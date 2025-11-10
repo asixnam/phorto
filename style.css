@@ -10,14 +10,15 @@ body {
   color: white;
   min-height: 100vh;
   /* offset for fixed header and footer */
-  padding-top: 84px;
-  padding-bottom: 100px;
+  padding-top: 90px; /* slightly larger to accommodate header */
+  padding-bottom: 120px; /* space for footer */
+  line-height: 1.6;
 }
 
 .container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: auto;
-  padding: 20px;
+  padding: 28px; /* more breathing room */
 }
 
 /* Navbar */
@@ -25,7 +26,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 0;
+  padding: 18px 0;
 }
 .logo {
   font-weight: bold;
@@ -35,8 +36,9 @@ body {
 .menu {
   list-style: none;
   display: flex;
-  gap: 25px;
+  gap: 28px;
   font-weight: 600;
+  align-items: center;
 }
 .menu a {
   color: white;
@@ -50,9 +52,9 @@ body {
 /* Hero Section */
 .hero {
   display: flex;
-  gap: 50px;
+  gap: 48px;
   align-items: center;
-  padding: 40px 0;
+  padding: 60px 0; /* increased vertical spacing */
   position: relative;
 }
 .hero-info {
@@ -79,9 +81,9 @@ h2 {
   opacity: 0.9;
 }
 .hero-desc {
-  max-width: 500px;
-  line-height: 1.5;
-  opacity: 0.8;
+  max-width: 640px;
+  line-height: 1.7;
+  opacity: 0.9;
   margin-bottom: 30px;
 }
 .btn-primary {
@@ -158,14 +160,14 @@ h2 {
 /* What I Do Section */
 .services-grid {
   display: grid;
-  grid-gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 28px; /* more gap between service cards */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 .service-box {
   background: #162a56;
-  padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px #0f1e40;
+  padding: 30px; /* more padding inside cards */
+  border-radius: 10px;
+  box-shadow: 0 0 14px #0f1e40;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 .service-box:hover {
@@ -207,13 +209,13 @@ h2 {
 }
 .tab-content {
   background: #162a56;
-  border-radius: 8px;
-  padding: 30px 25px;
+  border-radius: 10px;
+  padding: 36px 30px; /* more internal spacing */
   color: #cdd9ff;
-  max-width: 900px;
+  max-width: 980px;
   margin: 0 auto;
   display: none;
-  box-shadow: 0 0 15px #0f1e40;
+  box-shadow: 0 0 18px #0f1e40;
 }
 .tab-content.active {
   display: block;
@@ -239,8 +241,8 @@ h2 {
 /* Portfolio Section */
 .portfolio-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
 }
 .portfolio-item {
   position: relative;
@@ -259,6 +261,8 @@ h2 {
   width: 100%;
   display: block;
   border-radius: 10px;
+  object-fit: cover; /* ensure images fill their boxes nicely */
+  height: 240px;
 }
 .overlay {
   position: absolute;
@@ -278,17 +282,49 @@ h2 {
 }
 
 /* Responsive */
+@media (max-width: 992px) {
+  .hero {
+    gap: 30px;
+    padding: 48px 0;
+  }
+  .hero-desc {
+    max-width: 520px;
+  }
+}
+
 @media (max-width: 768px) {
   .hero {
     flex-direction: column;
     text-align: center;
+    padding: 36px 0;
   }
   .hero-image {
-    max-width: 250px;
-    margin: 25px auto 0;
+    max-width: 300px;
+    margin: 20px auto 0;
   }
   .menu {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    gap: 14px;
+    flex-wrap: wrap; /* allow menu to wrap on small screens */
+    justify-content: center;
+  }
+  .service-box {
+    padding: 22px;
+  }
+  .portfolio-item img {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 18px;
+  }
+  .section-title {
+    font-size: 1.6rem;
+  }
+  h1 {
+    font-size: 1.9rem;
   }
 }
 
