@@ -1,30 +1,34 @@
 // Hamburger Menu Toggle
-const hamburger = document.getElementById('hamburgerBtn');
-const mobileMenu = document.getElementById('mobileMenu');
-const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-
-if (hamburger) {
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    mobileMenu.classList.toggle('active');
-  });
-
-  // Close menu when clicking a link
-  mobileMenuLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('active');
-      mobileMenu.classList.remove('active');
+document.addEventListener('DOMContentLoaded', () => {
+  const hamburger = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  
+  if (hamburger && mobileMenu) {
+    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+    
+    hamburger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
     });
-  });
 
-  // Close menu when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('header')) {
-      hamburger.classList.remove('active');
-      mobileMenu.classList.remove('active');
-    }
-  });
-}
+    // Close menu when clicking a link
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('header')) {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+      }
+    });
+  }
+});
 
 // Tab switching logic for Resume Section
 
