@@ -72,7 +72,7 @@ body {
 .hero-inner { display:flex; gap:40px; align-items:center; }
 .hero-left { flex:1; color: #00473a; }
 .eyebrow { font-weight:700; color:#00483c; letter-spacing:2px; margin-bottom:8px; }
-.hero-title { font-size:3.2rem; line-height:1; color: #0b2340; margin-bottom:12px; font-weight:800; }
+.hero-title { font-size:3.2rem; line-height:1; color: #00674F; margin-bottom:12px; font-weight:800; }
 .hero-title .accent { color: #ff8a3d; }
 .hero-sub { max-width:520px; color:#475569; margin-bottom:22px; }
 .hero-search { display:flex; gap:12px; align-items:center; margin-top:12px; }
