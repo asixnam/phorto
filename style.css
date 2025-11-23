@@ -234,11 +234,11 @@ h2 {
   margin-bottom: 30px;
 }
 .tab-button {
-  background: #233965;
+  background: #00674F;
   border: none;
   padding: 12px 28px;
   border-radius: 30px;
-  color: #aabfff;
+  color: #ffffff;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.3s, color 0.3s;
