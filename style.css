@@ -3,7 +3,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* Use San Francisco / system font stack where available */
+  font-family: -apple-system, 'San Francisco', 'Helvetica Neue', 'Segoe UI', Roboto, Arial, sans-serif;
 }
 body {
   background: #ffffff;
@@ -13,6 +14,8 @@ body {
   padding-top: 90px; /* slightly larger to accommodate header */
   padding-bottom: 120px; /* space for footer */
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .container {
