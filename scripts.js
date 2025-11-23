@@ -1,5 +1,18 @@
-// Hamburger Menu Toggle
-document.addEventListener('DOMContentLoaded', () => {
+// Load Header from external file
+function loadHeader() {
+  const headerContainer = document.getElementById('header-container');
+  
+  fetch('header.html')
+    .then(response => response.text())
+    .then(html => {
+      headerContainer.innerHTML = html;
+      initHamburgerMenu(); // Initialize hamburger menu after header is loaded
+    })
+    .catch(error => console.error('Error loading header:', error));
+}
+
+// Initialize Hamburger Menu
+function initHamburgerMenu() {
   const hamburger = document.getElementById('hamburgerBtn');
   const mobileMenu = document.getElementById('mobileMenu');
   
@@ -28,6 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+}
+
+// Load header on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+  loadHeader();
 });
 
 // Tab switching logic for Resume Section
