@@ -75,7 +75,7 @@ body {
 .hero-left { flex:1; color: #f1f7fb; }
 .eyebrow { font-weight:700; color:#cfe6ff; letter-spacing:2px; margin-bottom:8px; }
 .hero-title { font-size:3.2rem; line-height:1; color: #fff; margin-bottom:12px; font-weight:800; }
-.hero-title .accent { color: #ff8a3d; }
+/* .hero-title .accent { color: #ff8a3d; } */
 .hero-sub { max-width:520px; color:#d9ecff; margin-bottom:22px; }
 .hero-search { display:flex; gap:12px; align-items:center; margin-top:12px; }
 .hero-search input[type="text"], .hero-search input[type="date"] {
