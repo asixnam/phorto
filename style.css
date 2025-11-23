@@ -10,9 +10,9 @@ body {
   background: #ffffff;
   color: #0b2340; /* dark text for light background */
   min-height: 100vh;
-  /* offset for fixed header and footer */
+  /* offset for fixed header; footer is in document flow and will scroll */
   padding-top: 90px; /* slightly larger to accommodate header */
-  padding-bottom: 120px; /* space for footer */
+  padding-bottom: 40px; /* small breathing room at bottom when footer is static */
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -484,18 +484,16 @@ header {
   box-shadow: 0 2px 10px rgba(0,0,0,0.25);
 }
 
-/* Footer - full width background and sticky to bottom */
+/* Footer - full width background and scrolls with page */
 .site-footer {
-  position: fixed; /* stick to bottom */
+  position: relative; /* part of normal document flow so it scrolls */
   left: 0;
   right: 0;
-  bottom: 0;
   width: 100%;
   background: #000000; /* keep existing dark footer color (adjust if you prefer) */
   color: #cfe6ff;
   padding: 22px 0; /* vertical padding; horizontal spacing is inside .container */
-  z-index: 900; /* below header (header z-index:1000) */
-  box-shadow: 0 -6px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 0 0 rgba(0,0,0,0); /* remove upward shadow used for fixed footer */
   border-top: 1px solid rgba(61,181,255,0.06);
 }
 .site-footer .container {
@@ -508,10 +506,4 @@ header {
   opacity: 0.95;
   font-size: 0.95rem;
   margin: 0;
-}
-
-/* Ensure body leaves space for the fixed footer to avoid overlap */
-body {
-  /* keep existing values, but ensure bottom padding covers footer height */
-  padding-bottom: 120px; /* large enough to prevent content being hidden behind footer */
 }
