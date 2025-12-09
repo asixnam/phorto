@@ -192,7 +192,7 @@ header {
   font-weight: 700;
   margin-bottom: 20px;
   line-height: 1.2;
-  color: #333;
+  color: #ffbb00;
 }
 
 .social-icons {
@@ -216,7 +216,7 @@ header {
   filter: invert(1); /* Ubah warna icon menjadi putih, hapus jika tidak perlu */
 }
 .accent {
-  color: #10b981;
+  color: #02856f;
 }
 
 .hero-sub {
