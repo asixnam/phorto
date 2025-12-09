@@ -19,13 +19,13 @@ body {
 
 /* Header Navbar */
 header {
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .navbar {
@@ -110,26 +110,55 @@ header {
 
 .mobile-menu {
   display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #ffffff;
   list-style: none;
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(10px);
-  padding: 1rem 0;
+  padding: 0;
+  margin: 0;
+  flex-direction: column;
+  z-index: 999;
+  animation: slideDown 0.3s ease-in-out;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .mobile-menu li {
-  padding: 1rem 20px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 0;
 }
 
 .mobile-menu a {
-  text-decoration: none;
-  color: #333;
   display: block;
-  font-weight: 500;
+  padding: 14px 20px;
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.mobile-menu a:hover {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.mobile-menu li:last-child a {
+  border-bottom: none;
 }
 
 .mobile-menu.active {
-  display: block;
+  display: flex;
 }
 
 /* Hero Section - Background Putih */
@@ -207,7 +236,7 @@ header {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
 }
 
-/* Services Section */
+/* Services Section - Carousel Style */
 .services {
   padding: 80px 20px;
   background: #f8f9fa;
@@ -220,83 +249,121 @@ header {
   color: #333;
 }
 
-.services-wrapper {
+.services-carousel-container {
   position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 60px;
+}
+
+.services-carousel-wrapper {
   overflow: hidden;
+  border-radius: 20px;
 }
 
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
-  transition: transform 0.3s ease;
+.services-carousel {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+  gap: 20px;
 }
 
-.service-box {
+.service-card {
+  min-width: 100%;
   background: white;
-  padding: 40px 30px;
-  border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s;
 }
 
-.service-box:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+.service-card:hover {
+  transform: scale(1.02);
 }
 
-.service-box h3 {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
+.service-icon {
+  font-size: 3.5rem;
+  margin-bottom: 25px;
+  display: block;
+}
+
+.service-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
   color: #10b981;
 }
 
-.service-box p {
+.service-card p {
   color: #666;
-  line-height: 1.7;
+  line-height: 1.8;
+  font-size: 1.05rem;
 }
 
-.slider-controls {
-  display: none;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 30px;
-}
-
-.slider-btn {
-  width: 50px;
-  height: 50px;
+/* Carousel Controls */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 45px;
+  height: 45px;
   border: none;
   background: #10b981;
   color: white;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.3s;
+  z-index: 10;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
 }
 
-.slider-btn:hover {
+.carousel-btn:hover:not(:disabled) {
   background: #059669;
-  transform: scale(1.1);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
 }
 
-.slider-dots {
-  display: none;
+.carousel-btn:disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.carousel-btn.prev {
+  left: 0;
+}
+
+.carousel-btn.next {
+  right: 0;
+}
+
+/* Carousel Dots */
+.carousel-dots {
+  display: flex;
   justify-content: center;
   gap: 10px;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
-.dot {
+.carousel-dot {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: #ddd;
+  background: #d1d5db;
   cursor: pointer;
   transition: all 0.3s;
+  border: none;
+  padding: 0;
 }
 
-.dot.active {
+.carousel-dot:hover {
+  background: #9ca3af;
+}
+
+.carousel-dot.active {
   background: #10b981;
   width: 30px;
   border-radius: 6px;
@@ -411,10 +478,28 @@ header {
 
 /* Footer */
 .site-footer {
-  background: #333;
-  color: white;
-  padding: 30px 0;
+  position: relative;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: #1f2937;
+  color: #e5e7eb;
+  padding: 22px 0;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  border-top: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.site-footer .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.site-footer p {
   text-align: center;
+  opacity: 0.95;
+  font-size: 0.95rem;
+  margin: 0;
 }
 
 /* Responsive Design */
@@ -448,14 +533,31 @@ header {
     order: -1;
   }
 
-  .services-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+  /* Mobile Carousel Adjustments */
+  .services-carousel-container {
+    padding: 0 50px;
   }
 
-  .slider-controls,
-  .slider-dots {
-    display: flex;
+  .service-card {
+    padding: 40px 30px;
+  }
+
+  .service-icon {
+    font-size: 3rem;
+  }
+
+  .service-card h3 {
+    font-size: 1.5rem;
+  }
+
+  .service-card p {
+    font-size: 1rem;
+  }
+
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
   }
 
   .tabs {
@@ -485,114 +587,46 @@ header {
     font-size: 2rem;
   }
 
+  /* Extra Small Mobile Carousel */
+  .services-carousel-container {
+    padding: 0 45px;
+  }
+
+  .service-card {
+    padding: 30px 20px;
+  }
+
+  .service-icon {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+
+  .service-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+
+  .service-card p {
+    font-size: 0.95rem;
+  }
+
+  .carousel-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+  }
+
+  .carousel-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .carousel-dot.active {
+    width: 25px;
+  }
+
   .tab-button {
     padding: 8px 15px;
     font-size: 0.85rem;
   }
-}
-
-/* Hamburger animation when active */
-.hamburger.active span:nth-child(1) {
-  transform: rotate(45deg) translate(8px, 8px);
-}
-
-.hamburger.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(7px, -7px);
-}
-
-/* Mobile Menu */
-.mobile-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: #ffffff;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  flex-direction: column;
-  z-index: 999;
-  animation: slideDown 0.3s ease-in-out;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.mobile-menu li {
-  padding: 0;
-}
-
-.mobile-menu a {
-  display: block;
-  padding: 14px 20px;
-  color: #333;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-  transition: background-color 0.2s, color 0.2s;
-}
-
-.mobile-menu a:hover {
-  background-color: rgba(16, 185, 129, 0.1);
-  color: #10b981;
-}
-
-.mobile-menu li:last-child a {
-  border-bottom: none;
-}
-
-/* Show mobile menu */
-.mobile-menu.active {
-  display: flex;
-}
-
-/* Fixed header */
-/* Fixed header */
- header {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    }
-
-/* Footer - full width background and scrolls with page */
-.site-footer {
-  position: relative;
-  left: 0;
-  right: 0;
-  width: 100%;
-  background: #1f2937;
-  color: #e5e7eb;
-  padding: 22px 0;
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-  border-top: 1px solid rgba(16, 185, 129, 0.1);
-}
-
-.site-footer .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.site-footer p {
-  text-align: center;
-  opacity: 0.95;
-  font-size: 0.95rem;
-  margin: 0;
 }
