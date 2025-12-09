@@ -220,12 +220,13 @@ header {
 }
 
 .hero-sub {
-  font-size: 1.1rem;
-  margin-bottom: 30px;
-  opacity: 0.85;
-  line-height: 1.8;
-  color: #666;
-}
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      opacity: 0.85;
+      line-height: 1.8;
+      color: #000000;
+      text-align: justify;
+    }
 
 .social-icons {
   display: flex;
