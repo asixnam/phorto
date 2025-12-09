@@ -142,41 +142,9 @@
       <p>&copy; 2025 Mohamad Khoirul Anam. Semua hak dilindungi.</p>
     </div>
   </footer>
+  <script src="scripts.js"></script>
 
   <script>
-    // Hamburger menu toggle
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-
-    hamburgerBtn.addEventListener('click', () => {
-      hamburgerBtn.classList.toggle('active');
-      mobileMenu.classList.toggle('active');
-    });
-
-    // Close mobile menu when clicking a link
-    document.querySelectorAll('.mobile-menu a').forEach(link => {
-      link.addEventListener('click', () => {
-        hamburgerBtn.classList.remove('active');
-        mobileMenu.classList.remove('active');
-      });
-    });
-
-    // Tab functionality
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    tabButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const targetTab = button.getAttribute('data-tab');
-        
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        tabContents.forEach(content => content.classList.remove('active'));
-        
-        button.classList.add('active');
-        document.getElementById(targetTab).classList.add('active');
-      });
-    });
-
     // Slider functionality for mobile
     let currentSlide = 0;
     const servicesGrid = document.getElementById('servicesGrid');
@@ -199,7 +167,7 @@
       if (window.innerWidth <= 768) {
         const offset = -currentSlide * 100;
         servicesGrid.style.transform = `translateX(${offset}%)`;
-        
+
         dots.forEach((dot, index) => {
           dot.classList.toggle('active', index === currentSlide);
         });
