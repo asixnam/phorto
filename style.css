@@ -488,11 +488,6 @@
       }
     }
   
-  background-color: white;
-  border-radius: 2px;
-  transition: all 0.3s ease-in-out;
-  transform-origin: center;
-}
 
 /* Hamburger animation when active */
 .hamburger.active span:nth-child(1) {
