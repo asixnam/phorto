@@ -1,35 +1,92 @@
-<header>
-  <nav class="navbar container">
-    <div class="nav-left">
-      <div class="logo">A6</div>
-    </div>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar Responsive</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; }
+    
+    header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); 
+             position: fixed; top: 0; width: 100%; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+    .logo { font-size: 1.5rem; font-weight: bold; color: #333; }
+    .menu { display: flex; list-style: none; gap: 2rem; }
+    .menu a { text-decoration: none; color: #333; transition: color 0.3s; }
+    .menu a:hover { color: #007bff; }
+    
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; 
+                 border: none; cursor: pointer; padding: 5px; }
+    .hamburger span { width: 25px; height: 3px; background: #333; transition: 0.3s; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(8px, 8px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+    
+    .mobile-menu { display: none; list-style: none; background: rgba(255, 255, 255, 0.98); 
+                   backdrop-filter: blur(10px); padding: 1rem 0; }
+    .mobile-menu li { padding: 1rem 20px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .mobile-menu a { text-decoration: none; color: #333; display: block; }
+    .mobile-menu.active { display: block; }
+    
+    @media (max-width: 768px) {
+      .nav-center { display: none; }
+      .hamburger { display: flex; }
+    }
+    
+    main { margin-top: 80px; padding: 2rem; }
+    section { min-height: 100vh; padding: 2rem 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar container">
+      <div class="nav-left">
+        <div class="logo">A6</div>
+      </div>
+      <div class="nav-center">
+        <ul class="menu">
+          <li><a href="#">Discover</a></li>
+          <li><a href="#services">Skill</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#about">About Us</a></li>
+        </ul>
+      </div>
+      <div class="nav-right">
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+    <ul class="mobile-menu" id="mobileMenu">
+      <li><a href="#">Discover</a></li>
+      <li><a href="#services">Skill</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#about">About Us</a></li>
+    </ul>
+  </header>
 
-    <div class="nav-center">
-      <ul class="menu">
-        <li><a href="#">Discover</a></li>
-        <li><a href="#services">Skill</a></li>
-        <li><a href="#portfolio">Phortofolio</a></li>
-        <li><a href="#about">About Us</a></li>
-      </ul>
-    </div>
+  <main class="container">
+    <section id="discover"><h1>Discover</h1><p>Konten discover...</p></section>
+    <section id="services"><h1>Skill</h1><p>Konten skill...</p></section>
+    <section id="portfolio"><h1>Portfolio</h1><p>Konten portfolio...</p></section>
+    <section id="about"><h1>About Us</h1><p>Konten about...</p></section>
+  </main>
 
-    <div class="nav-right">
-      <!-- Hamburger Menu Button -->
-      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- Mobile Menu -->
-  <ul class="mobile-menu" id="mobileMenu">
-    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
-    <li><a href="#">Discover</a></li>
-    <li><a href="#services">Skill</a></li>
-    <li><a href="#portfolio">Phortofolio</a></li>
-    <li><a href="#about">About Us</a></li>
-    </button>
-  </ul>
-</header>
+  <script>
+    const btn = document.getElementById('hamburgerBtn');
+    const menu = document.getElementById('mobileMenu');
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('active');
+      menu.classList.toggle('active');
+    });
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        btn.classList.remove('active');
+        menu.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>
