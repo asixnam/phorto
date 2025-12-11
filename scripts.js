@@ -187,4 +187,47 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Update on window resize
   window.addEventListener('resize', updateCarousel);
+
+  // Portfolio Filter Functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      // Remove active class from all buttons
+      filterBtns.forEach(b => b.classList.remove('active'));
+      
+      // Add active class to clicked button
+      this.classList.add('active');
+      
+      // Get filter value
+      const filterValue = this.getAttribute('data-filter');
+      
+      // Filter portfolio items with animation
+      portfolioItems.forEach(item => {
+        const category = item.getAttribute('data-category');
+        
+        if (filterValue === 'all' || category === filterValue) {
+          item.style.display = 'block';
+          setTimeout(() => {
+            item.style.opacity = '1';
+            item.style.transform = 'scale(1)';
+          }, 10);
+        } else {
+          item.style.opacity = '0';
+          item.style.transform = 'scale(0.8)';
+          setTimeout(() => {
+            item.style.display = 'none';
+          }, 300);
+        }
+      });
+    });
+  });
+
+  // Initialize all items
+  portfolioItems.forEach(item => {
+    item.style.transition = 'all 0.3s ease';
+  });
+});
 });
