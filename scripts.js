@@ -190,44 +190,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Portfolio Filter Functionality
 document.addEventListener('DOMContentLoaded', function() {
-  const filterBtns = document.querySelectorAll('.filter-btn');
+  
+  // Get all filter buttons and portfolio items
+  const filterButtons = document.querySelectorAll('.filter-btn');
   const portfolioItems = document.querySelectorAll('.portfolio-item');
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
+  // Add click event to each filter button
+  filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      
+      // Get the filter category
+      const filterValue = this.getAttribute('data-filter');
+      
       // Remove active class from all buttons
-      filterBtns.forEach(b => b.classList.remove('active'));
+      filterButtons.forEach(btn => btn.classList.remove('active'));
       
       // Add active class to clicked button
       this.classList.add('active');
       
-      // Get filter value
-      const filterValue = this.getAttribute('data-filter');
-      
-      // Filter portfolio items with animation
+      // Filter portfolio items
       portfolioItems.forEach(item => {
-        const category = item.getAttribute('data-category');
+        const itemCategory = item.getAttribute('data-category');
         
-        if (filterValue === 'all' || category === filterValue) {
-          item.style.display = 'block';
+        // Remove animation classes
+        item.classList.remove('show', 'hide');
+        
+        if (filterValue === 'all' || filterValue === itemCategory) {
+          // Show matching items with animation
           setTimeout(() => {
-            item.style.opacity = '1';
-            item.style.transform = 'scale(1)';
+            item.classList.add('show');
           }, 10);
         } else {
-          item.style.opacity = '0';
-          item.style.transform = 'scale(0.8)';
-          setTimeout(() => {
-            item.style.display = 'none';
-          }, 300);
+          // Hide non-matching items
+          item.classList.add('hide');
         }
       });
     });
   });
 
-  // Initialize all items
+  // Optional: Initialize all items as visible on page load
   portfolioItems.forEach(item => {
-    item.style.transition = 'all 0.3s ease';
+    item.classList.add('show');
+  });
+});
+
+// Optional: Smooth scroll for navigation (if you add internal links)
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
   });
 });
 });
