@@ -1,28 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Portfolio - Mohamad Khoirul Anam</title>
   <link rel="stylesheet" href="style.css" />
-    <!-- <script src="scripts.js"></script> -->
-     <script>
-  console.log('Script loaded!');
-</script>
 </head>
 <body>
-  <!-- Header will be loaded here -->
-  <div id="header-container"></div>
-
-  <!-- Portfolio Page -->
+  
   <section id="portfolio" class="portfolio">
     <div class="container">
       <h2 class="section-title">Portfolio</h2>
       <p class="section-subtitle">Explore my creative works across different categories</p>
       
-      <!-- Category Filter -->
       <div class="portfolio-filters">
-        <button class="filter-btn active" data-filter="all">Semua</button>
         <button class="filter-btn" data-filter="feed">Feed</button>
         <button class="filter-btn" data-filter="banner">Banner/Outdoor</button>
         <button class="filter-btn" data-filter="logo">Logo</button>
@@ -30,17 +21,15 @@
         <button class="filter-btn" data-filter="website">Website</button>
       </div>
 
-      <!-- Portfolio Grid -->
       <div class="portfolio-grid">
-        <!-- Feed Items -->
-        <div class="portfolio-item" data-category="feed">
+        <div class="portfolio-item show" data-category="feed">
           <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80" alt="Social Media Feed" />
           <div class="overlay">
             <h3>Social Media Feed</h3>
             <p>Feed</p>
           </div>
         </div>
-        <div class="portfolio-item" data-category="feed">
+        <div class="portfolio-item show" data-category="feed">
           <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=600&q=80" alt="Instagram Post" />
           <div class="overlay">
             <h3>Instagram Post</h3>
@@ -48,15 +37,14 @@
           </div>
         </div>
 
-        <!-- Banner/Outdoor Items -->
-        <div class="portfolio-item" data-category="banner">
+        <div class="portfolio-item show" data-category="banner">
           <img src="https://images.unsplash.com/photo-1567225477277-c1b8a5d0a620?auto=format&fit=crop&w=600&q=80" alt="Billboard Design" />
           <div class="overlay">
             <h3>Billboard Design</h3>
             <p>Banner/Outdoor</p>
           </div>
         </div>
-        <div class="portfolio-item" data-category="banner">
+        <div class="portfolio-item show" data-category="banner">
           <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80" alt="Outdoor Banner" />
           <div class="overlay">
             <h3>Outdoor Banner</h3>
@@ -64,15 +52,14 @@
           </div>
         </div>
 
-        <!-- Logo Items -->
-        <div class="portfolio-item" data-category="logo">
+        <div class="portfolio-item show" data-category="logo">
           <img src="https://images.unsplash.com/photo-1572044162444-ad60f128bdea?auto=format&fit=crop&w=600&q=80" alt="Brand Logo" />
           <div class="overlay">
             <h3>Brand Logo</h3>
             <p>Logo</p>
           </div>
         </div>
-        <div class="portfolio-item" data-category="logo">
+        <div class="portfolio-item show" data-category="logo">
           <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=600&q=80" alt="Corporate Identity" />
           <div class="overlay">
             <h3>Corporate Identity</h3>
@@ -80,22 +67,21 @@
           </div>
         </div>
 
-        <!-- Photography Items -->
-        <div class="portfolio-item" data-category="photography">
+        <div class="portfolio-item show" data-category="photography">
           <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=600&q=80" alt="Portrait Photography" />
           <div class="overlay">
             <h3>Portrait Photography</h3>
             <p>Fotografi</p>
           </div>
         </div>
-        <div class="portfolio-item" data-category="photography">
+        <div class="portfolio-item show" data-category="photography">
           <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Nature Photography" />
           <div class="overlay">
             <h3>Nature Photography</h3>
             <p>Fotografi</p>
           </div>
         </div>
-        <div class="portfolio-item" data-category="photography">
+        <div class="portfolio-item show" data-category="photography">
           <img src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=600&q=80" alt="Sunset Photography" />
           <div class="overlay">
             <h3>Sunset Photography</h3>
@@ -103,22 +89,21 @@
           </div>
         </div>
 
-        <!-- Website Items -->
-        <div class="portfolio-item" data-category="website">
+        <div class="portfolio-item show" data-category="website">
           <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80" alt="Web Development" />
           <div class="overlay">
             <h3>Web Development</h3>
             <p>Website</p>
           </div>
         </div>
-        <div class="portfolio-item" data-category="website">
+        <div class="portfolio-item show" data-category="website">
           <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80" alt="E-commerce Site" />
           <div class="overlay">
             <h3>E-commerce Site</h3>
             <p>Website</p>
           </div>
         </div>
-        <div class="portfolio-item" data-category="website">
+        <div class="portfolio-item show" data-category="website">
           <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Dashboard Design" />
           <div class="overlay">
             <h3>Dashboard Design</h3>
@@ -134,5 +119,7 @@
       <p>&copy; 2025 asixcreative. Semua hak dilindungi.</p>
     </div>
   </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
