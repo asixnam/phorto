@@ -188,49 +188,94 @@ document.addEventListener('DOMContentLoaded', () => {
   // Update on window resize
   window.addEventListener('resize', updateCarousel);
 
-  // Portfolio Filter Functionality
-document.addEventListener('DOMContentLoaded', function() {
+// Portfolio Filter Functionality
+(function() {
+  'use strict';
   
-  // Get all filter buttons and portfolio items
-  const filterButtons = document.querySelectorAll('.filter-btn');
-  const portfolioItems = document.querySelectorAll('.portfolio-item');
+  // Fungsi untuk inisialisasi filter
+  function initPortfolioFilter() {
+    console.log('Inisialisasi Portfolio Filter...');
+    
+    // Get all filter buttons and portfolio items
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    
+    console.log('Filter buttons ditemukan:', filterButtons.length);
+    console.log('Portfolio items ditemukan:', portfolioItems.length);
+    
+    // Cek apakah elemen ditemukan
+    if (filterButtons.length === 0 || portfolioItems.length === 0) {
+      console.error('Filter buttons atau portfolio items tidak ditemukan!');
+      return;
+    }
 
-  // Add click event to each filter button
-  filterButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      
-      // Get the filter category
-      const filterValue = this.getAttribute('data-filter');
-      
-      // Remove active class from all buttons
-      filterButtons.forEach(btn => btn.classList.remove('active'));
-      
-      // Add active class to clicked button
-      this.classList.add('active');
-      
-      // Filter portfolio items
-      portfolioItems.forEach(item => {
-        const itemCategory = item.getAttribute('data-category');
+    // Initialize all items as visible on page load
+    portfolioItems.forEach(item => {
+      item.classList.add('show');
+      item.style.display = 'block';
+    });
+
+    // Add click event to each filter button
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('Filter button diklik:', this.getAttribute('data-filter'));
         
-        // Remove animation classes
-        item.classList.remove('show', 'hide');
+        // Get the filter category
+        const filterValue = this.getAttribute('data-filter');
         
-        if (filterValue === 'all' || filterValue === itemCategory) {
-          // Show matching items with animation
-          setTimeout(() => {
-            item.classList.add('show');
-          }, 10);
-        } else {
-          // Hide non-matching items
-          item.classList.add('hide');
-        }
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        // Filter portfolio items
+        portfolioItems.forEach(item => {
+          const itemCategory = item.getAttribute('data-category');
+          
+          // Remove animation classes
+          item.classList.remove('show', 'hide');
+          
+          if (filterValue === 'all' || filterValue === itemCategory) {
+            // Show matching items with animation
+            setTimeout(() => {
+              item.classList.add('show');
+              item.style.display = 'block';
+            }, 10);
+          } else {
+            // Hide non-matching items
+            item.classList.add('hide');
+            setTimeout(() => {
+              item.style.display = 'none';
+            }, 300);
+          }
+        });
       });
     });
-  });
+    
+    console.log('Portfolio Filter berhasil diinisialisasi!');
+  }
 
-  // Optional: Initialize all items as visible on page load
-  portfolioItems.forEach(item => {
-    item.classList.add('show');
+  // Jalankan setelah DOM selesai dimuat
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPortfolioFilter);
+  } else {
+    initPortfolioFilter();
+  }
+})();
+
+// Optional: Smooth scroll for navigation (if you add internal links)
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
   });
 });
 
