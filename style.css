@@ -275,10 +275,10 @@ header {
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  padding: 0;
+  padding: 120px 0 0;
   
   /* Background Image */
-  background-image: url('public/hero.png');
+  background-image: url('public/hero2.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -291,7 +291,7 @@ header {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.5);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
   z-index: 1;
 }
 
@@ -304,38 +304,37 @@ header {
   justify-content: center;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 60px 80px;
+  padding: 0 40px;
   width: 100%;
 }
 
-/* Title Section - Left Aligned */
+/* Title Section - Center */
 .hero-title-wrapper {
-  text-align: left;
-  margin-bottom: 60px;
+  text-align: center;
+  margin-bottom: 80px;
 }
 
 .hero-title {
-  font-size: 6.5rem;
+  font-size: 5rem;
   font-weight: 900;
-  line-height: 0.9;
-  color: #FFC107;
+  line-height: 1;
+  color: #ffbb00;
   text-transform: uppercase;
-  letter-spacing: -4px;
-  margin: 0;
+  letter-spacing: -2px;
 }
 
 .accent {
-  color: #FFC107;
+  color: #ffbb00;
 }
 
 /* Content Grid - Left & Right */
 .hero-content-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 150px;
-  max-width: 100%;
+  gap: 100px;
+  max-width: 1200px;
   width: 100%;
-  margin: 0;
+  margin: 0 auto;
 }
 
 .hero-left,
@@ -344,19 +343,20 @@ header {
 }
 
 .hero-description {
-  font-size: 0.95rem;
-  line-height: 1.7;
+  font-size: 1rem;
+  line-height: 1.8;
   text-align: justify;
   margin: 0;
-  color: #000000;
 }
 
 /* Bottom Section - Transparent Box */
 .hero-bottom {
   position: relative;
   z-index: 2;
-  background: transparent;
-  padding: 40px 0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 30px 0;
   margin-top: auto;
 }
 
@@ -366,7 +366,7 @@ header {
   align-items: flex-end;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 80px;
+  padding: 0 40px;
 }
 
 /* Social Icons */
@@ -374,25 +374,61 @@ header {
   display: flex;
   gap: 15px;
   align-items: center;
+  position: relative;
+}
+
+/* Rectangle transparent di atas icons */
+.social-icons::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 280px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 2cm;
+  border-radius: 8px;
+}
+
+/* Text Grid di atas rectangle */
+.social-icons::after {
+  content: 'Feed Design    Logo Design    PhotoGraph    Website';
+  position: absolute;
+  bottom: calc(100% + 2cm);
+  left: 50%;
+  transform: translateX(-50%);
+  color: #000000;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+  text-align: center;
+  width: 280px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
 }
 
 .social-icons a {
-  width: 50px;
-  height: 50px;
-  background: #00695C;
+  width: 45px;
+  height: 45px;
+  background: #000000;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  color: #ffffff;
-  font-size: 1.2rem;
+  color: #000000;
+  font-size: 1.1rem;
 }
 
 .social-icons a:hover {
-  background: #004D40;
+  background: #1a1a1a;
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0, 105, 92, 0.4);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
 }
 
 .social-icons i {
@@ -402,8 +438,8 @@ header {
 /* Stats Section */
 .hero-stats {
   display: flex;
-  gap: 60px;
-  align-items: flex-end;
+  gap: 50px;
+  align-items: center;
 }
 
 .stat-item {
@@ -412,18 +448,18 @@ header {
 }
 
 .stat-number {
-  font-size: 3.5rem;
+  font-size: 15pt;
   font-weight: 900;
   color: #000000;
   line-height: 1;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
 
 .stat-label {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: #000000;
   font-weight: 400;
-  white-space: nowrap;
+  margin-top: 5px;
 }
 
 /* Container */
@@ -437,42 +473,30 @@ header {
 /* Responsive Design */
 @media (max-width: 1200px) {
   .hero-title {
-    font-size: 5rem;
+    font-size: 4rem;
   }
   
   .hero-content-grid {
-    gap: 80px;
+    gap: 60px;
   }
   
   .hero-stats {
-    gap: 40px;
-  }
-  
-  .stat-number {
-    font-size: 2.8rem;
-  }
-  
-  .hero-inner {
-    padding: 60px 40px;
-  }
-  
-  .bottom-content {
-    padding: 0 40px;
+    gap: 35px;
   }
 }
 
 @media (max-width: 968px) {
   .hero-landing {
-    padding: 0;
+    padding: 100px 0 0;
   }
   
   .hero-title {
-    font-size: 4rem;
+    font-size: 3rem;
   }
   
   .hero-content-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 30px;
   }
   
   .bottom-content {
@@ -482,42 +506,37 @@ header {
   }
   
   .hero-stats {
-    gap: 30px;
+    gap: 25px;
   }
   
-  .stat-number {
-    font-size: 2.5rem;
+  .social-icons::before {
+    width: 240px;
+    height: 70px;
+    margin-bottom: 1.5cm;
   }
   
-  .stat-label {
-    font-size: 0.8rem;
+  .social-icons::after {
+    font-size: 0.65rem;
+    width: 240px;
+    bottom: calc(100% + 1.5cm);
   }
 }
 
 @media (max-width: 640px) {
   .hero-landing {
-    padding: 0;
+    padding: 80px 0 0;
   }
   
   .hero-title {
-    font-size: 3rem;
-    letter-spacing: -2px;
+    font-size: 2.5rem;
   }
   
   .hero-title-wrapper {
-    margin-bottom: 40px;
+    margin-bottom: 50px;
   }
   
   .hero-description {
-    font-size: 0.9rem;
-  }
-  
-  .hero-inner {
-    padding: 40px 20px;
-  }
-  
-  .bottom-content {
-    padding: 0 20px;
+    font-size: 0.95rem;
   }
   
   .hero-stats {
@@ -527,18 +546,32 @@ header {
     width: 100%;
   }
   
+  .social-icons {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
   .social-icons a {
-    width: 45px;
-    height: 45px;
-    font-size: 1.1rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  
+  .social-icons::before {
+    width: 200px;
+    height: 60px;
+    margin-bottom: 1cm;
+  }
+  
+  .social-icons::after {
+    font-size: 0.6rem;
+    width: 200px;
+    bottom: calc(100% + 1cm);
+    letter-spacing: 0;
   }
   
   .hero-bottom {
-    padding: 30px 0;
-  }
-  
-  .stat-number {
-    font-size: 2rem;
+    padding: 20px 0;
   }
 }
 
