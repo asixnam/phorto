@@ -295,7 +295,7 @@ header {
 }
 
 .hero-inner {
-  position: relative;
+  position: bottom 0;
   z-index: 2;
   flex: 1;
   display: flex;
