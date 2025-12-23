@@ -275,10 +275,10 @@ header {
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  padding: 120px 0 0;
+  padding: 0;
   
   /* Background Image */
-  background-image: url('public/hero2.png');
+  background-image: url('public/hero.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -291,7 +291,7 @@ header {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+  background: rgba(255, 255, 255, 0.5);
   z-index: 1;
 }
 
@@ -304,37 +304,38 @@ header {
   justify-content: center;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 60px 80px;
   width: 100%;
 }
 
-/* Title Section - Center */
+/* Title Section - Left Aligned */
 .hero-title-wrapper {
-  text-align: center;
-  margin-bottom: 80px;
+  text-align: left;
+  margin-bottom: 60px;
 }
 
 .hero-title {
-  font-size: 5rem;
+  font-size: 6.5rem;
   font-weight: 900;
-  line-height: 1;
-  color: #ffbb00;
+  line-height: 0.9;
+  color: #FFC107;
   text-transform: uppercase;
-  letter-spacing: -2px;
+  letter-spacing: -4px;
+  margin: 0;
 }
 
 .accent {
-  color: #ffbb00;
+  color: #FFC107;
 }
 
 /* Content Grid - Left & Right */
 .hero-content-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 100px;
-  max-width: 1200px;
+  gap: 150px;
+  max-width: 100%;
   width: 100%;
-  margin: 0 auto;
+  margin: 0;
 }
 
 .hero-left,
@@ -343,30 +344,29 @@ header {
 }
 
 .hero-description {
-  font-size: 1rem;
-  line-height: 1.8;
+  font-size: 0.95rem;
+  line-height: 1.7;
   text-align: justify;
   margin: 0;
+  color: #000000;
 }
 
 /* Bottom Section - Transparent Box */
 .hero-bottom {
   position: relative;
   z-index: 2;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 30px 0;
+  background: transparent;
+  padding: 40px 0;
   margin-top: auto;
 }
 
 .bottom-content {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 80px;
 }
 
 /* Social Icons */
@@ -377,22 +377,22 @@ header {
 }
 
 .social-icons a {
-  width: 45px;
-  height: 45px;
-  background: #000000;
+  width: 50px;
+  height: 50px;
+  background: #00695C;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  color: #000000;
-  font-size: 1.1rem;
+  color: #ffffff;
+  font-size: 1.2rem;
 }
 
 .social-icons a:hover {
-  background: #000000;
+  background: #004D40;
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 15px rgba(0, 105, 92, 0.4);
 }
 
 .social-icons i {
@@ -402,8 +402,8 @@ header {
 /* Stats Section */
 .hero-stats {
   display: flex;
-  gap: 50px;
-  align-items: center;
+  gap: 60px;
+  align-items: flex-end;
 }
 
 .stat-item {
@@ -412,17 +412,18 @@ header {
 }
 
 .stat-number {
-  font-size: 2.5rem;
+  font-size: 3.5rem;
   font-weight: 900;
   color: #000000;
   line-height: 1;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
 .stat-label {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #000000;
   font-weight: 400;
+  white-space: nowrap;
 }
 
 /* Container */
@@ -436,47 +437,56 @@ header {
 /* Responsive Design */
 @media (max-width: 1200px) {
   .hero-title {
-    font-size: 4rem;
+    font-size: 5rem;
   }
   
   .hero-content-grid {
-    gap: 60px;
+    gap: 80px;
   }
   
   .hero-stats {
-    gap: 35px;
+    gap: 40px;
   }
   
   .stat-number {
-    font-size: 2rem;
+    font-size: 2.8rem;
+  }
+  
+  .hero-inner {
+    padding: 60px 40px;
+  }
+  
+  .bottom-content {
+    padding: 0 40px;
   }
 }
 
 @media (max-width: 968px) {
   .hero-landing {
-    padding: 100px 0 0;
+    padding: 0;
   }
   
   .hero-title {
-    font-size: 3rem;
+    font-size: 4rem;
   }
   
   .hero-content-grid {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 40px;
   }
   
   .bottom-content {
     flex-direction: column;
     gap: 30px;
+    align-items: center;
   }
   
   .hero-stats {
-    gap: 25px;
+    gap: 30px;
   }
   
   .stat-number {
-    font-size: 1.8rem;
+    font-size: 2.5rem;
   }
   
   .stat-label {
@@ -486,19 +496,28 @@ header {
 
 @media (max-width: 640px) {
   .hero-landing {
-    padding: 80px 0 0;
+    padding: 0;
   }
   
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 3rem;
+    letter-spacing: -2px;
   }
   
   .hero-title-wrapper {
-    margin-bottom: 50px;
+    margin-bottom: 40px;
   }
   
   .hero-description {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+  }
+  
+  .hero-inner {
+    padding: 40px 20px;
+  }
+  
+  .bottom-content {
+    padding: 0 20px;
   }
   
   .hero-stats {
@@ -509,17 +528,17 @@ header {
   }
   
   .social-icons a {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
+    width: 45px;
+    height: 45px;
+    font-size: 1.1rem;
   }
   
   .hero-bottom {
-    padding: 20px 0;
+    padding: 30px 0;
   }
   
   .stat-number {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 }
 
