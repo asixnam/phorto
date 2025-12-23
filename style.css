@@ -278,7 +278,7 @@ header {
   padding: 120px 0 0;
   
   /* Background Image */
-  background-image: url('public/hero2.png'); 
+  background-image: url('public/hero2.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -286,6 +286,7 @@ header {
 
 /* Overlay untuk membuat teks lebih terbaca */
 .hero-overlay {
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -310,19 +311,30 @@ header {
 /* Title Section - Center */
 .hero-title-wrapper {
   text-align: center;
-  margin-bottom: 10px; 
+  margin-bottom: 80px;
 }
 
+.hero-title {
+  font-size: 5rem;
+  font-weight: 900;
+  line-height: 1;
+  color: #ffbb00;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+}
+
+.accent {
+  color: #ffbb00;
+}
 
 /* Content Grid - Left & Right */
 .hero-content-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 100px;
-  max-width: 1000px;
+  max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  margin-bottom: 5px; /* Reduced from 60px to make it closer */
 }
 
 .hero-left,
@@ -345,7 +357,7 @@ header {
   backdrop-filter: blur(10px);
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   padding: 30px 0;
-  margin-top: 10px; /* Added small margin from content above */
+  margin-top: auto;
 }
 
 .bottom-content {
