@@ -319,10 +319,11 @@ header {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 100px;
-  max-width: 1000px;
+  max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  margin-bottom: 5px; /* Reduced from 60px to make it closer */
+  margin-bottom: 0; /* Removed margin to make content touch the transparent box */
+  padding-bottom: 0;
 }
 
 .hero-left,
@@ -335,6 +336,7 @@ header {
   line-height: 1.8;
   text-align: justify;
   margin: 0;
+  margin-bottom: 0; /* Ensure no extra space at bottom */
 }
 
 /* Bottom Section - Transparent Box */
@@ -345,7 +347,7 @@ header {
   backdrop-filter: blur(10px);
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   padding: 30px 0;
-  margin-top: 5px; /* Added small margin from content above */
+  margin-top: 0; /* No gap between content and transparent box */
 }
 
 .bottom-content {
