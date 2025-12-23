@@ -59,6 +59,7 @@ header {
 }
 
 .menu-wrapper {
+  backdrop-filter: blur(10px);
   border: 2px solid #e9ecef00;
   border-radius: 50px;
   padding: 0.5rem 2rem;
