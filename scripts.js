@@ -115,7 +115,25 @@ function highlightActiveMenu() {
 }
 
 // Initialize semua fungsi saat DOM ready
-document.addEventListener('DOMContentLoaded', () => {
+// Muat header dari file terpisah lalu inisialisasi fitur terkait
+async function loadHeader() {
+  const container = document.getElementById('header-container');
+  if (!container) return;
+
+  try {
+    const resp = await fetch('header.html');
+    if (!resp.ok) throw new Error('Gagal memuat header');
+    const html = await resp.text();
+    container.innerHTML = html;
+  } catch (err) {
+    console.error('loadHeader error:', err);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadHeader();
+
+  // Pastikan elemen header sudah ada sebelum menginisialisasi
   initHamburgerMenu();
   initSmoothScroll();
   initScrollEffect();
