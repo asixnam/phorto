@@ -102,7 +102,27 @@ function highlightActiveMenu() {
 }
 
 // Initialize semua fungsi saat DOM ready
-document.addEventListener('DOMContentLoaded', () => {
+// Load header.html into #header-container, then initialize behaviors
+async function loadHeader() {
+  const container = document.getElementById('header-container');
+  if (!container) return;
+
+  try {
+    const res = await fetch('header.html');
+    if (res.ok) {
+      const html = await res.text();
+      container.innerHTML = html;
+    }
+  } catch (e) {
+    // Fetch may fail on file:// protocol; silently ignore
+    console.warn('Could not load header.html:', e);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadHeader();
+
+  // initialize behaviors after header is present in the DOM
   initHamburgerMenu();
   initSmoothScroll();
   initScrollEffect();
