@@ -335,6 +335,7 @@ header {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
+  margin-bottom: 60px;
 }
 
 .hero-left,
@@ -347,29 +348,6 @@ header {
   line-height: 1.8;
   text-align: justify;
   margin: 0;
-  margin-bottom: 30px;
-}
-
-/* Hero CTA Button */
-.hero-cta {
-  display: inline-block;
-  margin-bottom: 40px;
-}
-
-.hero-cta .btn-primary {
-  padding: 15px 40px;
-  background: #ffbb00;
-  color: #000;
-  font-weight: 600;
-  border-radius: 50px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.hero-cta .btn-primary:hover {
-  background: #ffbf00;
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(255, 187, 0, 0.3);
 }
 
 /* Bottom Section - Transparent Box */
