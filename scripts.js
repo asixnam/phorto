@@ -89,40 +89,33 @@ function initScrollEffect() {
 // Highlight active menu berdasarkan URL (optional)
 function highlightActiveMenu() {
   const currentPath = window.location.pathname;
-  const menuLinks = document.querySelectorAll('.menu-link, .mobile-menu a');
+  const currentHash = window.location.hash;
+  const menuLinks = document.querySelectorAll('.menu-link');
 
   menuLinks.forEach(link => {
-    const linkPath = new URL(link.href).pathname;
+    const linkUrl = new URL(link.href);
+    const linkPath = linkUrl.pathname;
+    const linkHash = linkUrl.hash;
     
-    if (linkPath === currentPath) {
-      link.style.background = '#FFBF00';
-      link.style.color = '#fff';
+    // Check jika path dan hash cocok
+    if (linkPath === currentPath && linkHash === currentHash) {
+      link.classList.add('active');
+    } else if (linkPath === currentPath && !currentHash && !linkHash) {
+      link.classList.add('active');
     }
+  });
+  
+  // Tambahkan event listener untuk update active state saat menu diklik
+  menuLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      menuLinks.forEach(l => l.classList.remove('active'));
+      this.classList.add('active');
+    });
   });
 }
 
 // Initialize semua fungsi saat DOM ready
-// Load header.html into #header-container, then initialize behaviors
-async function loadHeader() {
-  const container = document.getElementById('header-container');
-  if (!container) return;
-
-  try {
-    const res = await fetch('header.html');
-    if (res.ok) {
-      const html = await res.text();
-      container.innerHTML = html;
-    }
-  } catch (e) {
-    // Fetch may fail on file:// protocol; silently ignore
-    console.warn('Could not load header.html:', e);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', async () => {
-  await loadHeader();
-
-  // initialize behaviors after header is present in the DOM
+document.addEventListener('DOMContentLoaded', () => {
   initHamburgerMenu();
   initSmoothScroll();
   initScrollEffect();
