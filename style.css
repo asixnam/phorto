@@ -278,7 +278,7 @@ header {
   padding: 120px 0 0;
   
   /* Background Image */
-  background-image: url('public/hero.png');
+  background-image: url('public/hero2.png'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -318,10 +318,10 @@ header {
 .hero-content-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 300px; 
+  gap: 100px;
   max-width: 1000px;
   width: 100%;
-  margin: bottom 5px; 
+  margin: 0 auto;
   margin-bottom: 5px; /* Reduced from 60px to make it closer */
 }
 
@@ -345,7 +345,7 @@ header {
   backdrop-filter: blur(10px);
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   padding: 30px 0;
-  margin-top: 5px; /* Added small margin from content above */
+  margin-top: 10px; /* Added small margin from content above */
 }
 
 .bottom-content {
