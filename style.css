@@ -286,7 +286,6 @@ header {
 
 /* Overlay untuk membuat teks lebih terbaca */
 .hero-overlay {
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
