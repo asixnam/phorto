@@ -339,11 +339,14 @@ header {
   bottom: 120px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 10; /* Tambahkan z-index */
 }
 
 .hero-left,
 .hero-right {
   color: #000000;
+  position: relative; /* Tambahkan ini */
+  z-index: 1; /* Tambahkan ini */
 }
 
 .hero-description {
@@ -397,24 +400,6 @@ header {
   border-radius: 8px;
 }
 
-/* Text Grid di atas rectangle */
-/* .social-icons::after {
-  content: 'Feed Design    Logo Design    PhotoGraph    Website';
-  position: absolute;
-  bottom: calc(100% + 2cm);
-  left: 50%;
-  transform: translateX(-50%);
-  color: #000000;
-  font-size: 0.75rem;
-  font-weight: 500;
-  white-space: nowrap;
-  letter-spacing: 0.5px;
-  text-align: center;
-  width: 280px;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 10px;
-} */
 
 .social-icons a {
   width: 45px;
@@ -480,9 +465,81 @@ header {
     font-size: 4rem;
   }
   
+ /* Tablet Portrait (600px - 767px) */
+@media (max-width: 767px) {
   .hero-content-grid {
-    gap: 60px;
+    grid-template-columns: 1fr; /* PERBAIKAN: 1fr saja untuk 1 kolom */
+    gap: 40px;
+    padding: 0 20px;
+    bottom: 200px;
+    position: absolute;
+     left: 50%;
+    transform: translateX(-50%);
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.15)
   }
+}
+
+/* Mobile Besar (480px - 599px) */
+@media (max-width: 599px) {
+  .hero-content-grid {
+    grid-template-columns: 1fr; /* Tambahkan ini */
+    gap: 35px;
+    padding: 0 20px;
+    bottom: 200px;
+    position: absolute;
+   left: 50%; 
+    transform: translateX(-50%);
+    
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.15)
+  }
+}
+
+/* Mobile Kecil (< 480px) */
+@media (max-width: 479px) {
+  .hero-content-grid {
+    grid-template-columns: 1fr; /* Tambahkan ini */
+    gap: 30px;
+    padding: 0 15px;
+    bottom: 200px;
+    position: absolute;
+    left: 50%; 
+    transform: translateX(-50%);
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.15)
+  }
+}
+
+/* Mobile Extra Kecil (< 360px) */
+@media (max-width: 359px) {
+  .hero-content-grid {
+    grid-template-columns: 1fr; /* Tambahkan ini */
+    gap: 25px;
+    padding: 0 12px;
+    bottom: 200px;
+    position: absolute;
+    left: 50%; 
+    transform: translateX(-50%);
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.15)
+  }
+}
   
   .hero-stats {
     gap: 35px;
