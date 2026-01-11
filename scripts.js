@@ -89,8 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // Update button states
-    prevBtn.disabled = currentIndex === 0;
-    nextBtn.disabled = currentIndex === cards.length - 1;
+    // prevBtn.disabled = currentIndex === 0;
+    // nextBtn.disabled = currentIndex === cards.length - 1;
   }
   
   function goToSlide(index) {
