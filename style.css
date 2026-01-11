@@ -496,7 +496,7 @@ header {
 }
 
 .carousel-btn:disabled {
-  background: #d1d5db;
+  background: #000000;
   cursor: not-allowed;
   opacity: 0.5;
 }
@@ -786,7 +786,7 @@ header {
   left: 0;
   right: 0;
   width: 100%;
-  background: #000000;
+  background: #ff9100;
   color: #ffffff;
   padding: 22px 0;
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
