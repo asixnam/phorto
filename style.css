@@ -521,7 +521,7 @@ header {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: #d1d5db;
+  background: #000000;
   cursor: pointer;
   transition: all 0.3s;
   border: none;
