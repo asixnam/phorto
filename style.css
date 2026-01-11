@@ -459,7 +459,7 @@ header {
 .service-card h3 {
   font-size: 1.8rem;
   margin-bottom: 20px;
-  color: #10b981;
+  color: #ff9100;
 }
 
 .service-card p {
@@ -476,7 +476,7 @@ header {
   width: 45px;
   height: 45px;
   border: none;
-  background: #10b981;
+  background: #ff9100;
   color: white;
   border-radius: 50%;
   cursor: pointer;
@@ -486,13 +486,13 @@ header {
   justify-content: center;
   transition: all 0.3s;
   z-index: 10;
-  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 15px #ff9100;
 }
 
 .carousel-btn:hover:not(:disabled) {
-  background: #059669;
+  background: #ff9100;
   transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 6px 20px rgba(253, 152, 0, 0.842);
 }
 
 .carousel-btn:disabled {
@@ -533,7 +533,7 @@ header {
 }
 
 .carousel-dot.active {
-  background: #10b981;
+  background: #ff9100;
   width: 30px;
   border-radius: 6px;
 }
@@ -554,9 +554,9 @@ header {
 
 .tab-button {
   padding: 12px 30px;
-  border: 2px solid #10b981;
+  border: 2px solid #ff9100;
   background: white;
-  color: #10b981;
+  color: #ff9100;
   cursor: pointer;
   border-radius: 25px;
   font-size: 1rem;
@@ -569,7 +569,7 @@ header {
 }
 
 .tab-button.active {
-  background: #10b981;
+  background: #ff9100;
   color: white;
 }
 
@@ -615,7 +615,7 @@ header {
 
 .resume-item span {
   display: block;
-  color: #10b981;
+  color: #ff9100;
   font-weight: 600;
   margin-bottom: 5px;
   font-size: 0.95rem;
@@ -764,7 +764,7 @@ header {
 .btn-primary {
   display: inline-block;
   padding: 15px 40px;
-  background: linear-gradient(135deg, #10b981, #059669);
+  background: linear-gradient(135deg, #ff9100, #ff9100);
   color: white;
   text-decoration: none;
   border-radius: 50px;
@@ -777,7 +777,7 @@ header {
 
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 10px 25px rgb(219, 124, 0);
 }
 
 /* Footer */
@@ -790,7 +790,7 @@ header {
   color: #ffffff;
   padding: 22px 0;
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-  border-top: 1px solid rgba(16, 185, 129, 0.1);
+  border-top: 1px solid rgba(185, 126, 16, 0.1);
 }
 
 .site-footer .container {
