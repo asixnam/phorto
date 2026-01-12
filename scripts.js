@@ -7,8 +7,44 @@ function loadHeader() {
     .then(html => {
       headerContainer.innerHTML = html;
       initHamburgerMenu();
+      initDarkModeToggle();
     })
     .catch(error => console.error('Error loading header:', error));
+}
+
+// Initialize Dark Mode Toggle
+function initDarkModeToggle() {
+  const toggle = document.getElementById('darkModeToggle');
+  const sunIcon = document.querySelector('.sun-icon');
+  const moonIcon = document.querySelector('.moon-icon');
+  
+  if (!toggle) return;
+  
+  // Check for saved theme preference or default to light mode
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+    if (sunIcon) sunIcon.style.display = 'none';
+    if (moonIcon) moonIcon.style.display = 'block';
+  }
+  
+  toggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    
+    // Toggle icon visibility
+    if (sunIcon && moonIcon) {
+      if (isDarkMode) {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      } else {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      }
+    }
+  });
 }
 
 // Initialize Hamburger Menu
