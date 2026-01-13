@@ -9,7 +9,7 @@
   --bg-primary: #f8f9fa;
   --bg-secondary: #ffffff;
   --text-primary: #ffae00;
-  --text-secondary: #ffae00;
+  --text-secondary: #000000;
   --border-color: #e9ecef;
   --shadow-color: rgba(0, 0, 0, 0.05);
   --shadow-dark: rgba(0, 0, 0, 0.15);
@@ -23,7 +23,7 @@ body.dark-mode {
   --bg-primary: #1a1a1a;
   --bg-secondary: #000000;
   --text-primary: #ffae00;
-  --text-secondary: #ffae00;
+  --text-secondary: #ffffff;
   --border-color: #404040;
   --shadow-color: rgba(0, 0, 0, 0.3);
   --shadow-dark: rgba(0, 0, 0, 0.5);
