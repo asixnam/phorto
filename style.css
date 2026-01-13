@@ -8,8 +8,8 @@
 :root {
   --bg-primary: #f8f9fa;
   --bg-secondary: #ffffff;
-  --text-primary: #333;
-  --text-secondary: #666;
+  --text-primary: #ffae00;
+  --text-secondary: #ffae00;
   --border-color: #e9ecef;
   --shadow-color: rgba(0, 0, 0, 0.05);
   --shadow-dark: rgba(0, 0, 0, 0.15);
@@ -21,9 +21,9 @@
 
 body.dark-mode {
   --bg-primary: #1a1a1a;
-  --bg-secondary: #2d2d2d;
-  --text-primary: #e0e0e0;
-  --text-secondary: #b0b0b0;
+  --bg-secondary: #000000;
+  --text-primary: #ffae00;
+  --text-secondary: #ffae00;
   --border-color: #404040;
   --shadow-color: rgba(0, 0, 0, 0.3);
   --shadow-dark: rgba(0, 0, 0, 0.5);
@@ -34,7 +34,7 @@ body.dark-mode {
 }
 
 body {
-  font-family: 'Montserrat', ;
+  font-family: 'Montserrat', sans-serif;
   line-height: 1.6;
   color: var(--text-primary);
   background-color: var(--bg-primary);
