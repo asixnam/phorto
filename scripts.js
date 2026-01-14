@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Carousel for "What I Do" Section
+// Smooth Carousel for "What I Do" Section with Infinite Loop
 document.addEventListener('DOMContentLoaded', () => {
   const carousel = document.querySelector('.services-carousel');
   const prevBtn = document.querySelector('.carousel-btn.prev');
@@ -109,53 +109,109 @@ document.addEventListener('DOMContentLoaded', () => {
   
   if (!carousel || !prevBtn || !nextBtn) return;
   
-  const cards = carousel.querySelectorAll('.service-card');
+  const cards = Array.from(carousel.querySelectorAll('.service-card'));
+  const totalCards = cards.length;
   let currentIndex = 0;
   let autoSlideInterval;
+  let isTransitioning = false;
   
-  function updateCarousel() {
-    const cardWidth = cards[0].offsetWidth;
-    const gap = 20; // Gap between cards
-    const offset = -(currentIndex * (cardWidth + gap));
-    carousel.style.transform = `translateX(${offset}px)`;
-    
-    // Update dots
-    dots.forEach((dot, index) => {
-      dot.classList.toggle('active', index === currentIndex);
-    });
-    
-    // Update button states
-    // prevBtn.disabled = currentIndex === 0;
-    // nextBtn.disabled = currentIndex === cards.length - 1;
+  // Clone first and last cards for infinite loop effect
+  const firstClone = cards[0].cloneNode(true);
+  const lastClone = cards[totalCards - 1].cloneNode(true);
+  
+  carousel.appendChild(firstClone);
+  carousel.insertBefore(lastClone, cards[0]);
+  
+  // Update cards array to include clones
+  const allCards = carousel.querySelectorAll('.service-card');
+  currentIndex = 1; // Start at first real card (after last clone)
+  
+  function getCardWidth() {
+    return allCards[0].offsetWidth;
   }
   
-  function goToSlide(index) {
-    currentIndex = Math.max(0, Math.min(index, cards.length - 1));
-    updateCarousel();
+  function updateCarousel(smooth = true) {
+    const cardWidth = getCardWidth();
+    const offset = -(currentIndex * cardWidth);
+    
+    if (smooth) {
+      carousel.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+    } else {
+      carousel.style.transition = 'none';
+    }
+    
+    carousel.style.transform = `translateX(${offset}px)`;
+    
+    // Update dots (only for real cards, not clones)
+    const realIndex = ((currentIndex - 1) % totalCards + totalCards) % totalCards;
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === realIndex);
+    });
+  }
+  
+  function goToSlide(index, smooth = true) {
+    if (isTransitioning) return;
+    isTransitioning = true;
+    
+    currentIndex = index;
+    updateCarousel(smooth);
+    
+    setTimeout(() => {
+      isTransitioning = false;
+    }, 600);
+    
     resetAutoSlide();
   }
   
   function nextSlide() {
-    if (currentIndex < cards.length - 1) {
-      goToSlide(currentIndex + 1);
-    } else {
-      goToSlide(0); // Loop back to start
+    if (isTransitioning) return;
+    
+    currentIndex++;
+    updateCarousel(true);
+    
+    // Check if we're at the first clone (after last real card)
+    if (currentIndex === totalCards + 1) {
+      setTimeout(() => {
+        currentIndex = 1; // Jump to first real card
+        updateCarousel(false);
+      }, 600);
     }
+    
+    isTransitioning = true;
+    setTimeout(() => {
+      isTransitioning = false;
+    }, 600);
+    
+    resetAutoSlide();
   }
   
   function prevSlide() {
-    if (currentIndex > 0) {
-      goToSlide(currentIndex - 1);
-    } else {
-      goToSlide(cards.length - 1); // Loop to end
+    if (isTransitioning) return;
+    
+    currentIndex--;
+    updateCarousel(true);
+    
+    // Check if we're at the last clone (before first real card)
+    if (currentIndex === 0) {
+      setTimeout(() => {
+        currentIndex = totalCards; // Jump to last real card
+        updateCarousel(false);
+      }, 600);
     }
+    
+    isTransitioning = true;
+    setTimeout(() => {
+      isTransitioning = false;
+    }, 600);
+    
+    resetAutoSlide();
   }
   
   // Auto slide functionality
   function startAutoSlide() {
     autoSlideInterval = setInterval(() => {
       nextSlide();
-    }, 4000); // Change slide every 4 seconds
+    }, 4500); // Change slide every 4.5 seconds
   }
   
   function stopAutoSlide() {
@@ -173,7 +229,10 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Dot navigation
   dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => goToSlide(index));
+    dot.addEventListener('click', () => {
+      if (isTransitioning) return;
+      goToSlide(index + 1, true); // +1 because of the cloned card at start
+    });
   });
   
   // Pause auto-slide on hover
@@ -186,23 +245,27 @@ document.addEventListener('DOMContentLoaded', () => {
   // Touch/Swipe support for mobile
   let touchStartX = 0;
   let touchEndX = 0;
+  let touchStartTime = 0;
   
   carousel.addEventListener('touchstart', (e) => {
     touchStartX = e.changedTouches[0].screenX;
+    touchStartTime = Date.now();
     stopAutoSlide();
-  });
+  }, { passive: true });
   
   carousel.addEventListener('touchend', (e) => {
     touchEndX = e.changedTouches[0].screenX;
     handleSwipe();
     startAutoSlide();
-  });
+  }, { passive: true });
   
   function handleSwipe() {
-    const swipeThreshold = 50;
+    const swipeThreshold = 75;
     const diff = touchStartX - touchEndX;
+    const timeDiff = Date.now() - touchStartTime;
     
-    if (Math.abs(diff) > swipeThreshold) {
+    // Only register as swipe if it's fast enough (less than 300ms)
+    if (Math.abs(diff) > swipeThreshold && timeDiff < 300) {
       if (diff > 0) {
         nextSlide();
       } else {
@@ -218,11 +281,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
   // Initialize
-  updateCarousel();
+  updateCarousel(false);
   startAutoSlide();
   
-  // Update on window resize
-  window.addEventListener('resize', updateCarousel);
+  // Update on window resize with debounce
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      updateCarousel(false);
+    }, 250);
+  })
 
 // Portfolio Filter System
 document.addEventListener('DOMContentLoaded', function() {
