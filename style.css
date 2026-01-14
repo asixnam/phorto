@@ -28,7 +28,7 @@ body.dark-mode {
   --shadow-color: rgba(0, 0, 0, 0.664);
   --shadow-dark: rgba(0, 0, 0, 0.5);
   --header-bg: rgba(0, 0, 0, 0.795);
-  --menu-wrapper-border: #ff880021;
+  --menu-wrapper-border: #ff880017;
   --overlay-bg: rgba(0, 0, 0, 0.1);
   --overlay-border: rgba(212, 212, 212, 0.089);
 }
