@@ -12,6 +12,20 @@ function loadHeader() {
     .catch(error => console.error('Error loading header:', error));
 }
 
+// Load Footer from external file
+function loadFooter() {
+  const footerContainer = document.getElementById('footer-container');
+  
+  if (footerContainer) {
+    fetch('footer.html')
+      .then(response => response.text())
+      .then(html => {
+        footerContainer.innerHTML = html;
+      })
+      .catch(error => console.error('Error loading footer:', error));
+  }
+}
+
 // Initialize Dark Mode Toggle
 function initDarkModeToggle() {
   const toggle = document.getElementById('darkModeToggle');
@@ -77,9 +91,10 @@ function initHamburgerMenu() {
   }
 }
 
-// Load header on DOM ready
+// Load header and footer on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   loadHeader();
+  loadFooter();
 });
 
 // Tab switching logic for Resume Section
