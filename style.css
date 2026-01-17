@@ -1089,90 +1089,34 @@ header {
 /* Mobile Optimization - Tablet */
 @media (max-width: 768px) {
     .footer-content {
-        grid-template-columns: 1fr;
-        gap: 25px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px 20px;
         padding: 0 20px;
     }
 
     .site-footer {
-        padding: 35px 0 15px;
+        padding: 40px 0 15px;
     }
 
     .footer-section {
-        text-align: center;
-        padding: 0;
+        text-align: left;
     }
 
     .footer-section h3 {
         font-size: 18px;
-        margin-bottom: 12px;
+        margin-bottom: 15px;
         font-weight: 600;
     }
 
     .footer-section h4 {
         font-size: 15px;
-        margin-bottom: 10px;
-        font-weight: 500;
+        margin-bottom: 12px;
     }
 
     .contact-item {
         font-size: 13px;
-        justify-content: center;
-        margin-bottom: 8px;
-        line-height: 1.5;
-    }
-
-    .footer-links {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .social-links {
-        justify-content: center;
-        gap: 15px;
-        margin-top: 10px;
-    }
-
-    /* Hide elemen yang tidak penting di mobile */
-    .footer-description {
-        display: none;
-    }
-}
-
-/* Mobile Optimization - Smartphone */
-@media (max-width: 480px) {
-    .site-footer {
-        padding: 30px 0 12px;
-    }
-
-    .footer-content {
-        gap: 20px;
-        padding: 0 15px;
-    }
-
-    .footer-section {
-        margin-bottom: 0;
-    }
-
-    .footer-section h3 {
-        font-size: 16px;
         margin-bottom: 10px;
-    }
-
-    .footer-section h4 {
-        font-size: 14px;
-        margin-bottom: 8px;
-    }
-
-    .contact-item {
-        font-size: 12px;
-        margin-bottom: 6px;
-    }
-
-    .contact-item span {
-        font-size: 12px;
+        line-height: 1.5;
     }
 
     .contact-item i,
@@ -1181,67 +1125,94 @@ header {
         margin-right: 6px;
     }
 
-    /* Social icons lebih compact */
+    /* Jika ada section yang ingin full width */
+    .footer-section.full-width {
+        grid-column: 1 / -1;
+        text-align: center;
+        margin-top: 10px;
+    }
+
     .social-links {
-        gap: 12px;
-    }
-
-    .social-links a {
-        width: 32px;
-        height: 32px;
-        font-size: 14px;
-    }
-
-    /* Copyright section minimal */
-    .footer-bottom {
-        font-size: 11px;
-        padding: 12px 15px;
-        margin-top: 20px;
-    }
-
-    /* Sembunyikan elemen sekunder */
-    .footer-description,
-    .footer-newsletter,
-    .footer-extra-links {
-        display: none;
+        justify-content: center;
+        gap: 15px;
     }
 }
 
-/* Extra small devices - Super minimal */
-@media (max-width: 360px) {
+/* Mobile Optimization - Smartphone */
+@media (max-width: 480px) {
     .site-footer {
-        padding: 25px 0 10px;
+        padding: 35px 0 12px;
     }
 
     .footer-content {
-        gap: 18px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px 15px;
+        padding: 0 15px;
+    }
+
+    .footer-section h3 {
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+
+    .footer-section h4 {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .contact-item {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+
+    .contact-item span {
+        font-size: 12px;
+        display: block;
+    }
+
+    .contact-item i,
+    .contact-item svg {
+        font-size: 13px;
+        margin-right: 5px;
+    }
+
+    /* Link items lebih compact */
+    .footer-links a {
+        font-size: 12px;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    .footer-bottom {
+        font-size: 11px;
+        padding: 12px;
+        margin-top: 20px;
+    }
+}
+
+/* Extra small devices - tetap 2 kolom tapi lebih compact */
+@media (max-width: 360px) {
+    .footer-content {
+        gap: 20px 10px;
         padding: 0 12px;
     }
 
     .footer-section h3 {
         font-size: 15px;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
     }
 
     .footer-section h4 {
         font-size: 13px;
-        margin-bottom: 6px;
     }
 
     .contact-item {
         font-size: 11px;
-        margin-bottom: 5px;
+        margin-bottom: 6px;
     }
 
-    .footer-bottom {
-        font-size: 10px;
-        padding: 10px 12px;
-        margin-top: 15px;
-    }
-
-    /* Batasi jumlah contact items yang ditampilkan */
-    .contact-item:nth-child(n+4) {
-        display: none;
+    .footer-links a {
+        font-size: 11px;
     }
 }
 
