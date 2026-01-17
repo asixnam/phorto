@@ -1090,117 +1090,158 @@ header {
 @media (max-width: 768px) {
     .footer-content {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 25px;
         padding: 0 20px;
     }
 
     .site-footer {
-        padding: 50px 0 20px;
+        padding: 35px 0 15px;
     }
 
     .footer-section {
         text-align: center;
-        padding: 0 10px;
+        padding: 0;
     }
 
     .footer-section h3 {
-        font-size: 22px;
-        margin-bottom: 20px;
+        font-size: 18px;
+        margin-bottom: 12px;
+        font-weight: 600;
     }
 
     .footer-section h4 {
-        font-size: 17px;
-        margin-bottom: 15px;
+        font-size: 15px;
+        margin-bottom: 10px;
+        font-weight: 500;
     }
 
     .contact-item {
-        font-size: 14px;
+        font-size: 13px;
         justify-content: center;
-        margin-bottom: 12px;
+        margin-bottom: 8px;
+        line-height: 1.5;
     }
 
-    /* Jika ada links/menu */
     .footer-links {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
     }
 
-    /* Social media icons di tengah */
     .social-links {
         justify-content: center;
-        margin-top: 15px;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    /* Hide elemen yang tidak penting di mobile */
+    .footer-description {
+        display: none;
     }
 }
 
 /* Mobile Optimization - Smartphone */
 @media (max-width: 480px) {
     .site-footer {
-        padding: 40px 0 15px;
+        padding: 30px 0 12px;
     }
 
     .footer-content {
-        gap: 35px;
+        gap: 20px;
         padding: 0 15px;
     }
 
     .footer-section {
-        padding: 0 5px;
+        margin-bottom: 0;
     }
 
     .footer-section h3 {
-        font-size: 20px;
-        margin-bottom: 18px;
-        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: 10px;
     }
 
     .footer-section h4 {
-        font-size: 16px;
-        margin-bottom: 12px;
+        font-size: 14px;
+        margin-bottom: 8px;
     }
 
     .contact-item {
-        font-size: 13px;
-        margin-bottom: 10px;
-        line-height: 1.6;
+        font-size: 12px;
+        margin-bottom: 6px;
     }
 
     .contact-item span {
-        font-size: 13px;
+        font-size: 12px;
     }
 
     .contact-item i,
     .contact-item svg {
-        font-size: 16px;
-        margin-right: 8px;
+        font-size: 14px;
+        margin-right: 6px;
     }
 
-    /* Copyright/bottom text lebih kecil */
+    /* Social icons lebih compact */
+    .social-links {
+        gap: 12px;
+    }
+
+    .social-links a {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+
+    /* Copyright section minimal */
     .footer-bottom {
-        font-size: 12px;
-        padding: 15px;
-        margin-top: 30px;
+        font-size: 11px;
+        padding: 12px 15px;
+        margin-top: 20px;
+    }
+
+    /* Sembunyikan elemen sekunder */
+    .footer-description,
+    .footer-newsletter,
+    .footer-extra-links {
+        display: none;
     }
 }
 
-/* Extra small devices */
+/* Extra small devices - Super minimal */
 @media (max-width: 360px) {
+    .site-footer {
+        padding: 25px 0 10px;
+    }
+
     .footer-content {
-        gap: 30px;
+        gap: 18px;
         padding: 0 12px;
     }
 
     .footer-section h3 {
-        font-size: 18px;
+        font-size: 15px;
+        margin-bottom: 8px;
     }
 
     .footer-section h4 {
-        font-size: 15px;
+        font-size: 13px;
+        margin-bottom: 6px;
     }
 
     .contact-item {
-        font-size: 12px;
+        font-size: 11px;
+        margin-bottom: 5px;
+    }
+
+    .footer-bottom {
+        font-size: 10px;
+        padding: 10px 12px;
+        margin-top: 15px;
+    }
+
+    /* Batasi jumlah contact items yang ditampilkan */
+    .contact-item:nth-child(n+4) {
+        display: none;
     }
 }
 
