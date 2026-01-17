@@ -1086,36 +1086,109 @@ header {
    RESPONSIVE DESIGN
    ======================================== */
 
+/* Mobile Optimization - Tablet */
 @media (max-width: 768px) {
     .footer-content {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 40px;
+        padding: 0 20px;
     }
 
     .site-footer {
-        padding: 40px 0 0;
+        padding: 50px 0 20px;
+    }
+
+    .footer-section {
+        text-align: center;
+        padding: 0 10px;
+    }
+
+    .footer-section h3 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .footer-section h4 {
+        font-size: 17px;
+        margin-bottom: 15px;
+    }
+
+    .contact-item {
+        font-size: 14px;
+        justify-content: center;
+        margin-bottom: 12px;
+    }
+
+    /* Jika ada links/menu */
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Social media icons di tengah */
+    .social-links {
+        justify-content: center;
+        margin-top: 15px;
+    }
+}
+
+/* Mobile Optimization - Smartphone */
+@media (max-width: 480px) {
+    .site-footer {
+        padding: 40px 0 15px;
+    }
+
+    .footer-content {
+        gap: 35px;
+        padding: 0 15px;
+    }
+
+    .footer-section {
+        padding: 0 5px;
     }
 
     .footer-section h3 {
         font-size: 20px;
+        margin-bottom: 18px;
+        font-weight: 600;
     }
 
     .footer-section h4 {
         font-size: 16px;
+        margin-bottom: 12px;
     }
 
     .contact-item {
         font-size: 13px;
+        margin-bottom: 10px;
+        line-height: 1.6;
+    }
+
+    .contact-item span {
+        font-size: 13px;
+    }
+
+    .contact-item i,
+    .contact-item svg {
+        font-size: 16px;
+        margin-right: 8px;
+    }
+
+    /* Copyright/bottom text lebih kecil */
+    .footer-bottom {
+        font-size: 12px;
+        padding: 15px;
+        margin-top: 30px;
     }
 }
 
-@media (max-width: 480px) {
-    .site-footer {
-        padding: 30px 0 0;
-    }
-
+/* Extra small devices */
+@media (max-width: 360px) {
     .footer-content {
-        gap: 25px;
+        gap: 30px;
+        padding: 0 12px;
     }
 
     .footer-section h3 {
@@ -1126,7 +1199,7 @@ header {
         font-size: 15px;
     }
 
-    .contact-item span {
+    .contact-item {
         font-size: 12px;
     }
 }
