@@ -1101,13 +1101,13 @@ header {
     }
 
     .footer-section.contact {
-        grid-column: 1 / -1; /* Span across both columns */
+        grid-column: 1 / 0; /* Span across both columns */
         text-align: center;
         margin-top: 10px;
     }
 
     .footer-section.contact .contact-item {
-        justify-content: center;
+        justify-content: left;
     }
 
     .site-footer {
