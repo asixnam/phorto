@@ -27,7 +27,7 @@ body.dark-mode {
   --border-color: #000000;
   --shadow-color: rgba(0, 0, 0, 0.664);
   --shadow-dark: rgba(0, 0, 0, 0.5);
-  --header-bg: rgba(0, 0, 0, 0.795);
+  --header-bg: rgba(0, 13, 19, 0.795);
   --menu-wrapper-border: #ff880017;
   --overlay-bg: rgba(0, 0, 0, 0.1);
   --overlay-border: rgba(212, 212, 212, 0.089);
@@ -350,7 +350,7 @@ header {
   font-size: 5rem;
   font-weight: 900;
   line-height: 1;
-  background: linear-gradient(to right, #ffc400, #ffae00);
+  background: linear-gradient(to right, #ffc400, #002231);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -537,10 +537,14 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  gap: 8px !important;
   min-height: 80px;
   margin-bottom: 30px;
   flex-wrap: wrap;
+}
+
+.icon-container img {
+  margin: 0 1px;
 }
 
 .service-icon {
@@ -555,7 +559,7 @@ header {
 }
 
 .service-card:hover .service-icon {
-  transform: scale(1.1);
+  transform: scale(1.0);
 }
 
 .service-card h3 {
