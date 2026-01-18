@@ -997,6 +997,21 @@ header {
     margin-bottom: 40px;
 }
 
+/* Mobile Layout */
+@media (max-width: 768px) {
+    .footer-content {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .footer-top-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+}
+
 /* Footer Section Headings */
 .footer-section h3 {
     font-size: 24px;
