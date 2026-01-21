@@ -485,7 +485,7 @@ header {
   margin-top: 5px;
 }
 
-/* Services Section - Carousel Style */
+/* Services Section - Skills Grid */
 .services {
   padding: 100px 20px;
   background: var(--bg-primary);
@@ -501,81 +501,68 @@ header {
   letter-spacing: -0.5px;
 }
 
-.services-carousel-container {
-  position: relative;
-  max-width: 650px;
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 40px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 0 70px;
+  padding: 0 20px;
 }
 
-.services-carousel-wrapper {
-  overflow: hidden;
-  border-radius: 24px;
-}
-
-.services-carousel {
+.skill-item {
   display: flex;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.service-card {
-  min-width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  text-align: center;
+  padding: 30px 20px;
   background: var(--bg-secondary);
-  padding: 60px 50px;
   border-radius: 24px;
   box-shadow: 0 10px 40px var(--shadow-color);
-  text-align: center;
   transition: all 0.3s ease;
 }
 
-.service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 50px var(--shadow-color);
+.skill-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 50px var(--shadow-dark);
 }
 
-.icon-container {
+.skill-icon {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 8px !important;
-  min-height: 80px;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255, 174, 0, 0.1), rgba(255, 145, 0, 0.1));
+  transition: all 0.3s ease;
 }
 
-.icon-container img {
-  margin: 0 1px;
+.skill-item:hover .skill-icon {
+  transform: scale(1.1) rotate(5deg);
+  background: linear-gradient(135deg, rgba(255, 174, 0, 0.2), rgba(255, 145, 0, 0.2));
 }
 
-.service-icon {
-  width: 60px;
-  height: 60px;
+.skill-icon img {
+  width: 70px;
+  height: 70px;
   object-fit: contain;
-  transition: transform 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: filter 0.3s ease;
 }
 
-.service-card:hover .service-icon {
-  transform: scale(1.0);
+.skill-item:hover .skill-icon img {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
-.service-card h3 {
-  font-size: 1.9rem;
-  margin-bottom: 20px;
-  color: #ff9100;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-}
-
-.service-card p {
-  color: var(--text-secondary);
-  line-height: 1.8;
+.skill-item p {
   font-size: 1.05rem;
-  max-width: 500px;
-  margin: 0 auto;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0;
+  letter-spacing: 0.3px;
 }
 
 /* Carousel Controls */
@@ -669,42 +656,53 @@ header {
     padding: 0 50px;
   }
   
-  .service-card {
-    padding: 40px 30px;
-  }
   
-  .carousel-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 1.5rem;
+  .skills-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
   }
-  
-  .icon-container {
-    min-height: 60px;
-    margin-bottom: 20px;
+
+  .skill-item {
+    padding: 25px 15px;
   }
-  
-  .service-icon {
-    width: 50px;
-    height: 50px;
+
+  .skill-icon {
+    width: 90px;
+    height: 90px;
+  }
+
+  .skill-icon img {
+    width: 65px;
+    height: 65px;
+  }
+
+  .skill-item p {
+    font-size: 1rem;
   }
 }
 
 @media (max-width: 480px) {
-  .services-carousel-container {
-    padding: 0 40px;
+  .skills-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
   }
-  
-  .service-card {
-    padding: 35px 25px;
+
+  .skill-item {
+    padding: 20px 10px;
   }
-  
-  .service-card h3 {
-    font-size: 1.5rem;
+
+  .skill-icon {
+    width: 80px;
+    height: 80px;
   }
-  
-  .service-card p {
-    font-size: 0.95rem;
+
+  .skill-icon img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .skill-item p {
+    font-size: 0.9rem;
   }
 }
 
@@ -1620,6 +1618,25 @@ header {
 
   .service-card {
     padding: 40px 30px;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .skill-item {
+    padding: 20px 10px;
+  }
+
+  .skill-icon {
+    width: 80px;
+    height: 80px;
+  }
+
+  .skill-icon img {
+    width: 60px;
+    height: 60px;
   }
 
   .service-icon {
