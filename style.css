@@ -503,9 +503,9 @@ header {
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(6, 1fr);
   gap: 40px;
-  max-width: 1000px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -518,15 +518,15 @@ header {
   gap: 15px;
   text-align: center;
   padding: 30px 20px;
-  background: var(--bg-secondary);
+  background: transparent;
   border-radius: 15px;
-  box-shadow: 0 10px 40px var(--shadow-color);
+  box-shadow: none;
   transition: all 0.3s ease;
 }
 
 .skill-item:hover {
   transform: translateY(-8px);
-  box-shadow: 0 15px 50px var(--shadow-dark);
+  box-shadow: none;
 }
 
 .skill-icon {
@@ -536,13 +536,13 @@ header {
   width: 100px;
   height: 100px;
   border-radius: 16px;
-  /* background: linear-gradient(135deg, rgba(255, 174, 0, 0.1), rgba(255, 145, 0, 0.1)); */
+  background: transparent;
   transition: all 0.3s ease;
 }
 
 .skill-item:hover .skill-icon {
   transform: scale(1.1) rotate(5deg);
-  /* background: linear-gradient(135deg, rgba(255, 174, 0, 0.2), rgba(255, 145, 0, 0.2)); */
+  background: transparent;
 }
 
 .skill-icon img {
