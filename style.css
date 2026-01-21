@@ -1375,7 +1375,12 @@ header {
   }
 
   .hamburger {
-    display: flex;
+    display: none;
+  }
+
+  /* Always show mobile menu on small viewports (no hamburger) */
+  .mobile-menu {
+    display: flex !important;
   }
 
   .user-icon-btn {

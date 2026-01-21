@@ -81,8 +81,11 @@ function initHamburgerMenu() {
 
     mobileMenuLinks.forEach(link => {
       link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        mobileMenu.classList.remove('active');
+        // Don't close the mobile menu on small screens when user clicks links.
+        if (window.innerWidth > 768) {
+          hamburger.classList.remove('active');
+          mobileMenu.classList.remove('active');
+        }
       });
     });
 
