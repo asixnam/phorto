@@ -1375,7 +1375,7 @@ header {
   }
 
   .hamburger {
-    display: none;
+    display: flex;
   }
 
   .user-icon-btn {
@@ -2214,5 +2214,12 @@ header {
   
   .cta-guarantee {
     gap: 0.8rem;
+  }
+}
+
+/* Ensure mobile menu never shows on desktop even if `.active` is applied */
+@media (min-width: 769px) {
+  .mobile-menu {
+    display: none !important;
   }
 }

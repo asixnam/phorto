@@ -67,9 +67,8 @@ function initHamburgerMenu() {
   const mobileMenu = document.getElementById('mobileMenu');
   
   // Mobile menu is now always visible at bottom, no hamburger needed
-  if (mobileMenu) {
-    mobileMenu.classList.add('active');
-  }
+  // Don't force-open the mobile menu on all viewports; let hamburger control it
+  // (this keeps the menu hidden on desktop even if JS runs)
 
   if (hamburger && mobileMenu) {
     const mobileMenuLinks = mobileMenu.querySelectorAll('a');
@@ -87,8 +86,10 @@ function initHamburgerMenu() {
       });
     });
 
+    // Only close menu on outside click for desktop sizes. On mobile we don't
+    // close the menu when user clicks inside page content (per requirement).
     document.addEventListener('click', (e) => {
-      if (!e.target.closest('header')) {
+      if (window.innerWidth > 768 && !e.target.closest('header')) {
         hamburger.classList.remove('active');
         mobileMenu.classList.remove('active');
       }
