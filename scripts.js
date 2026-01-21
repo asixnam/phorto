@@ -66,6 +66,11 @@ function initHamburgerMenu() {
   const hamburger = document.getElementById('hamburgerBtn');
   const mobileMenu = document.getElementById('mobileMenu');
   
+  // Mobile menu is now always visible at bottom, no hamburger needed
+  if (mobileMenu) {
+    mobileMenu.classList.add('active');
+  }
+
   if (hamburger && mobileMenu) {
     const mobileMenuLinks = mobileMenu.querySelectorAll('a');
     

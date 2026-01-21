@@ -245,20 +245,34 @@ header {
 /* Mobile Menu */
 .mobile-menu {
   display: none;
-  position: absolute;
-  top: calc(100% + 1rem);
-  right: 1rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background: var(--bg-secondary);
   list-style: none;
-  border-radius: 20px;
-  padding: 0.5rem 0;
+  border-radius: 20px 20px 0 0;
+  padding: 1rem 0;
   margin: 0;
-  flex-direction: column;
+  flex-direction: row;
   overflow: hidden;
-  box-shadow: 0 4px 12px var(--shadow-dark);
-  animation: slideDown 0.3s ease-in-out;
-  min-width: 200px;
+  box-shadow: 0 -4px 12px var(--shadow-dark);
+  animation: slideUp 0.3s ease-in-out;
+  width: 100%;
+  z-index: 999;
   transition: background-color 0.3s ease;
+  border-top: 1px solid var(--border-color);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes slideDown {
@@ -274,26 +288,39 @@ header {
 
 .mobile-menu li {
   padding: 0;
+  flex: 1;
+  text-align: center;
 }
 
 .mobile-menu a {
-  display: block;
-  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 0.5rem;
   color: var(--text-primary);
   text-decoration: none;
   font-weight: 400;
-  font-size: 0.95rem;
+  font-size: 0.75rem;
   transition: all 0.2s ease;
   border-bottom: none;
+  gap: 4px;
+}
+
+.mobile-menu a i {
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
 }
 
 .mobile-menu a:hover {
   background: var(--shadow-color);
   color: #FFBF00;
+  transform: scale(1.05);
 }
 
 .mobile-menu li:not(:last-child) {
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: none;
+  border-right: 1px solid var(--border-color);
 }
 
 .mobile-menu.active {
@@ -1348,15 +1375,19 @@ header {
   }
 
   .hamburger {
-    display: flex;
+    display: none;
   }
 
-  .user-icon {
-    display: none;
+  .user-icon-btn {
+    display: flex;
   }
 
   .navbar {
     gap: 1rem;
+  }
+
+  body {
+    padding-bottom: 70px;
   }
 }
 
@@ -1367,6 +1398,20 @@ header {
 
   header {
     padding: 0.8rem 0;
+  }
+
+  .user-icon-btn {
+    width: 35px;
+    height: 35px;
+  }
+
+  .dark-mode-toggle {
+    width: 35px;
+    height: 35px;
+  }
+
+  body {
+    padding-bottom: 70px;
   }
 }
 
