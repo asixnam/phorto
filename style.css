@@ -839,24 +839,92 @@ header {
   line-height: 1.6;
 }
 
+:root {
+  --primary-color: #ff9900;
+  --primary-hover: #e68a00;
+  --bg-subtle: rgba(212, 212, 212, 0.1);
+  --text-dark: #333;
+  --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
 .portfolio-wrapper {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 60px 40px;
-  border: 2px solid rgba(255, 153, 0, 0.445);
-  border-radius: 12px;
-  background-color: rgba(212, 212, 212, 0.103);
-  box-shadow: 0 4px 6px rgba(255, 166, 0, 0.247);
-  transition: all 0.3s ease;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 80px 40px;
+  border: 1px solid rgba(255, 153, 0, 0.2);
+  border-radius: 20px;
+  background: linear-gradient(145deg, #ffffff, var(--bg-subtle));
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: var(--transition);
+  overflow: hidden;
+  position: relative;
 }
 
 .portfolio-wrapper:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(255, 153, 0, 0.15);
+  border-color: var(--primary-color);
 }
 
-.portfolio-cta {
-  text-align: center;
+.section-title {
+  font-size: 2.5rem;
+  color: var(--text-dark);
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+}
+
+/* Grid Variasi untuk Visual */
+.portfolio-preview-grid {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 40px;
+  opacity: 0.6;
+}
+
+.preview-box {
+  width: 80px;
+  height: 6px;
+  background: var(--primary-color);
+  border-radius: 10px;
+}
+
+/* Tombol CTA Utama */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 35px;
+  background-color: var(--primary-color);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 50px;
+  transition: var(--transition);
+  box-shadow: 0 4px 15px rgba(255, 153, 0, 0.3);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  padding: 16px 45px; /* Memberikan efek melebar sedikit saat hover */
+  box-shadow: 0 6px 20px rgba(255, 153, 0, 0.4);
+}
+
+.btn-primary .icon {
+  transition: transform 0.3s ease;
+}
+
+.btn-primary:hover .icon {
+  transform: translateX(5px);
 }
 
 /* Portfolio Content */
