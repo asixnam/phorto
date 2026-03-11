@@ -57,8 +57,8 @@
 
 body.dark-mode {
   /* Dark Theme Variables (Original Cyberpunk) */
-  --bg-primary: #0f172b;
-  --bg-secondary: #161e33;
+  --bg-primary: #4a003a;
+  --bg-secondary: #7d005b;
   --text-primary: #05df72;
   --text-secondary: #ffffff;
   --accent-blue: #00d1ff;
