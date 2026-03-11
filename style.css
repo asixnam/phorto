@@ -1330,14 +1330,41 @@ body::before {
   grid-template-columns: repeat(6, 1fr);
 }
 
-/* Grid for Photography - 6 columns */
+/* Grid for Photography - 3 columns */
 .grid-photo {
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 }
 
 /* Grid for Website - 3 columns */
 .grid-website {
   grid-template-columns: repeat(3, 1fr);
+}
+
+/* Responsive Grids */
+@media (max-width: 900px) {
+  .grid-instagram {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid-logo,
+  .grid-photo {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid-outdoor,
+  .grid-website {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .grid-instagram {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .grid-logo,
+  .grid-photo,
+  .grid-outdoor,
+  .grid-website {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 /* Portfolio Item - HUD Frame */
@@ -1493,11 +1520,7 @@ body::before {
   border: none;
 }
 
-.project-card:hover .project-image-wrapper img,
-.project-card:hover .project-image-wrapper iframe {
-  transform: scale(1.0);
-  /* Iframes shouldn't scale like images on hover, or maybe they should? stick to 1.0 to avoid interactions breaking */
-}
+
 
 /* Optional: class for scrollable iframe */
 .project-image-wrapper iframe.interactive {

@@ -8,6 +8,7 @@ function loadHeader() {
       headerContainer.innerHTML = html;
       initHamburgerMenu();
       initDarkModeToggle();
+      setActiveNavLink();
     })
     .catch(error => console.error('Error loading header:', error));
 }
@@ -23,6 +24,35 @@ function loadFooter() {
         footerContainer.innerHTML = html;
       })
       .catch(error => console.error('Error loading footer:', error));
+  }
+}
+
+// Set Active Navigation Link based on current URL
+function setActiveNavLink() {
+  let path = window.location.pathname;
+  let page = path.split("/").pop();
+  
+  if (page === '' || page === '/') {
+    page = 'index.html';
+  }
+
+  const navLinks = document.querySelectorAll('.nav-center-icons a, .mobile-menu a');
+  
+  navLinks.forEach(link => link.classList.remove('active'));
+
+  let found = false;
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === page) {
+      link.classList.add('active');
+      found = true;
+    }
+  });
+
+  if (!found && (!page.includes('.html') || page === 'index.html')) {
+    document.querySelectorAll('a[href="index.html"]').forEach(link => {
+      link.classList.add('active');
+    });
   }
 }
 
