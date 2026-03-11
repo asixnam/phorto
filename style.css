@@ -275,6 +275,7 @@ body::before {
 
 .progress-fill {
   height: 100%;
+  color: var(--text-primary);
   background: var(--text-primary);
   box-shadow: 0 0 10px var(--text-primary);
 }
