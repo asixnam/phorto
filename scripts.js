@@ -34,23 +34,27 @@ function initDarkModeToggle() {
 
   if (!toggle) return;
 
-  // Check for saved theme preference or default to light mode
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  if (savedTheme === 'dark') {
+  // Check for saved theme preference or default to dark mode (cyberpunk default)
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  const isDark = savedTheme === 'dark';
+  
+  if (isDark) {
     document.body.classList.add('dark-mode');
     if (sunIcon) sunIcon.style.display = 'none';
     if (moonIcon) moonIcon.style.display = 'block';
+  } else {
+    document.body.classList.remove('dark-mode');
+    if (sunIcon) sunIcon.style.display = 'block';
+    if (moonIcon) moonIcon.style.display = 'none';
   }
 
   toggle.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
+    const isDarkModeNow = document.body.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDarkModeNow ? 'dark' : 'light');
 
-    const isDarkMode = document.body.classList.contains('dark-mode');
-    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-
-    // Toggle icon visibility
     if (sunIcon && moonIcon) {
-      if (isDarkMode) {
+      if (isDarkModeNow) {
         sunIcon.style.display = 'none';
         moonIcon.style.display = 'block';
       } else {
@@ -250,7 +254,135 @@ function initDynamicProjectImages() {
   });
 }
 
+// Initialize Typewriter Effect
+function initTypewriterEffect() {
+  const elements = document.querySelectorAll('h1, h2, h3, h4, p:not(.signal-text), .section-tag, .hero-tag, .card-tag, .stat-label, .tech-tag');
+  
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        typeElement(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  elements.forEach(el => {
+    // Only apply if it doesn't have nested complex structures or is already handled
+    if (!el.classList.contains('typewriter-done')) {
+      el.classList.add('typewriter-text');
+      observer.observe(el);
+    }
+  });
+}
+
+function typeElement(element) {
+  const originalHTML = element.innerHTML;
+  const textContent = element.textContent.trim();
+  
+  // If no text, just show it
+  if (!textContent) {
+    element.classList.add('typing');
+    return;
+  }
+
+  // Clear and prepare
+  element.innerHTML = '';
+  element.classList.add('typing');
+  
+  let i = 0;
+  const speed = 15; // ms per character (increased speed for smoother feeling)
+  const initialDelay = 100; // small delay before starting
+  
+  // Advanced approach: Walk the nodes
+  const nodes = [];
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = originalHTML;
+  
+  function collectNodes(parent) {
+    parent.childNodes.forEach(node => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const chars = node.textContent.split('');
+        chars.forEach(char => nodes.push({ type: 'text', val: char }));
+      } else {
+        const clone = node.cloneNode(false);
+        nodes.push({ type: 'element-start', val: clone });
+        collectNodes(node);
+        nodes.push({ type: 'element-end' });
+      }
+    });
+  }
+  
+  collectNodes(tempDiv);
+  
+  let nodeIndex = 0;
+  let currentParent = element;
+  const parentStack = [element];
+
+  function typeNext() {
+    if (nodeIndex < nodes.length) {
+      const node = nodes[nodeIndex];
+      
+      if (node.type === 'text') {
+        currentParent.append(node.val);
+      } else if (node.type === 'element-start') {
+        const newEl = node.val;
+        currentParent.appendChild(newEl);
+        currentParent = newEl;
+        parentStack.push(newEl);
+      } else if (node.type === 'element-end') {
+        parentStack.pop();
+        currentParent = parentStack[parentStack.length - 1];
+      }
+      
+      nodeIndex++;
+      setTimeout(typeNext, speed);
+    } else {
+      element.classList.add('typewriter-done');
+    }
+  }
+  
+  setTimeout(typeNext, initialDelay);
+}
+
+// Scroll Progress Tracker for Header HUD
+function initScrollProgress() {
+  const progressBar = document.querySelector('.progress-fill');
+  const progressVal = document.querySelector('.stat-val');
+  
+  if (!progressBar || !progressVal) return;
+
+  function updateScrollProgress() {
+    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPosition = window.scrollY;
+    
+    if (totalHeight <= 0) return;
+    
+    const percentage = Math.min(Math.round((scrollPosition / totalHeight) * 100), 100);
+    
+    progressBar.style.width = `${percentage}%`;
+    progressVal.textContent = `${percentage}%`;
+  }
+
+  window.addEventListener('scroll', updateScrollProgress);
+  updateScrollProgress(); // Initial call
+}
+
 // Initialize on load
 document.addEventListener('DOMContentLoaded', () => {
   initDynamicProjectImages();
+  initTypewriterEffect();
+
+  // Check if header is already loaded or wait for it
+  const checkHeader = setInterval(() => {
+    if (document.querySelector('.cyber-header')) {
+      clearInterval(checkHeader);
+      initScrollProgress();
+    }
+  }, 100);
 });

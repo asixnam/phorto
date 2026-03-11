@@ -1,64 +1,56 @@
-<header>
-    <div class="container">
-      <nav class="navbar">
-        <!-- Logo Kiri -->
-        <div class="nav-left">
-          <a href="https://asixnam.vercel.app" class="logo">
-            <img src="public/logo.png" alt="A6 Logo">
-          </a>
+<header class="cyber-header">
+    <div class="container navbar">
+      <!-- Left: Profile -->
+      <div class="nav-profile">
+        <div class="profile-avatar">
+          <img src="public/logo.png" alt="Logo">
+          <div class="status-dot"></div>
         </div>
+        <div class="profile-info">
+          <div class="profile-name">ASIXNAM</div>
+          <div class="profile-status">[ONLINE]</div>
+        </div>
+      </div>
 
-        <!-- Menu Tengah dengan Border Rounded -->
-        <div class="nav-center">
-          <div class="menu-wrapper">
-            <ul class="menu">
-              <li><a href="https://asixnam.vercel.app" class="menu-link">Discover</a></li>
-              <li><a href="https://asixnam.vercel.app/#services" class="menu-link">Skill</a></li>
-              <li><a href="#resume" class="menu-link">Resume</a></li>
-              <li><a href="portfolio.html" class="menu-link">Portfolio</a></li>
-              <li><a href="shop.html" class="menu-link">Shop</a></li>
-            </ul>
+      <!-- Center: Icons Navigation -->
+      <nav class="nav-center-icons">
+        <a href="index.html" class="nav-icon active" title="Home"><i class="fas fa-gamepad"></i><span>HOME</span></a>
+        <a href="#services" class="nav-icon" title="Lore"><i class="fas fa-scroll"></i><span>LORE</span></a>
+        <a href="#resume" class="nav-icon" title="Quests"><i class="fas fa-khanda"></i><span>QUESTS</span></a>
+        <a href="portfolio.html" class="nav-icon" title="Portfolio"><i class="fas fa-bolt"></i><span>PROJECTS</span></a>
+        <a href="shop.html" class="nav-icon" title="Shop"><i class="fas fa-shopping-bag"></i><span>SHOP</span></a>
+      </nav>
+
+      <!-- Right: Stats & Actions -->
+      <div class="nav-right-cyber">
+        <div class="cyber-stats">
+          <div class="stats-top">
+            <span class="stat-label">XP STR</span>
+            <span class="stat-val">85%</span>
+          </div>
+          <div class="cyber-progress">
+            <div class="progress-fill" style="width: 85%"></div>
           </div>
         </div>
-
-        <!-- Icon User Kanan -->
-        <div class="nav-right">
-          <!-- Dark Mode Toggle -->
-          <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
-            <svg class="sun-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l-2.12-2.12a1 1 0 111.414-1.414l2.12 2.12a1 1 0 11-1.414 1.414zM2.05 6.464a1 1 0 110-1.414l1.414-1.414a1 1 0 011.414 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707zm12.728 0l-.707.707a1 1 0 001.414 1.414l1.414-1.414a1 1 0 000-1.414l-.707-.707a1 1 0 00-1.414 0zM6.464 16.95l-1.414 1.414a1 1 0 01-1.414 0l-.707-.707a1 1 0 011.414-1.414l.707.707a1 1 0 001.414 0zm10-9.9l.707-.707a1 1 0 000-1.414l-1.414-1.414a1 1 0 00-1.414 0l-.707.707a1 1 0 001.414 1.414l.707-.707zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464a1 1 0 11-1.414-1.414l-.707-.707a1 1 0 000-1.414L3.636 1.22a1 1 0 011.414 0l.707.707a1 1 0 01-1.414 1.414l.707.707zm5.414 5.414l1.414 1.414a1 1 0 11-1.414 1.414l-1.414-1.414a1 1 0 111.414-1.414zM3 12a1 1 0 100-2H2a1 1 0 100 2h1z" clip-rule="evenodd"></path>
-            </svg>
-            <svg class="moon-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style="display: none;">
-              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-            </svg>
+        
+        <div class="cyber-actions">
+          <button id="darkModeToggle" class="cyber-btn-mini" aria-label="Toggle dark mode">
+            <i class="fas fa-sun sun-icon" style="display: none;"></i>
+            <i class="fas fa-moon moon-icon"></i>
           </button>
-
-          
-            <a href="https://linktree.com/asixnam">
-            <button class="user-icon-btn" aria-label="User profile">
-              <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-              </svg>
-            </button>
-            </a>
-
-          <!-- Hamburger Menu untuk Mobile -->
-          <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
+          <a href="https://github.com/asixnam" target="_blank" class="cyber-btn-mini">
+            <i class="fab fa-github"></i>
+          </a>
         </div>
-      </nav>     
-    </div> <!-- Tutup .container -->
+      </div>
+    </div>
 </header>
 
-<div>
+<!-- Mobile Menu -->
 <ul class="mobile-menu" id="mobileMenu">
-        <li><a href="https://asixnam.vercel.app"><i class="fas fa-home"></i></a></li>
-        <li><a href="https://asixnam.vercel.app/#services"><i class="fas fa-star"></i></a></li>
-        <li><a href="#resume"><i class="fas fa-file-alt"></i></a></li>
-        <li><a href="portfolio.html"><i class="fas fa-images"></i></a></li>
-        <li><a href="shop.html"><i class="fas fa-shopping-bag"></i></a></li>
-      </ul>
-</div>
+  <li><a href="index.html" class="active"><i class="fas fa-gamepad"></i></a></li>
+  <li><a href="#services"><i class="fas fa-scroll"></i></a></li>
+  <li><a href="#resume"><i class="fas fa-khanda"></i></a></li>
+  <li><a href="portfolio.html"><i class="fas fa-bolt"></i></a></li>
+  <li><a href="shop.html"><i class="fas fa-shopping-bag"></i></a></li>
+</ul>

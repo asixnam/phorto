@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,34 +9,28 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="public/logo.png">
 </head>
+
 <body>
-    <!-- Header will be loaded here -->
+  <!-- Header will be loaded here -->
   <div id="header-container"></div>
 
- <!-- Hero Section -->
-<section class="hero hero-landing">
-  <div class="container hero-container">
-    <h1 class="hero-title" style="text-align: center;">Mohamad Khoirul Anam</h1>
-    </div>
-  <div class="hero-overlay"></div>
-    <div class="hero-content-grid">
-      <div class="hero-left">
-        <p class="hero-description">
-          Lulusan S1 Informatika Universitas Nahdlatul Ulama Yogyakarta, 
-          berpengalaman dalam Desain Grafis, Pemrograman Website, dan Fotografi.
-        </p>
-      </div>
-      
-      <div class="hero-right">
-        <p class="hero-description">
-          Memiliki kemampuan dalam merancang tampilan visual, mengembangkan website 
-          berbasis Laravel, serta menghasilkan karya foto dan video profesional. 
-          Selain itu, saya aktif berorganisasi dan memiliki pengalaman kepemimpinan 
-          serta kolaborasi tim yang kuat.
-        </p>
+  <section class="hero hero-landing">
+    <!-- Dynamic Hero Background Overlay -->
+    <div class="hero-bg-image"></div>
+    <div class="hero-overlay-gradient"></div>
+
+    <div class="container hero-container">
+      <div class="hero-content">
+        <div class="hero-tag">Official Phortofolio</div>
+        <h1 class="hero-title">Mohamad<br><span class="name-blue">Khoirul Anam</span></h1>
+        <p class="hero-tagline">// Visual_Log_Capture & Code_Uplink_Operator</p>
+        <div class="hero-btns">
+          <a href="shop.html" class="btn-hud btn-cyan"><i class="fas fa-shopping-bag"></i> SHOP</a>
+          <a href="portfolio.html" class="btn-hud btn-outline"><i class="fas fa-folder-open"></i> PORTFOLIO</a>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- Bottom Section - Transparent Box -->
   <div class="hero-bottom">
@@ -53,11 +48,13 @@
             <i class="fab fa-instagram"></i>
           </a>
           <a href="https://linktree.com/asixnam" aria-label="Linktree" target="_blank">
-            <img src="public/Icon/ltre.png" alt="Linktree logo - white asterisk or cross symbol on dark green circular background" class="social-icon-img" style="width: 20px; height: 20px;" />
+            <img src="public/Icon/ltre.png"
+              alt="Linktree logo - white asterisk or cross symbol on dark green circular background"
+              class="social-icon-img" style="width: 20px; height: 20px;" />
           </a>
-            <a href="https://github.com/asixnam" aria-label="GitHub" target="_blank">
+          <a href="https://github.com/asixnam" aria-label="GitHub" target="_blank">
             <i class="fab fa-github"></i>
-            </a>
+          </a>
         </div>
 
         <!-- Stats -->
@@ -82,100 +79,84 @@
       </div>
     </div>
   </div>
-</section>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about-me">
+    <div class="container">
+      <div class="section-tag">// IDENTITY_RECON</div>
+      <h2 class="section-title">PLAYER PROFILE</h2>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <h3 class="card-tag">BACKGROUND_LORE</h3>
+          <p class="about-description">
+            Lulusan S1 Informatika Universitas Nahdlatul Ulama Yogyakarta,
+            berpengalaman dalam Desain Grafis, Pemrograman Website, dan Fotografi.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <h3 class="card-tag">TECHNICAL_SKILLS</h3>
+          <p class="about-description">
+            Memiliki kemampuan dalam merancang tampilan visual, mengembangkan website
+            berbasis Laravel, serta menghasilkan karya foto dan video profesional.
+            Selain itu, saya aktif berorganisasi dan memiliki pengalaman kepemimpinan
+            serta kolaborasi tim yang kuat.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
   <!-- What I Do (Skills) -->
-<section id="services" class="services">
-  <div class="container">
-    <h2 class="section-title">What I Do</h2>
-    
-    <div class="skills-grid">
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="public/Icon/figma.png" alt="Figma - UI/UX Design" >
-        </div>
-        <p>Figma</p>
-      </div>
+  <section id="services" class="services">
+    <div class="container">
+      <div class="section-tag">// OPERATIONAL_INTEL</div>
+      <h2 class="section-title">TECHNICAL CAPABILITIES</h2>
 
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="public/Icon/cdr.png" alt="CorelDraw - Logo Design" >
+      <div class="skills-marquee">
+        <!-- Row 1: Move Right -->
+        <div class="skills-row row-right">
+          <div class="row-inner">
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/figma.png" alt="Figma"></div><p>Figma</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/cdr.png" alt="CorelDraw"></div><p>CorelDraw</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/canva.png" alt="Canva"></div><p>Canva</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/sony_logo.png" alt="Sony"></div><p>Sony</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/canon.png" alt="Canon"></div><p>Canon</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/photoshop.png" alt="Photoshop"></div><p>Photoshop</p></div>
+            <!-- Duplicate for loop -->
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/figma.png" alt="Figma"></div><p>Figma</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/cdr.png" alt="CorelDraw"></div><p>CorelDraw</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/canva.png" alt="Canva"></div><p>Canva</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/sony_logo.png" alt="Sony"></div><p>Sony</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/canon.png" alt="Canon"></div><p>Canon</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/photoshop.png" alt="Photoshop"></div><p>Photoshop</p></div>
+          </div>
         </div>
-        <p>CorelDraw</p>
-      </div>
 
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="public/Icon/canva.png" alt="Canva - Branding" >
+        <!-- Row 2: Move Left -->
+        <div class="skills-row row-left">
+          <div class="row-inner">
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/laravel.png" alt="Laravel"></div><p>Laravel</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/php.png" alt="PHP"></div><p>PHP</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/mysql.png" alt="MySQL"></div><p>MySQL</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/html.png" alt="HTML"></div><p>HTML</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/css.png" alt="CSS"></div><p>CSS</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/script.png" alt="JavaScript"></div><p>JavaScript</p></div>
+            <!-- Duplicate for loop -->
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/laravel.png" alt="Laravel"></div><p>Laravel</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/php.png" alt="PHP"></div><p>PHP</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/mysql.png" alt="MySQL"></div><p>MySQL</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/html.png" alt="HTML"></div><p>HTML</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/css.png" alt="CSS"></div><p>CSS</p></div>
+            <div class="skill-item"><div class="skill-icon"><img src="public/Icon/script.png" alt="JavaScript"></div><p>JavaScript</p></div>
+          </div>
         </div>
-        <p>Canva</p>
       </div>
-
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="public/Icon/sony_logo.png" alt="Sony - Photography" >
-        </div>
-        <p>Sony</p>
-      </div>
-
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="public/Icon/canon.png" alt="Canon - Photography" >
-        </div>
-        <p>Canon</p>
-      </div>
-
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="public/Icon/photoshop.png" alt="Photoshop - Photo Editing" >
-        </div>
-        <p>Photoshop</p>
-      </div>
-
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="public/Icon/laravel.png" alt="Laravel - Web Framework" >
-        </div>
-        <p>Laravel</p>
-      </div>
-
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="public/Icon/php.png" alt="PHP - Programming Language" >
-        </div>
-        <p>PHP</p>
-      </div>
-
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="public/Icon/mysql.png" alt="MySQL - Database" >
-        </div>
-        <p>MySQL</p>
-      </div>
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="public/Icon/html.png" alt="HTML - Markup Language" >
-        </div>
-        <p>HTML</p>
-      </div>
-
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="public/Icon/css.png" alt="CSS - Styling Language" >
-        </div>
-        <p>CSS</p>
-      </div>
-
-      <div class="skill-item">
-        <div class="skill-icon">
-          <img src="public/Icon/script.png" alt="JavaScript - Programming Language" >
-        </div>
-        <p>JavaScript</p>
-      </div>
-      
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- Resume -->
   <section id="resume" class="resume">
@@ -193,12 +174,19 @@
           <h4>Direktorat GEDSI Universitas Nahdlatul Ulama Yogyakarta</h4>
           <span>Periode 1: 2022–2023</span>
           <span>Periode 2: Desember 2024 – Sekarang</span>
-          <p>Selama bekerja di Direktorat GEDSI Universitas Nahdlatul Ulama Yogyakarta, saya bertanggung jawab dalam merancang berbagai materi kampanye dan publikasi digital untuk mendukung kegiatan organisasi. Selain itu, saya juga mengelola akun media sosial resmi GEDSI dengan fokus pada peningkatan interaksi dan penyampaian pesan yang efektif. Saya turut berkontribusi dalam penyusunan strategi komunikasi visual agar setiap konten yang dipublikasikan memiliki identitas dan nilai estetika yang konsisten.</p>
+          <p>Selama bekerja di Direktorat GEDSI Universitas Nahdlatul Ulama Yogyakarta, saya bertanggung jawab dalam
+            merancang berbagai materi kampanye dan publikasi digital untuk mendukung kegiatan organisasi. Selain itu,
+            saya juga mengelola akun media sosial resmi GEDSI dengan fokus pada peningkatan interaksi dan penyampaian
+            pesan yang efektif. Saya turut berkontribusi dalam penyusunan strategi komunikasi visual agar setiap konten
+            yang dipublikasikan memiliki identitas dan nilai estetika yang konsisten.</p>
         </div>
         <div class="resume-item">
           <h4>Rumah Batik Jinggar (UMKM Yogyakarta)</h4>
           <span>2023</span>
-          <p>Sebagai Desain Grafis di Rumah Batik Jinggar, saya bertanggung jawab dalam membuat berbagai konten visual untuk kebutuhan promosi produk batik, baik untuk media sosial maupun materi pemasaran lainnya. Selain itu, saya juga berperan dalam membantu pengembangan branding dan identitas visual UMKM agar memiliki citra yang konsisten dan menarik di mata konsumen.</p>
+          <p>Sebagai Desain Grafis di Rumah Batik Jinggar, saya bertanggung jawab dalam membuat berbagai konten visual
+            untuk kebutuhan promosi produk batik, baik untuk media sosial maupun materi pemasaran lainnya. Selain itu,
+            saya juga berperan dalam membantu pengembangan branding dan identitas visual UMKM agar memiliki citra yang
+            konsisten dan menarik di mata konsumen.</p>
         </div>
       </div>
 
@@ -207,22 +195,32 @@
           <h4>KAMABA Yogyakarta (Keluarga Mahasiswa Blora Yogyakarta)</h4>
           <span>2022–2023 — Desain Grafis & Admin Media Sosial</span>
           <span>2023-2024 — Ketua Umum</span>
-          <p>Sebagai Desain Grafis & Admin Media Sosial di KAMABA Yogyakarta, saya bertanggung jawab dalam merancang berbagai konten visual untuk kebutuhan promosi kegiatan organisasi di media sosial. Selain itu, saya juga mengelola akun media sosial resmi KAMABA dengan fokus pada peningkatan interaksi dan penyampaian informasi yang efektif kepada anggota dan masyarakat luas.</p>
+          <p>Sebagai Desain Grafis & Admin Media Sosial di KAMABA Yogyakarta, saya bertanggung jawab dalam merancang
+            berbagai konten visual untuk kebutuhan promosi kegiatan organisasi di media sosial. Selain itu, saya juga
+            mengelola akun media sosial resmi KAMABA dengan fokus pada peningkatan interaksi dan penyampaian informasi
+            yang efektif kepada anggota dan masyarakat luas.</p>
         </div>
         <div class="resume-item">
           <h4>UKM JQH IAC UNU Yogyakarta</h4>
           <span>2023-2024 — Desain Grafis</span>
-          <p>Sebagai Desain Grafis di UKM JQH IAC UNU Yogyakarta, saya bertanggung jawab dalam merancang berbagai konten visual untuk kebutuhan promosi kegiatan organisasi di media sosial. Selain itu, saya juga mengelola akun media sosial resmi UKM JQH IAC UNU dengan fokus pada peningkatan interaksi dan penyampaian informasi yang efektif kepada anggota dan masyarakat luas.</p>
+          <p>Sebagai Desain Grafis di UKM JQH IAC UNU Yogyakarta, saya bertanggung jawab dalam merancang berbagai konten
+            visual untuk kebutuhan promosi kegiatan organisasi di media sosial. Selain itu, saya juga mengelola akun
+            media sosial resmi UKM JQH IAC UNU dengan fokus pada peningkatan interaksi dan penyampaian informasi yang
+            efektif kepada anggota dan masyarakat luas.</p>
         </div>
         <div class="resume-item">
           <h4>Mustika Amarta</h4>
           <span>2025-Sekarang — Admin Sosial Media</span>
-          <p>Sebagai Desain Grafis dan Admin Sosial media di Mustika Amarta, saya bertanggung jawab dalam merancang berbagai konten visual untuk kebutuhan promosi kegiatan organisasi di media sosial. Selain itu, saya juga mengelola akun media sosial resmi Mustika Amarta dengan fokus pada peningkatan interaksi dan penyampaian informasi yang efektif kepada anggota dan masyarakat luas.</p>
+          <p>Sebagai Desain Grafis dan Admin Sosial media di Mustika Amarta, saya bertanggung jawab dalam merancang
+            berbagai konten visual untuk kebutuhan promosi kegiatan organisasi di media sosial. Selain itu, saya juga
+            mengelola akun media sosial resmi Mustika Amarta dengan fokus pada peningkatan interaksi dan penyampaian
+            informasi yang efektif kepada anggota dan masyarakat luas.</p>
         </div>
         <div class="resume-item">
           <h4>NataKarsa</h4>
           <span>Sekarang — Founder</span>
-          <p>sebuah Komunitas yang berfokus pada dunia developer yang bertujuan agar para developer dapat saling berkolaborasi dan berbagi pengetahuan.</p>
+          <p>sebuah Komunitas yang berfokus pada dunia developer yang bertujuan agar para developer dapat saling
+            berkolaborasi dan berbagi pengetahuan.</p>
         </div>
       </div>
 
@@ -251,35 +249,48 @@
           <span>Desain Grafis</span>
           <p>Februari 2026 - Sekarang</p>
         </div>
-    </div>
+      </div>
   </section>
 
-<!-- Portfolio -->
-<section id="portfolio" class="portfolio">
-  <div class="container">
-    <div class="portfolio-wrapper">
-      <div class="portfolio-content">
-        <h2 class="section-title">Portofolio Terpilih</h2>
-        <p class="section-subtitle">
-          Menampilkan proyek desain grafis, pengembangan web, dan fotografi terbaru yang dikerjakan dengan penuh dedikasi.
+  <!-- Signal Uplink Section -->
+  <section id="contact" class="signal-uplink">
+    <div class="container">
+      <div class="signal-header">
+        <div class="section-tag">MISSION_DOSSIER</div>
+        <span class="binary-code">PROJECT ARCHIVE</span>
+        <h2 class="connection-title">CONNECTION</h2>
+      </div>
+
+      <div class="signal-card">
+        <p class="signal-text">
+          Retrieving encrypted repositories...<br>
+          Selected projects successfully decrypted.
         </p>
-      </div>
 
-      <div class="portfolio-preview-grid">
-        <div class="preview-box"></div>
-        <div class="preview-box"></div>
-        <div class="preview-box"></div>
-      </div>
+        <div class="signal-actions">
+          <a href="portfolio.html" class="btn-signal">
+            <i class="fas fa-broadcast-tower"></i>
+            Lihat Semua Karya
+          </a>
+          <a href="https://github.com/asixnam" target="_blank" class="social-btn-mini">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://linkedin.com/in/asixnam" target="_blank" class="social-btn-mini">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
 
-      <div class="portfolio-cta">
-        <a class="btn-primary" href="portfolio.html">
-          Lihat Semua Karya 
-          <span class="icon">→</span>
-        </a>
+        <div class="terminal-status">
+          <div class="status-bars">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+          </div>
+          TERMINAL ONLINE
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <div id="footer-container"></div>
   <script src="scripts.js"></script>
@@ -361,4 +372,5 @@
     updateSlider();
   </script>
 </body>
+
 </html>
