@@ -263,7 +263,9 @@ body::before {
 }
 
 .stat-val {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-primary);
+  font-weight: 800;
+  text-shadow: 0 0 10px var(--text-primary);
 }
 
 .cyber-progress {

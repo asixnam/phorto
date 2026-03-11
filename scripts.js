@@ -403,10 +403,46 @@ function initScrollProgress() {
   updateScrollProgress(); // Initial call
 }
 
+// Lazy Load Instagram Feed
+function initInstagramLazyLoad() {
+  const instagramFeedContainer = document.querySelector('.portfolio-grid.grid-instagram');
+  
+  if (!instagramFeedContainer) return;
+
+  console.log('Initializing Instagram lazy load observer...');
+  
+  const observerOptions = {
+    root: null,
+    rootMargin: '200px 0px', // Load it slightly before it comes into view
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        console.log('Instagram feed in view, loading script...');
+        
+        // Create and inject the Instagram embed script
+        const script = document.createElement('script');
+        script.src = "//www.instagram.com/embed.js";
+        script.async = true;
+        document.body.appendChild(script);
+
+        // Stop observing once loaded
+        observer.unobserve(instagramFeedContainer);
+        observer.disconnect();
+      }
+    });
+  }, observerOptions);
+
+  observer.observe(instagramFeedContainer);
+}
+
 // Initialize on load
 document.addEventListener('DOMContentLoaded', () => {
   initDynamicProjectImages();
   initTypewriterEffect();
+  initInstagramLazyLoad();
 
   // Check if header is already loaded or wait for it
   const checkHeader = setInterval(() => {
