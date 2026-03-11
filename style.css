@@ -9,7 +9,7 @@
   /* Light Theme Variables (Default) */
   --bg-primary: #fdfdfd;
   --bg-secondary: #ffffff;
-  --text-primary: #005b34fe;
+  --text-primary: #003c25bb;
   /* Sharper Green */
   --text-secondary: #0f172a;
   /* Deeper Slate */
@@ -258,22 +258,17 @@ body::before {
 .stats-top {
   display: flex;
   justify-content: space-between;
-  font-size: 0.65rem;
-  color: var(--text-primary);
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 800;
-  letter-spacing: 1px;
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .stat-val {
-  color: var(--text-primary);
-  font-weight: 800;
-  text-shadow: 0 0 10px var(--text-primary);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .cyber-progress {
   height: 4px;
-  background: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 2px;
   overflow: hidden;
 }
