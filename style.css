@@ -9,7 +9,7 @@
   /* Light Theme Variables (Default) */
   --bg-primary: #fdfdfd;
   --bg-secondary: #ffffff;
-  --text-primary: #ffd000;
+  --text-primary: #00231fae;
   /* Sharper Green */
   --text-secondary: #0f172a;
   /* Deeper Slate */
@@ -1345,10 +1345,12 @@ body::before {
   .grid-instagram {
     grid-template-columns: repeat(3, 1fr);
   }
+
   .grid-logo,
   .grid-photo {
     grid-template-columns: repeat(3, 1fr);
   }
+
   .grid-outdoor,
   .grid-website {
     grid-template-columns: repeat(2, 1fr);
@@ -1359,6 +1361,7 @@ body::before {
   .grid-instagram {
     grid-template-columns: repeat(1, 1fr);
   }
+
   .grid-logo,
   .grid-photo,
   .grid-outdoor,
@@ -1697,14 +1700,14 @@ body::before {
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 15px;
-  color: #ffffff;
+  color: var(--text-primary);
 }
 
 .footer-section h4 {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 20px;
-  color: #ffffff;
+  color: var(--text-primary);
   position: relative;
   padding-bottom: 10px;
 }
@@ -1716,14 +1719,14 @@ body::before {
   bottom: 0;
   width: 40px;
   height: 3px;
-  background: #ffffff;
+  background: var(--text-primary);
   border-radius: 2px;
 }
 
 /* About Section */
 .footer-section.about p {
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-primary);
   font-size: 14px;
 }
 
