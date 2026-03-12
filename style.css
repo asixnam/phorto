@@ -745,7 +745,7 @@ body::before {
 .social-icons a:hover {
   background: rgba(5, 223, 114, 0.15);
   transform: translateY(-3px);
-  box-shadow: 0 0 20px rgba(5, 223, 114, 0.3);
+  box-shadow: 0 0 20px rgba(5, 223, 114, 0.302);
   border-color: var(--text-primary);
 }
 
@@ -754,7 +754,23 @@ body::before {
 }
 
 .social-icon-img {
-  filter: brightness(0) saturate(100%) invert(84%) sepia(21%) font-size(100%) hue-rotate(97deg) brightness(97%) contrast(92%);
+  display: inline-block;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  line-height: 1;
+}
+
+/* Ensure SVGs inherit color and scale correctly */
+.social-icons a svg.social-icon-img {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+/* Make SVG icons inherit the link color so all social icons match */
+.social-icons a svg.social-icon-img {
+  color: inherit;
 }
 
 /* Stats Section */
