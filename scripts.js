@@ -243,7 +243,7 @@ function initDynamicProjectImages() {
     const demoLink = card.querySelector('.btn-demo');
     const projectImage = card.querySelector('.project-image-wrapper img');
 
-    if (demoLink && projectImage) {
+    if (demoLink && projectImage && !card.classList.contains('no-iframe')) {
       let url = demoLink.getAttribute('href');
       console.log('Found project card with link:', url);
 
@@ -479,164 +479,97 @@ function initClickSound() {
   });
 }
 
-// --- Starry Cursor Trail Effect (Optimized) ---
-function initStarCursor() {
+// --- WebGL "Smokey Cursor" Fluid Simulation ---
+function initWebGLFluid() {
   const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d', { alpha: true }); // optimize compositing
-  
-  canvas.id = 'star-cursor-canvas';
+  canvas.id = 'fluid-canvas';
   document.body.appendChild(canvas);
-  
   canvas.style.position = 'fixed';
-  canvas.style.top = '0';
-  canvas.style.left = '0';
-  canvas.style.width = '100vw';
-  canvas.style.height = '100vh';
-  canvas.style.pointerEvents = 'none';
-  canvas.style.zIndex = '9999';
+  canvas.style.top = '0'; canvas.style.left = '0';
+  canvas.style.width = '100%'; canvas.style.height = '100%';
+  canvas.style.pointerEvents = 'none'; canvas.style.zIndex = '9999';
 
-  let width = window.innerWidth;
-  let height = window.innerHeight;
-  canvas.width = width;
-  canvas.height = height;
+  const gl = canvas.getContext('webgl', { alpha: true });
+  if (!gl) return;
 
-  let resizeTimeout;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-    }, 200);
-  }, { passive: true });
+  const shaders = {
+    vertex: `precision highp float; attribute vec2 a_pos; varying vec2 v_uv; void main() { v_uv = a_pos * 0.5 + 0.5; gl_Position = vec4(a_pos, 0, 1); }`,
+    splat: `precision highp float; varying vec2 v_uv; uniform sampler2D u_tex; uniform vec3 u_color; uniform vec2 u_point; uniform float u_radius; uniform float u_aspect; void main() { vec2 p = v_uv - u_point; p.x *= u_aspect; vec3 splat = exp(-dot(p, p) / u_radius) * u_color; gl_FragColor = vec4(texture2D(u_tex, v_uv).rgb + splat, 1); }`,
+    advect: `precision highp float; varying vec2 v_uv; uniform sampler2D u_vel; uniform sampler2D u_src; uniform float u_dt; uniform float u_diss; void main() { vec2 coord = v_uv - u_dt * texture2D(u_vel, v_uv).xy; gl_FragColor = u_diss * texture2D(u_src, coord); }`,
+    display: `precision highp float; varying vec2 v_uv; uniform sampler2D u_tex; void main() { vec4 c = texture2D(u_tex, v_uv); float a = max(c.r, max(c.g, c.b)); gl_FragColor = vec4(c.rgb, a * 0.8); }`
+  };
 
-  const stars = [];
-  let mouseX = -100;
-  let mouseY = -100;
-  let isMoving = false;
-  let inactivityTimer = null;
-  let animationFrameId = null;
+  const createProg = (vs, fs) => {
+    const s = (t, src) => { const sh = gl.createShader(t); gl.shaderSource(sh, src); gl.compileShader(sh); return sh; };
+    const p = gl.createProgram(); gl.attachShader(p, s(gl.VERTEX_SHADER, vs)); gl.attachShader(p, s(gl.FRAGMENT_SHADER, fs));
+    gl.linkProgram(p); return p;
+  };
 
-  class Star {
-    constructor(x, y) {
-      this.x = x;
-      this.y = y;
-      this.size = Math.random() * 2 + 1;
-      this.opacity = 1;
-      
-      const angle = Math.random() * Math.PI * 2;
-      const speed = Math.random() * 1.5;
-      this.vx = Math.cos(angle) * speed;
-      this.vy = Math.sin(angle) * speed;
-      
-      this.rotation = Math.random() * Math.PI;
-      this.spinSpeed = (Math.random() - 0.5) * 0.2;
-      
-      const colors = ['#05df72', '#00d9ff', '#ffffff'];
-      this.color = colors[Math.floor(Math.random() * colors.length)];
-    }
+  const progs = { splat: createProg(shaders.vertex, shaders.splat), advect: createProg(shaders.vertex, shaders.advect), display: createProg(shaders.vertex, shaders.display) };
+  const createFBO = (w, h) => {
+    const tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, w, h, 0, gl.RGB, gl.UNSIGNED_BYTE, null);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    const fbo = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0);
+    return { tex, fbo, w, h };
+  };
 
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-      this.opacity -= 0.03; // Faster fadeout for better performance
-      this.rotation += this.spinSpeed;
-      this.size -= 0.06;
-    }
+  let density = [createFBO(512, 512), createFBO(512, 512)];
+  let velocity = [createFBO(128, 128), createFBO(128, 128)];
+  const quad = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, quad); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
 
-    draw(ctx) {
-      ctx.save();
-      ctx.translate(this.x, this.y);
-      ctx.rotate(this.rotation);
-      ctx.globalAlpha = Math.max(0, this.opacity);
-      ctx.fillStyle = this.color;
+  let mouse = { x: 0.5, y: 0.5, px: 0.5, py: 0.5, moved: false };
+  window.addEventListener('mousemove', e => { 
+    mouse.px = mouse.x; mouse.py = mouse.y;
+    mouse.x = e.clientX / window.innerWidth; mouse.y = 1 - e.clientY / window.innerHeight;
+    mouse.moved = true;
+  });
 
-      ctx.beginPath();
-      const spikes = 4;
-      const outerRadius = this.size;
-      const innerRadius = this.size / 2.5;
-
-      let rot = Math.PI / 2 * 3;
-      const step = Math.PI / spikes;
-
-      ctx.moveTo(0, -outerRadius);
-      for (let i = 0; i < spikes; i++) {
-        ctx.lineTo(Math.cos(rot) * outerRadius, Math.sin(rot) * outerRadius);
-        rot += step;
-        ctx.lineTo(Math.cos(rot) * innerRadius, Math.sin(rot) * innerRadius);
-        rot += step;
-      }
-      ctx.closePath();
-      // Removed ctx.shadowBlur as it is extremely expensive on GPU
-      ctx.fill();
-
-      ctx.restore();
-    }
-  }
-
-  function startAnimation() {
-    if (!animationFrameId) {
-      animate();
-    }
-  }
-
-  // Use passive listener for better scroll/mouse performance
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+  const render = () => {
+    gl.bindBuffer(gl.ARRAY_BUFFER, quad); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0); gl.enableVertexAttribArray(0);
     
-    // Spawn fewer stars to save CPU/GPU cycles
-    if (Math.random() > 0.6) {
-      stars.push(new Star(mouseX, mouseY));
-      startAnimation();
-    }
+    // Advect Velocity
+    gl.useProgram(progs.advect); gl.viewport(0, 0, 128, 128);
+    gl.uniform1f(gl.getUniformLocation(progs.advect, 'u_dt'), 0.016); gl.uniform1f(gl.getUniformLocation(progs.advect, 'u_diss'), 0.98);
+    gl.uniform1i(gl.getUniformLocation(progs.advect, 'u_vel'), 0); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, velocity[0].tex);
+    gl.uniform1i(gl.getUniformLocation(progs.advect, 'u_src'), 0); gl.bindFramebuffer(gl.FRAMEBUFFER, velocity[1].fbo); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    velocity.reverse();
 
-    isMoving = true;
-    clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(() => { isMoving = false; }, 50);
-  }, { passive: true });
+    // Advect Density
+    gl.viewport(0, 0, 512, 512); gl.uniform1f(gl.getUniformLocation(progs.advect, 'u_diss'), 0.97);
+    gl.uniform1i(gl.getUniformLocation(progs.advect, 'u_vel'), 0); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, velocity[0].tex);
+    gl.uniform1i(gl.getUniformLocation(progs.advect, 'u_src'), 1); gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, density[0].tex);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, density[1].fbo); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    density.reverse();
 
-  document.addEventListener('click', () => {
-    // Fewer explosion particles
-    for (let i = 0; i < 5; i++) {
-      let star = new Star(mouseX, mouseY);
-      star.vx *= 3;
-      star.vy *= 3;
-      star.size *= 1.5;
-      stars.push(star);
-    }
-    startAnimation();
-  }, { passive: true });
-
-  function animate() {
-    ctx.clearRect(0, 0, width, height);
-    
-    if (isMoving && Math.random() > 0.9) {
-       stars.push(new Star(mouseX + (Math.random()-0.5)*10, mouseY + (Math.random()-0.5)*10));
-    }
-
-    let activeStars = false;
-    for (let i = 0; i < stars.length; i++) {
-      stars[i].update();
-      stars[i].draw(ctx);
+    if (mouse.moved) {
+      gl.useProgram(progs.splat); gl.uniform1f(gl.getUniformLocation(progs.splat, 'u_aspect'), window.innerWidth / window.innerHeight);
+      gl.uniform2f(gl.getUniformLocation(progs.splat, 'u_point'), mouse.x, mouse.y); gl.uniform1f(gl.getUniformLocation(progs.splat, 'u_radius'), 0.001);
       
-      if (stars[i].opacity <= 0 || stars[i].size <= 0) {
-        stars.splice(i, 1);
-        i--;
-      } else {
-        activeStars = true;
-      }
+      // Splat Velocity
+      gl.uniform3f(gl.getUniformLocation(progs.splat, 'u_color'), (mouse.x - mouse.px) * 50, (mouse.y - mouse.py) * 50, 0);
+      gl.viewport(0,0,128,128); gl.bindFramebuffer(gl.FRAMEBUFFER, velocity[1].fbo);
+      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, velocity[0].tex); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); velocity.reverse();
+
+      // Splat Density
+      const time = Date.now() * 0.002;
+      gl.uniform3f(gl.getUniformLocation(progs.splat, 'u_color'), Math.sin(time)*0.5+0.5, Math.sin(time+2)*0.5+0.5, Math.sin(time+4)*0.5+0.5);
+      gl.viewport(0,0,512,512); gl.bindFramebuffer(gl.FRAMEBUFFER, density[1].fbo);
+      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, density[0].tex); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); density.reverse();
+      mouse.moved = false;
     }
 
-    // Stop the animation loop entirely if there are no stars to draw (Saves huge battery/CPU)
-    if (activeStars) {
-      animationFrameId = requestAnimationFrame(animate);
-    } else {
-      animationFrameId = null;
-    }
-  }
+    gl.useProgram(progs.display); gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, density[0].tex);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  };
+
+  const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+  window.addEventListener('resize', resize); resize(); render();
 }
+
 
 // Initialize on load
 document.addEventListener('DOMContentLoaded', () => {
@@ -644,7 +577,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTypewriterEffect();
   initInstagramLazyLoad();
   initClickSound(); // Initialize sound effect
-  initStarCursor(); // Initialize starry cursor trail
+  initWebGLFluid(); // Initialize high-performance WebGL fluid cursor
 
   // Check if header is already loaded or wait for it
   const checkHeader = setInterval(() => {
