@@ -545,6 +545,19 @@ body::before {
   display: flex;
   gap: 20px;
   justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .hero-btns {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .btn-hud {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .btn-hud {
@@ -2229,8 +2242,9 @@ body::before {
 /* Mobile Hero - Vertical Layout */
 @media (max-width: 767px) {
   .hero-landing {
-    min-height: 100vh;
-    padding: 80px 0 0;
+    min-height: auto;
+    height: auto;
+    padding: 100px 0 40px;
     display: flex;
     flex-direction: column;
   }
@@ -2304,9 +2318,13 @@ body::before {
 
   /* Bottom - Social & Stats */
   .hero-bottom {
+    position: relative;
+    bottom: auto;
     background: rgba(15, 23, 43, 0.6);
     backdrop-filter: blur(15px);
     padding: 30px 20px;
+    margin-top: 40px;
+    z-index: 10;
   }
 
   .social-icons a {
