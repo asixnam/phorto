@@ -670,7 +670,7 @@ function initWebGLFluid() {
 
   const quad = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, quad);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
-  
+
   let dye, velocity, divergence, curl, pressure;
   function initFramebuffers() {
     let w = gl.drawingBufferWidth, h = gl.drawingBufferHeight;
@@ -683,7 +683,7 @@ function initWebGLFluid() {
     curl = createFBO(simW, simH, r[0], r[1], halfFloat, gl.NEAREST);
     pressure = createDoubleFBO(simW, simH, r[0], r[1], halfFloat, gl.NEAREST);
   }
-  
+
   canvas.width = window.innerWidth; canvas.height = window.innerHeight;
   initFramebuffers();
 
@@ -705,7 +705,7 @@ function initWebGLFluid() {
     gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0); gl.enableVertexAttribArray(0);
     gl.disable(gl.BLEND);
     const blit = (t) => { if (t) { gl.viewport(0, 0, t.width, t.height); gl.bindFramebuffer(gl.FRAMEBUFFER, t.fbo); } else { gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight); gl.bindFramebuffer(gl.FRAMEBUFFER, null); } gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); };
-    
+
     programs.curl.bind(); gl.uniform2f(programs.curl.uniforms.texelSize, velocity.texelSizeX, velocity.texelSizeY); gl.uniform1i(programs.curl.uniforms.uVelocity, velocity.read.attach(0)); blit(curl);
     programs.vorticity.bind(); gl.uniform2f(programs.vorticity.uniforms.texelSize, velocity.texelSizeX, velocity.texelSizeY); gl.uniform1i(programs.vorticity.uniforms.uVelocity, velocity.read.attach(0)); gl.uniform1i(programs.vorticity.uniforms.uCurl, curl.attach(1)); gl.uniform1f(programs.vorticity.uniforms.curl, config.CURL); gl.uniform1f(programs.vorticity.uniforms.dt, 0.016); blit(velocity.write); velocity.swap();
     programs.divergence.bind(); gl.uniform2f(programs.divergence.uniforms.texelSize, velocity.texelSizeX, velocity.texelSizeY); gl.uniform1i(programs.divergence.uniforms.uVelocity, velocity.read.attach(0)); blit(divergence);
@@ -745,3 +745,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 100);
 });
+
+// Generic playVideo function for inline replacements
+window.playVideo = function(url, id, eventObj) {
+    const e = eventObj || window.event;
+    if (e && e.currentTarget) {
+        const aTag = e.currentTarget;
+        
+        if (url.includes('instagram')) {
+            // Append theme=dark to force Instagram's Lightmode background to pure black, killing the "white frame"
+            const instaUrl = url.includes('?') ? url + '&autoplay=1&theme=dark' : url + '?autoplay=1&theme=dark';
+            
+            // Inline replacement without changing grid appearance, strictly cropped
+            aTag.outerHTML = `
+              <div style="position: relative; overflow: hidden; aspect-ratio: 9/16; border-radius: 10px; background: #000; width: 100%;">
+                <div style="position: absolute; top: -56px; left: -2px; width: calc(100% + 4px); height: calc(100% + 250px); background: #000;">
+                  <iframe src="${instaUrl}" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen="true" style="width: 100%; height: 100%; border: none; background: transparent;"></iframe>
+                </div>
+              </div>
+            `;
+        } else {
+            // For Youtube videos like your UMjY66sawFg
+            const ytUrl = url.includes('?') ? url + '&autoplay=1' : url + '?autoplay=1';
+            aTag.outerHTML = `
+              <div style="position: relative; overflow: hidden; aspect-ratio: 16/9; border-radius: 10px; background: #000; width: 100%;">
+                <iframe src="${ytUrl}" frameborder="0" allow="autoplay; fullscreen; encrypted-media" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
+              </div>
+            `;
+        }
+    }
+};

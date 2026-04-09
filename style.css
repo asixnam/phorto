@@ -554,6 +554,7 @@ body::before {
     align-items: center;
     width: 100%;
   }
+
   .btn-hud {
     width: 100%;
     justify-content: center;
@@ -731,14 +732,14 @@ body::before {
   max-width: 1200px;
   margin: 0 auto;
   padding: 30px 40px;
-  
+
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
   border: 1px solid var(--border-color);
   position: relative;
   box-shadow: 0 10px 30px var(--shadow-color);
   clip-path: polygon(20px 0%, 100% 0%, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0% 100%, 0% 20px);
-  
+
   animation: heroCardFloatUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
 }
 
@@ -769,6 +770,7 @@ body::before {
     opacity: 0;
     transform: translateY(40px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -1390,7 +1392,8 @@ body::before {
 }
 
 /* Grid for Instagram Feed - 6 columns */
-.grid-instagram {
+.grid-instagram,
+.grid-rels {
   grid-template-columns: repeat(6, 1fr);
 }
 
@@ -1416,7 +1419,9 @@ body::before {
 
 /* Responsive Grids */
 @media (max-width: 900px) {
-  .grid-instagram {
+
+  .grid-instagram,
+  .grid-rels {
     grid-template-columns: repeat(3, 1fr);
   }
 
@@ -1432,8 +1437,11 @@ body::before {
 }
 
 @media (max-width: 600px) {
-  .grid-instagram {
-    grid-template-columns: repeat(1, 1fr);
+
+  .grid-instagram,
+  .grid-rels {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
   }
 
   .grid-logo,
@@ -1480,29 +1488,125 @@ body::before {
 
 /* Instagram Feed Override */
 .portfolio-item.instagram-feed {
-  grid-column: span 2;
-  aspect-ratio: auto !important;
+  aspect-ratio: 4 / 5 !important;
   height: auto !important;
-  min-height: 500px;
-  overflow: visible !important;
+  overflow: hidden !important;
+  position: relative;
+  display: block;
+  border-radius: 12px;
   background: transparent;
   border: none;
+}
+
+.portfolio-item.instagram-feed iframe {
+  position: absolute !important;
+  top: -55px !important;
+  /* Offset the 54px instagram header */
+  left: -2px !important;
+  width: calc(100% + 4px) !important;
+  min-width: calc(100% + 4px) !important;
+  height: calc(100% + 120px) !important;
+  /* Large height, bottom is clipped by overflow */
+}
+
+/* Reels Override */
+.portfolio-item.instagram-reels {
+  aspect-ratio: 9 / 16 !important;
+  height: auto !important;
+  overflow: hidden !important;
+  position: relative;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  border-radius: 12px;
+  background: transparent;
+  border: none;
+}
+
+.portfolio-item.instagram-reels iframe {
+  position: relative !important;
+  margin-top: -55px !important;
+  margin-bottom: -120px !important;
+  /* ← tambahkan ini untuk dorong footer keluar */
+  left: -2px !important;
+  width: calc(100% + 4px) !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: calc(100% + 175px) !important;
+  /* ← perbesar tinggi iframe */
+}
+
+.portfolio-item.custom-reel {
+  aspect-ratio: 9 / 16 !important;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #111;
+  display: block;
+}
+
+.portfolio-item.custom-reel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.portfolio-item.custom-reel:hover img {
+  transform: scale(1.05);
+  /* Soft zoom on hover */
+}
+
+.reel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
+  z-index: 2;
+  transition: background 0.3s ease;
 }
 
-@media (max-width: 900px) {
-  .portfolio-item.instagram-feed {
-    grid-column: span 3;
-  }
+.portfolio-item.custom-reel:hover .reel-overlay {
+  background: rgba(0, 0, 0, 0.5);
 }
 
-@media (max-width: 600px) {
-  .portfolio-item.instagram-feed {
-    grid-column: 1 / -1;
-  }
+.play-icon {
+  width: 50px;
+  height: 50px;
+  fill: #fff;
+  opacity: 0.9;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  margin-bottom: 10px;
 }
+
+.view-text {
+  color: #fff;
+  font-size: 0.9rem;
+  font-family: 'Space Mono', monospace;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.portfolio-item.custom-reel:hover .play-icon {
+  transform: scale(1.15);
+  opacity: 1;
+}
+
+.portfolio-item.custom-reel:hover .view-text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 
 .portfolio-item:hover img {
   transform: scale(1.05);
@@ -2533,7 +2637,8 @@ body::before {
 /* Portfolio Responsive */
 /* Portfolio Preview Section */
 .portfolio {
-  padding: 120px 0 60px; /* Menambah padding atas untuk ruang header jika dibutuhkan, atau sesuaikan */
+  padding: 120px 0 60px;
+  /* Menambah padding atas untuk ruang header jika dibutuhkan, atau sesuaikan */
   background: transparent;
 }
 
@@ -2865,9 +2970,246 @@ body::before {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
   color: var(--text-primary);
-  letter-spacing: 4px;
-  font-weight: 800;
+}
+
+/* ===== TRENDING CAROUSEL SECTION ===== */
+
+.trending-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.carousel-container {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  background: rgba(5, 223, 114, 0.02);
+  border: 1px solid var(--border-color);
+  padding: 12px;
+}
+
+.carousel-track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+  animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.trending-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  backdrop-filter: blur(10px);
+}
+
+.trending-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--text-primary);
+  box-shadow: 0 12px 32px rgba(5, 223, 114, 0.2);
+  background: rgba(5, 223, 114, 0.05);
+}
+
+.card-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, rgba(5, 223, 114, 0.1), rgba(0, 209, 255, 0.1));
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease, filter 0.3s ease;
+}
+
+.trending-card:hover .card-image img {
+  transform: scale(1.08);
+  filter: brightness(1.1) saturate(1.15);
+}
+
+.card-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 10px;
+}
+
+.card-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  opacity: 0.8;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  line-height: 1.3;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.trending-card:hover .card-title {
+  color: var(--text-primary);
+}
+
+.card-description {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  opacity: 0.8;
+  line-height: 1.5;
+  flex: 1;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Carousel Navigation */
+.carousel-nav-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 12px;
+}
+
+.nav-btn {
+  width: 40px;
+  height: 40px;
+  background: rgba(5, 223, 114, 0.1);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.nav-btn:hover {
+  background: rgba(5, 223, 114, 0.2);
+  border-color: var(--text-primary);
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(5, 223, 114, 0.3);
+}
+
+.nav-btn:active {
+  transform: scale(0.95);
+}
+
+.carousel-indicator {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  opacity: 0.7;
+  min-width: 80px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .carousel-track {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .card-image {
+    height: 180px;
+  }
+}
+
+@media (max-width: 900px) {
+  .carousel-track {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .card-content {
+    padding: 14px;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-description {
+    font-size: 0.8125rem;
+  }
+
+  .card-image {
+    height: 160px;
+  }
+}
+
+@media (max-width: 600px) {
+  .carousel-track {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .carousel-container {
+    padding: 8px;
+  }
+
+  .card-image {
+    height: 220px;
+  }
+
+  .card-content {
+    padding: 12px;
+  }
+
+  .card-title {
+    font-size: 0.95rem;
+  }
+
+  .card-description {
+    font-size: 0.75rem;
+    -webkit-line-clamp: 1;
+  }
+
+  .nav-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .carousel-indicator {
+    font-size: 0.8125rem;
+  }
 }
 
 .status-bars {
@@ -3330,4 +3672,17 @@ body::before {
   .mobile-menu {
     display: none !important;
   }
+}
+
+/* CSS untuk menghilangkan border frame putih instagram */
+.instagram-media {
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  width: 100% !important;
 }
