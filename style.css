@@ -1,4 +1,6 @@
 /* Reset & Base Styles */
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -23,7 +25,7 @@
   --glass-bg: rgba(255, 255, 255, 0.8);
   --grid-pattern: rgba(4, 120, 87, 0.05);
   --hero-overlay: rgba(255, 255, 255, 0.7);
-  --font-main: 'Inter', system-ui;
+  --font-main: 'Anta', sans-serif;
 }
 
 /* Typewriter Effect Classes */
@@ -478,11 +480,13 @@ body::before {
   width: 100%;
   max-width: 1200px;
   padding: 0 20px;
+  margin: 100px auto 0; /* Jarak atas diperlebar, auto agar ke tengah */
+  text-align: center;
 }
 
 .hero-tag {
   color: var(--text-primary);
-  font-size: 0.85rem;
+  font-size: 8px;
   margin-bottom: 24px;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -522,7 +526,7 @@ body::before {
   color: var(--text-secondary);
   text-transform: none;
   letter-spacing: -1px;
-  margin-bottom: 20px;
+  margin-bottom: 20px; /* Jarak antara title dan tagline diperlebar */
   text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
 }
 
@@ -533,7 +537,7 @@ body::before {
 
 .hero-tagline {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.9rem;
+  font-size: 10px;
   color: var(--text-secondary);
   letter-spacing: 4px;
   margin-bottom: 40px;
@@ -562,7 +566,7 @@ body::before {
 }
 
 .btn-hud {
-  padding: 14px 28px;
+  padding: 10px 20px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.85rem;
   font-weight: 800;
@@ -576,7 +580,7 @@ body::before {
 }
 
 .btn-cyan {
-  background: #00d9ff;
+  background: #ffd500;
   color: #000;
   box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
 }
@@ -1407,9 +1411,9 @@ body::before {
   grid-template-columns: repeat(6, 1fr);
 }
 
-/* Grid for Photography - 3 columns */
+/* Grid for Photography - 6 columns */
 .grid-photo {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
 }
 
 /* Grid for Website - 3 columns */
@@ -1425,7 +1429,10 @@ body::before {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .grid-logo,
+  .grid-logo {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   .grid-photo {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -1444,11 +1451,14 @@ body::before {
     gap: 10px;
   }
 
-  .grid-logo,
-  .grid-photo,
   .grid-outdoor,
   .grid-website {
     grid-template-columns: repeat(1, 1fr);
+  }
+
+  .grid-logo,
+  .grid-photo {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
