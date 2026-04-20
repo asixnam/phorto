@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'August';
+  src: url('public/August-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 /* Reset & Base Styles */
 @import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
 
@@ -69,7 +76,7 @@ body.dark-mode {
   --header-bg: rgba(15, 23, 43, 0.8);
   --menu-wrapper-border: rgba(5, 223, 114, 0.1);
   --overlay-bg: rgba(5, 223, 114, 0.05);
-  --glass-bg: rgba(22, 30, 51, 0.6);
+  --glass-bg: rgba(0, 41, 66, 0.204);
   --grid-pattern: rgba(5, 223, 114, 0.05);
   --hero-overlay: rgba(15, 23, 43, 0.6);
 }
@@ -117,7 +124,7 @@ body::before {
   width: calc(100% - 40px);
   max-width: 1200px;
   padding: 8px 0;
-  background:#00000000;
+  background: #00000000;
   backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
   border-radius: 4px;
@@ -145,9 +152,9 @@ body::before {
   position: relative;
   width: 40px;
   height: 40px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  padding: 4px;
+  background: none;
+  border: none;
+  padding: 0;
 }
 
 .profile-avatar img {
@@ -173,10 +180,15 @@ body::before {
 }
 
 .profile-name {
+  font-family: 'August', sans-serif;
   font-weight: 800;
-  font-size: 0.9rem;
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1;
   color: var(--text-secondary);
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-left: 5px;
 }
 
 .profile-status {
@@ -480,7 +492,8 @@ body::before {
   width: 100%;
   max-width: 1200px;
   padding: 0 20px;
-  margin: 100px auto 0; /* Jarak atas diperlebar, auto agar ke tengah */
+  margin: 100px auto 0;
+  /* Jarak atas diperlebar, auto agar ke tengah */
   text-align: center;
 }
 
@@ -520,14 +533,22 @@ body::before {
 }
 
 .hero-title {
-  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-family: 'August', sans-serif;
+  font-size: 150px;
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 0.85;
   color: var(--text-secondary);
   text-transform: none;
-  letter-spacing: -1px;
-  margin-bottom: 20px; /* Jarak antara title dan tagline diperlebar */
+  letter-spacing: -2px;
+  margin-bottom: 20px;
+  /* Jarak antara title dan tagline diperlebar */
   text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 60px !important;
+  }
 }
 
 .name-blue {
@@ -540,7 +561,7 @@ body::before {
   font-size: 10px;
   color: var(--text-secondary);
   letter-spacing: 4px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   opacity: 0.8;
   text-transform: uppercase;
 }
@@ -856,7 +877,8 @@ body::before {
 }
 
 .stat-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'August', sans-serif;
+  font-style: italic;
   font-size: 0.7rem;
   color: var(--text-secondary);
   text-transform: uppercase;
@@ -872,11 +894,12 @@ body::before {
 }
 
 .section-title {
+  font-family: 'August', sans-serif;
   text-align: center;
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  font-size: 80px;
   margin-bottom: 40px;
   color: var(--text-primary);
-  font-weight: 800;
   letter-spacing: -1px;
   text-transform: uppercase;
 }
@@ -1257,6 +1280,176 @@ body::before {
   line-height: 1.8;
 }
 
+/* Testimonials Section */
+.testimonials {
+  padding: 100px 0;
+  background: var(--overlay-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonials-marquee {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+.testimonials-row {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+
+.testimonials-inner {
+  display: flex;
+  gap: 30px;
+  width: max-content;
+  padding: 20px 0;
+}
+
+.testimonials-row.row-right .testimonials-inner {
+  animation: scroll-right 60s linear infinite;
+}
+
+.testimonial-card {
+  flex: 0 0 550px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  padding: 30px;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px var(--shadow-color);
+  clip-path: polygon(20px 0%, 100% 0%,
+      100% calc(100% - 20px),
+      calc(100% - 20px) 100%,
+      0% 100%, 0% 20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.testimonials-row:hover .testimonials-inner {
+  animation-play-state: paused;
+}
+
+.testimonial-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid var(--text-primary);
+  border-left: 2px solid var(--text-primary);
+}
+
+.testimonial-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border-bottom: 2px solid var(--text-primary);
+  border-right: 2px solid var(--text-primary);
+}
+
+.testimonial-card:hover {
+  border-color: var(--text-primary);
+  box-shadow: 0 0 30px rgba(5, 223, 114, 0.15);
+  transform: translateY(-5px);
+}
+
+.testimonial-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.client-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--text-primary);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 223, 114, 0.05);
+}
+
+.client-avatar i {
+  font-size: 2.5rem;
+  color: var(--text-primary);
+  opacity: 0.7;
+}
+
+.client-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.client-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.client-name {
+  font-family: 'August', sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.client-role {
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  opacity: 0.8;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.testimonial-body {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  /* font-style: italic; */
+  opacity: 0.9;
+}
+
+.testimonial-footer {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.rating {
+  color: #ff9100;
+  font-size: 0.9rem;
+  display: flex;
+  gap: 4px;
+}
+
+.rating .far {
+  opacity: 0.4;
+}
+
+@media (max-width: 768px) {
+  .testimonial-card {
+    flex: 0 0 300px;
+    padding: 30px;
+  }
+}
+
 /* Portfolio Section */
 .portfolio {
   padding: 80px 0;
@@ -1365,11 +1558,11 @@ body::before {
 
 /* Category Title - HUD Style */
 .category-title {
-  font-size: 1.2rem;
+  font-family: 'August', sans-serif;
+  font-size: 40px;
   font-weight: 800;
   margin-bottom: 40px;
   color: var(--text-primary);
-  font-family: 'JetBrains Mono', monospace;
   letter-spacing: 2px;
   text-transform: uppercase;
   display: flex;
@@ -2917,22 +3110,25 @@ body::before {
 
 .binary-code {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 2rem;
+  font-size: 25px;
   font-weight: 900;
   color: var(--text-secondary);
   letter-spacing: 10px;
   line-height: 1;
   display: block;
+  margin-bottom: 0;
 }
 
 .connection-title {
-  font-size: 5rem;
+  font-family: 'August', sans-serif;
+  font-size: 10rem;
   font-weight: 950;
   color: var(--text-primary);
   text-transform: uppercase;
-  margin-top: -20px;
+  margin-top: 15px;
   letter-spacing: -2px;
   display: block;
+  line-height: 0.8;
 }
 
 .signal-card {
