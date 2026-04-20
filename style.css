@@ -183,8 +183,8 @@ body::before {
   font-family: 'August', sans-serif;
   font-weight: 800;
   font-style: italic;
-  font-size: 1rem;
-  line-height: 1;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  line-height: 1.1;
   color: var(--text-secondary);
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -192,7 +192,7 @@ body::before {
 }
 
 .profile-status {
-  font-size: 0.65rem;
+  font-size: clamp(0.6rem, 1.5vw, 0.65rem);
   color: var(--text-primary);
   opacity: 0.8;
 }
@@ -499,7 +499,7 @@ body::before {
 
 .hero-tag {
   color: var(--text-primary);
-  font-size: 8px;
+  font-size: clamp(0.6rem, 1vw, 0.75rem);
   margin-bottom: 24px;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -534,7 +534,7 @@ body::before {
 
 .hero-title {
   font-family: 'August', sans-serif;
-  font-size: 150px;
+  font-size: clamp(3rem, 12vw, 150px);
   font-weight: 800;
   line-height: 0.85;
   color: var(--text-secondary);
@@ -547,7 +547,9 @@ body::before {
 
 @media (max-width: 768px) {
   .hero-title {
-    font-size: 60px !important;
+    font-size: clamp(2.5rem, 15vw, 60px) !important;
+    line-height: 1.1;
+    letter-spacing: -1px;
   }
 }
 
@@ -558,7 +560,7 @@ body::before {
 
 .hero-tagline {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
+  font-size: clamp(0.6rem, 1.5vw, 0.75rem);
   color: var(--text-secondary);
   letter-spacing: 4px;
   margin-bottom: 20px;
@@ -897,7 +899,7 @@ body::before {
   font-family: 'August', sans-serif;
   text-align: center;
   font-weight: 800;
-  font-size: 80px;
+  font-size: clamp(2.5rem, 10vw, 80px);
   margin-bottom: 40px;
   color: var(--text-primary);
   letter-spacing: -1px;
@@ -1403,7 +1405,7 @@ body::before {
 
 .client-name {
   font-family: 'August', sans-serif;
-  font-size: 30px;
+  font-size: clamp(1.2rem, 4vw, 30px);
   font-weight: 800;
   color: var(--text-secondary);
   margin-bottom: 4px;
@@ -1459,7 +1461,7 @@ body::before {
 
 .section-subtitle {
   text-align: center;
-  font-size: 1.1 rem;
+  font-size: 1.1rem;
   color: var(--text-secondary);
   margin-bottom: 40px;
   font-weight: 400;
@@ -1559,7 +1561,7 @@ body::before {
 /* Category Title - HUD Style */
 .category-title {
   font-family: 'August', sans-serif;
-  font-size: 40px;
+  font-size: clamp(1.5rem, 5vw, 40px);
   font-weight: 800;
   margin-bottom: 40px;
   color: var(--text-primary);
@@ -2115,14 +2117,14 @@ body::before {
 
 /* Footer Section Headings */
 .footer-section h3 {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 15px;
   color: var(--text-primary);
 }
 
 .footer-section h4 {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
   margin-bottom: 20px;
   color: var(--text-primary);
@@ -2729,7 +2731,7 @@ body::before {
   }
 
   .stat-number {
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 
   .stat-label {
@@ -2749,7 +2751,7 @@ body::before {
   }
 
   .stat-number {
-    font-size: 22px;
+    font-size: 1.375rem;
   }
 
   .hero-mobile-description {
@@ -3110,7 +3112,7 @@ body::before {
 
 .binary-code {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 25px;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
   font-weight: 900;
   color: var(--text-secondary);
   letter-spacing: 10px;
@@ -3121,7 +3123,7 @@ body::before {
 
 .connection-title {
   font-family: 'August', sans-serif;
-  font-size: 10rem;
+  font-size: clamp(4rem, 15vw, 10rem);
   font-weight: 950;
   color: var(--text-primary);
   text-transform: uppercase;
@@ -3489,11 +3491,13 @@ body::before {
 
 @media (max-width: 768px) {
   .binary-code {
-    font-size: 2.5rem;
+    font-size: clamp(0.7rem, 3.5vw, 1rem);
+    letter-spacing: 2px;
+    white-space: nowrap;
   }
 
   .connection-title {
-    font-size: 3rem;
+    font-size: clamp(2.5rem, 12vw, 4.5rem);
   }
 
   .signal-card {
@@ -3716,7 +3720,7 @@ body::before {
 }
 
 .shop-cta-section h3 {
-  font-size: 2.2rem;
+  font-size: clamp(1.4rem, 5vw, 2.2rem);
   font-weight: 700;
   margin-bottom: 1rem;
   color: var(--text-primary);
