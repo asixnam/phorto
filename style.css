@@ -117,13 +117,13 @@ body::before {
   width: calc(100% - 40px);
   max-width: 1200px;
   padding: 8px 0;
-  background: var(--header-bg);
+  background:#00000000;
   backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
   border-radius: 4px;
   z-index: 1000;
   font-family: monospace;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0);
 }
 
 .navbar {
@@ -1615,6 +1615,43 @@ body::before {
 .portfolio-item.custom-reel:hover .view-text {
   opacity: 1;
   transform: translateY(0);
+}
+
+.insta-handle {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 6px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 3;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.insta-handle i {
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+.insta-handle span {
+  color: #fff;
+  font-family: 'Anta', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.portfolio-item.custom-reel:hover .insta-handle {
+  background: rgba(0, 0, 0, 0.6);
+  border-color: rgba(5, 223, 114, 0.3);
+  transform: translateX(5px);
 }
 
 
