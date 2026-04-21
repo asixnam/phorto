@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+
 @font-face {
   font-family: 'August';
   src: url('public/August-Bold.ttf') format('truetype');
@@ -5,8 +7,13 @@
   font-style: normal;
 }
 
-/* Reset & Base Styles */
-@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+@font-face {
+  font-family: 'Anta-Local';
+  src: url('public/Anta-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 * {
   margin: 0;
@@ -32,7 +39,7 @@
   --glass-bg: rgba(255, 255, 255, 0.8);
   --grid-pattern: rgba(4, 120, 87, 0.05);
   --hero-overlay: rgba(255, 255, 255, 0.7);
-  --font-main: 'Anta', sans-serif;
+  --font-main: 'Anta', 'Anta-Local', sans-serif;
 }
 
 /* Typewriter Effect Classes */
@@ -725,6 +732,7 @@ body::before {
 }
 
 .about-description {
+  font-family: var(--font-main);
   font-size: 1.1rem;
   line-height: 1.8;
   color: var(--text-secondary);
