@@ -37,7 +37,7 @@
   --shadow-color: rgba(0, 0, 0, 0.08);
   --header-bg: rgba(255, 255, 255, 0.9);
   --menu-wrapper-border: rgba(4, 120, 87, 0.1);
-  --overlay-bg: rgba(4, 120, 87, 0.05);
+  --overlay-bg: rgba(91, 2, 2, 0.042);
   --glass-bg: rgba(255, 255, 255, 0.8);
   --grid-pattern: rgba(4, 120, 87, 0.05);
   --hero-overlay: rgba(255, 255, 255, 0.7);
@@ -566,7 +566,7 @@ body::before {
 
 .name-blue {
   color: var(--accent-blue);
-  text-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+  text-shadow: 0 0 20px rgba(45, 0, 0, 0.4);
 }
 
 .hero-tagline {
@@ -620,14 +620,14 @@ body::before {
 }
 
 .btn-cyan:hover {
-  background: #fff;
+  background: var(--bg-social);
   box-shadow: 0 0 30px rgba(0, 217, 255, 0.5);
   transform: translateY(-2px);
 }
 
 .btn-outline {
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
+  border: 1px solid var(--accent-blue);
+  color: var(--accent-blue);
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(5px);
 }
@@ -3109,9 +3109,9 @@ body::before {
 /* Signal Uplink Section (Contact) */
 .signal-uplink {
   padding: 120px 20px;
-  background-color: var(--bg-primary);
+  background-color: #00000000;
   background-image:
-    radial-gradient(circle, rgba(5, 223, 114, 0.05) 1px, transparent 1px);
+    radial-gradient(circle, rgba(5, 223, 114, 0) 1px, transparent 1px);
   background-size: 30px 30px;
   text-align: center;
   position: relative;
