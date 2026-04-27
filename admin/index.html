@@ -9,20 +9,33 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="../public/logo.png">
   <style>
-    /* Admin Dashboard Inline Styles */
+    /* Admin Dashboard Dynamic Styles */
     :root {
+      /* Default Light Mode Variables */
+      --admin-bg: #f5f7fa;
+      --admin-text: #1a1a1a;
+      --admin-card-bg: #ffffff;
+      --admin-border: rgba(0, 0, 0, 0.1);
+      --text-primary: #0088cc;
+      --text-secondary: #2c3e50;
+    }
+
+    /* Dark Mode Overrides */
+    body.dark-mode {
+      --admin-bg: #0a0a0b;
+      --admin-text: #ffffff;
+      --admin-card-bg: rgba(255, 255, 255, 0.03);
+      --admin-border: rgba(255, 255, 255, 0.1);
       --text-primary: #00f2ff;
       --text-secondary: #05df72;
-      --bg-dark: #0a0a0b;
-      --border-color: rgba(255, 255, 255, 0.1);
     }
     
     body { 
-        background: var(--bg-dark); 
-        color: white; 
+        background: var(--admin-bg); 
+        color: var(--admin-text); 
         margin: 0; 
         font-family: 'Inter', sans-serif;
-        transition: background 0.3s, color 0.3s; 
+        transition: all 0.3s ease; 
     }
 
     .login-container {
@@ -49,11 +62,12 @@
     }
 
     .stat-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid var(--border-color);
-        padding: 20px;
-        border-radius: 8px;
+        background: var(--admin-card-bg);
+        border: 1px solid var(--admin-border);
+        padding: 25px;
+        border-radius: 12px;
         text-align: center;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     }
 
     .stat-card h3 { 
@@ -64,7 +78,7 @@
     }
 
     .stat-card .stat-value { 
-        font-size: 2rem; 
+        font-size: 2.2rem; 
         font-weight: bold; 
         color: var(--text-primary); 
     }
@@ -72,21 +86,22 @@
     /* Table Styling */
     .dashboard-section {
         margin-top: 20px;
-        border-radius: 10px;
+        border-radius: 12px;
         overflow-x: auto;
+        border: 1px solid var(--admin-border);
     }
 
     .dashboard-table {
         width: 100%;
         border-collapse: collapse;
-        background: rgba(0, 0, 0, 0.2);
-        min-width: 800px;
+        background: var(--admin-card-bg);
+        min-width: 900px;
     }
 
     .dashboard-table th, .dashboard-table td {
-        padding: 15px;
+        padding: 18px;
         text-align: left;
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--admin-border);
     }
 
     .dashboard-table th {
@@ -96,14 +111,14 @@
         color: var(--text-primary);
     }
 
-    /* Theme Toggle */
+    /* Theme Toggle Button */
     .theme-toggle-admin {
         position: fixed;
-        top: 20px;
-        right: 20px;
+        top: 25px;
+        right: 25px;
         z-index: 1000;
-        background: rgba(255,255,255,0.05);
-        border: 1px solid var(--border-color);
+        background: var(--admin-card-bg);
+        border: 1px solid var(--admin-border);
         color: var(--text-primary);
         width: 45px;
         height: 45px;
@@ -112,6 +127,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
 
     /* Responsive */
@@ -127,8 +143,8 @@
             display: block;
         }
         .dashboard-table thead tr { position: absolute; top: -9999px; left: -9999px; }
-        .dashboard-table tr { margin-bottom: 25px; border: 1px solid var(--border-color); padding: 15px; border-radius: 12px; background: rgba(255,255,255,0.03); }
-        .dashboard-table td { border: none; padding: 10px 0 !important; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .dashboard-table tr { margin-bottom: 25px; border: 1px solid var(--admin-border); padding: 15px; border-radius: 12px; background: var(--admin-card-bg); }
+        .dashboard-table td { border: none; padding: 10px 0 !important; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--admin-border); }
         .dashboard-table td:before { content: attr(data-label); font-weight: bold; color: var(--text-primary); font-size: 0.65rem; }
     }
   </style>
