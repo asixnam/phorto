@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Checkout - Mohamad Khoirul Anam</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="public/logo.png">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+  <div id="header-container"></div>
+
+  <section class="checkout-section" style="padding: 120px 20px 60px;">
+    <div class="container" style="max-width: 800px;">
+      <div style="text-align: center; margin-bottom: 50px;">
+        <div class="section-tag" style="display: inline-block;">// ORDER_UPLINK_ESTABLISHED</div>
+        <h1 class="hero-title" style="font-size: clamp(2.5rem, 10vw, 80px); margin: 20px 0;">KONFIRMASI PESANAN</h1>
+      </div>
+
+      <div id="checkoutContainer" class="about-card" style="padding: 40px; margin-bottom: 30px;">
+        <form id="orderForm" class="modal-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>NAMA_KLIEN</label>
+              <input type="text" id="clientName" placeholder="Masukkan nama Anda" required>
+            </div>
+            <div class="form-group">
+              <label>WHATSAPP_UPLINK</label>
+              <input type="text" id="clientWA" placeholder="Contoh: 08123456789" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>EMAIL_ADDRESS</label>
+            <input type="email" id="clientEmail" placeholder="nama@email.com" required>
+          </div>
+          <div class="form-group">
+            <label>JENIS_PEMESANAN</label>
+            <select id="serviceNameInput" required class="form-select">
+              <option value="" disabled selected>Pilih Layanan</option>
+              <option value="Desain Logo">Desain Logo</option>
+              <option value="Desain Kaos">Desain Kaos</option>
+              <option value="Feed Instagram">Feed Instagram</option>
+              <option value="Desain Stiker">Desain Stiker</option>
+              <option value="Desain Mug">Desain Mug</option>
+              <option value="Desain Lanyard">Desain Lanyard</option>
+              <option value="Desain ID Card">Desain ID Card</option>
+              <option value="Pembuatan Website">Pembuatan Website</option>
+              <option value="Fotografi">Fotografi</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>CATATAN_MISI</label>
+            <textarea id="orderNotes" rows="4" placeholder="Detail pesanan atau request khusus..."></textarea>
+          </div>
+
+          <!-- Payment Section -->
+          <div class="payment-info" style="margin-top: 30px; background: rgba(5, 223, 114, 0.05);">
+            <div class="section-tag">// PAYMENT_GATEWAY</div>
+            <div class="payment-details">
+              <div class="payment-method">
+                <i class="fas fa-university"></i>
+                <span>Bank BRI: <strong>001001061913504</strong></span>
+                <small>A.n Mohamad Khoirul Anam</small>
+              </div>
+              <div class="payment-method">
+                <i class="fas fa-wallet"></i>
+                <span>DANA (Aktif): <strong>085943548498 </strong></span>
+                <small>A.n Mohamad Khoirul Anam</small>
+              </div>
+              <div class="payment-method">
+                <i class="fas fa-wallet"></i>
+                <span>ShopeePay: <strong>081323596022 </strong></span>
+                <small>A.n Mohamad Khoirul Anam</small>
+              </div>
+            </div>
+            <p class="payment-note">*Silakan lakukan pembayaran DP 50% atau Pelunasan untuk memproses antrean.</p>
+          </div>
+
+          <button type="submit" class="service-cta"
+            style="width: 100%; border: none; cursor: pointer; margin-top: 30px; padding: 20px;">
+            <i class="fas fa-paper-plane"></i> KIRIM PESANAN & BAYAR SEKARANG
+          </button>
+        </form>
+      </div>
+
+      <div style="text-align: center;">
+        <a href="shop.html"
+          style="color: var(--text-primary); text-decoration: none; font-size: 0.8rem; letter-spacing: 2px;">
+          <i class="fas fa-arrow-left"></i> KEMBALI KE SHOP
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-container"></div>
+
+  <script src="scripts.js"></script>
+  <script>
+    loadHeader();
+
+    // Supabase Config
+    const SUPABASE_URL = 'https://nmlxivljaduwpttsxgoe.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5tbHhpdmxqYWR1d3B0dHN4Z29lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcyODAxNjQsImV4cCI6MjA5Mjg1NjE2NH0.ApzztRY7eKPV0Ivo5aOv_0vjgxAG2gDM3HhuFSle4SI';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Auto-select service from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const service = urlParams.get('service');
+    if (service) {
+      document.getElementById('serviceNameInput').value = service;
+    }
+
+    // Handle Form Submit
+    document.getElementById('orderForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> PROCESSING_UPLINK...';
+      submitBtn.disabled = true;
+
+      const formData = {
+        client_name: document.getElementById('clientName').value,
+        client_whatsapp: document.getElementById('clientWA').value,
+        client_email: document.getElementById('clientEmail').value,
+        order_type: document.getElementById('serviceNameInput').value,
+        order_notes: document.getElementById('orderNotes').value,
+        status: 'pending',
+        payment_status: 'unpaid'
+      };
+
+      try {
+        const { data, error } = await supabaseClient.from('orders').insert([formData]);
+        if (error) throw error;
+
+        // Show Payment Section
+        document.getElementById('checkoutContainer').innerHTML = `
+          <div style="text-align: center; animation: slideUp 0.5s ease;">
+            <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--text-primary); margin-bottom: 20px;"></i>
+            <h2 class="service-title">PESANAN TERKIRIM!</h2>
+            <p style="margin-bottom: 30px; opacity: 0.8;">Data Anda telah kami terima. Silakan lakukan pembayaran untuk memproses pesanan.</p>
+            
+            <div class="payment-info" style="background: rgba(5, 223, 114, 0.05); text-align: left; padding: 25px;">
+              <div class="section-tag">// RINCIAN_PEMBAYARAN</div>
+              <div class="payment-details" style="margin: 20px 0;">
+                <div class="payment-method" style="font-size: 1.1rem; margin-bottom: 15px;">
+                  <i class="fas fa-university"></i>
+                  <span>Bank Mandiri: <br><strong>1350017124237</strong></span>
+                  <small style="display:block; margin-top:5px;">A.n Mohamad Khoirul Anam</small>
+                </div>
+                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 15px 0;">
+                <div class="payment-method" style="font-size: 1.1rem;">
+                  <i class="fas fa-qrcode"></i>
+                  <span>DANA / ShopeePay: <br><strong>081323596022</strong></span>
+                </div>
+              </div>
+              <p class="payment-note" style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 4px;">
+                <strong>TOTAL: DP 50% atau Pelunasan</strong><br>
+                Harap simpan bukti transfer Anda.
+              </p>
+            </div>
+
+            <a href="https://wa.me/6281323596022?text=${encodeURIComponent('Halo Anam, saya sudah melakukan pemesanan ' + formData.order_type + ' dan ingin konfirmasi pembayaran.')}" 
+               target="_blank" class="service-cta" style="display: block; margin-top: 30px; text-decoration: none;">
+              <i class="fab fa-whatsapp"></i> KONFIRMASI VIA WHATSAPP
+            </a>
+          </div>
+        `;
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      } catch (error) {
+        alert('Gagal: ' + error.message);
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> KIRIM PESANAN & BAYAR SEKARANG';
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+
+</html>

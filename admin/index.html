@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard - Mohamad Khoirul Anam</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="admin-style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="../public/logo.png">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body class="dark-mode">
+
+  <!-- Theme Toggle -->
+  <button id="themeToggle" class="theme-toggle-admin">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <!-- Login Section -->
+  <div id="loginSection" class="login-container">
+    <div class="about-card" style="max-width: 400px; width: 100%; text-align: center;">
+      <div class="section-tag">// SECURE_UPLINK_REQUIRED</div>
+      <h1 class="service-title">ADMIN LOGIN</h1>
+      <form id="loginForm" class="modal-form">
+        <div class="form-group" style="position: relative;">
+          <label>ACCESS_KEY</label>
+          <input type="password" id="adminPassword" placeholder="Enter security key" required
+            style="background: rgba(255,255,255,0.05); border: 1px solid var(--text-primary); text-align: center; letter-spacing: 5px; color: var(--text-secondary); width: 100%;">
+          <i id="togglePassword" class="fas fa-eye" style="position: absolute; right: 15px; top: 35px; cursor: pointer; opacity: 0.5;"></i>
+        </div>
+        <button type="submit" class="service-cta" style="width: 100%; border: none; cursor: pointer; margin-top: 20px;">
+          <i class="fas fa-unlock"></i> AUTHORIZE
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dashboard Section -->
+  <div id="adminDashboard">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 60px;">
+        <div class="section-tag" style="display: inline-block;">// COMMAND_CENTER</div>
+        <h1 class="hero-title" style="font-size: 3.5rem; margin: 20px 0;">ORDER MANAGEMENT</h1>
+        
+        <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
+          <button onclick="fetchOrders()" class="btn-hud btn-outline" style="font-size: 0.8rem;">
+            <i class="fas fa-sync"></i> REFRESH_DATA
+          </button>
+          <button onclick="handleLogout()" class="btn-hud btn-outline" style="font-size: 0.8rem; border-color: #ff4d4d; color: #ff4d4d;">
+            <i class="fas fa-sign-out-alt"></i> TERMINATE_SESSION
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats Summary -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>TOTAL_PESANAN</h3>
+          <div id="statTotal" class="stat-value">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>BELUM_DP / UNPAID</h3>
+          <div id="statUnpaid" class="stat-value">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>LUNAS / PAID</h3>
+          <div id="statPaid" class="stat-value">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>SELESAI / COMPLETED</h3>
+          <div id="statCompleted" class="stat-value" style="color: #05df72;">0</div>
+        </div>
+      </div>
+
+      <div class="dashboard-section" style="display: block; background: transparent;">
+        <table class="dashboard-table">
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Layanan</th>
+              <th>Klien</th>
+              <th>WhatsApp</th>
+              <th>Catatan</th>
+              <th>Status</th>
+              <th>Pembayaran</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody">
+            <!-- Data loaded via JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top: 40px; text-align: center;">
+        <a href="../shop.html" style="color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.7rem;">
+          <i class="fas fa-external-link-alt"></i> Back to Public Site
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://nmlxivljaduwpttsxgoe.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5tbHhpdmxqYWR1d3B0dHN4Z29lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcyODAxNjQsImV4cCI6MjA5Mjg1NjE2NH0.ApzztRY7eKPV0Ivo5aOv_0vjgxAG2gDM3HhuFSle4SI';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const loginSection = document.getElementById('loginSection');
+    const adminDashboard = document.getElementById('adminDashboard');
+    const ordersTableBody = document.getElementById('ordersTableBody');
+
+    // Login logic with Supabase Auth
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> AUTHENTICATING...';
+      
+      // Masukkan EMAIL yang Anda buat di menu 'Authentication' Supabase
+      const email = "admin@asixnam.com"; 
+      const passwordInput = document.getElementById('adminPassword');
+
+      if (!passwordInput) {
+        alert('Error: Elemen password tidak ditemukan!');
+        return;
+      }
+
+      try {
+        const passwordValue = passwordInput.value.trim();
+        console.log("Attempting login for:", email);
+        
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+          email: email,
+          password: passwordValue,
+        });
+
+        console.log("Supabase response:", { data, error });
+
+        if (error) throw error;
+        showDashboard();
+      } catch (error) {
+        console.error("Login Error Object:", error);
+        let msg = error.message;
+        if (msg === "Invalid login credentials") {
+          msg = "Email atau Password Salah. Silakan cek kembali atau matikan 'Confirm Email' di settings Supabase.";
+        }
+        alert('LOGIN GAGAL: ' + msg);
+        submitBtn.innerHTML = '<i class="fas fa-unlock"></i> AUTHORIZE';
+      }
+    });
+
+    // Toggle Password Visibility
+    document.getElementById('togglePassword').addEventListener('click', function() {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      this.classList.toggle('fa-eye');
+      this.classList.toggle('fa-eye-slash');
+    });
+
+    async function checkSession() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (session) {
+        showDashboard();
+      }
+    }
+
+    function showDashboard() {
+      loginSection.style.display = 'none';
+      adminDashboard.style.display = 'block';
+      fetchOrders();
+    }
+
+    window.handleLogout = async () => {
+      await supabaseClient.auth.signOut();
+      location.reload();
+    };
+
+    // Run session check on load
+    checkSession();
+
+    async function fetchOrders() {
+      ordersTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 40px;">ACCESSING_DATABASE...</td></tr>';
+
+      try {
+        const { data, error } = await supabaseClient
+          .from('orders')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        if (data.length === 0) {
+          ordersTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 40px;">NO_DATA_FOUND</td></tr>';
+          updateStats(0, 0, 0, 0);
+          return;
+        }
+
+        let unpaid = 0, paid = 0, completed = 0;
+        const total = data.length;
+
+        ordersTableBody.innerHTML = '';
+        data.forEach(order => {
+          if (order.payment_status === 'unpaid') unpaid++;
+          if (order.payment_status === 'paid') paid++;
+          if (order.status === 'completed') completed++;
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td data-label="Tanggal">${new Date(order.created_at).toLocaleDateString()}</td>
+            <td data-label="Layanan" style="color: var(--text-primary)">${order.order_type}</td>
+            <td data-label="Klien">${order.client_name}<br><small style="opacity:0.5">${order.client_email}</small></td>
+            <td data-label="WhatsApp"><a href="https://wa.me/${order.client_whatsapp}" target="_blank" style="color: #25D366; text-decoration:none">
+              <i class="fab fa-whatsapp"></i> ${order.client_whatsapp}
+            </a></td>
+            <td data-label="Catatan" style="font-size: 0.8rem; opacity: 0.8; max-width: 200px; white-space: normal;">${order.notes || '-'}</td>
+            <td data-label="Status">
+              <select onchange="updateOrderStatus('${order.id}', this.value)" class="status-select ${order.status}">
+                <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+                <option value="in-progress" ${order.status === 'in-progress' ? 'selected' : ''}>In Progress</option>
+                <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Completed</option>
+              </select>
+            </td>
+            <td data-label="Pembayaran">
+              <select onchange="updatePaymentStatus('${order.id}', this.value)" class="status-badge ${order.payment_status}" style="border:none; cursor:pointer;">
+                <option value="unpaid" ${order.payment_status === 'unpaid' ? 'selected' : ''}>Unpaid</option>
+                <option value="paid" ${order.payment_status === 'paid' ? 'selected' : ''}>Paid</option>
+              </select>
+            </td>
+            <td data-label="Aksi">
+              <button onclick="deleteOrder('${order.id}')" class="btn-delete" style="opacity:0.5"><i class="fas fa-trash"></i></button>
+            </td>
+          `;
+          ordersTableBody.appendChild(tr);
+        });
+
+        updateStats(total, unpaid, paid, completed);
+
+      } catch (err) {
+        ordersTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; color: red;">ERROR: ${err.message}</td></tr>`;
+      }
+    }
+
+    function updateStats(total, unpaid, paid, completed) {
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statUnpaid').textContent = unpaid;
+      document.getElementById('statPaid').textContent = paid;
+      document.getElementById('statCompleted').textContent = completed;
+    }
+
+    window.updateOrderStatus = async (id, status) => {
+      const { error } = await supabaseClient.from('orders').update({ status }).eq('id', id);
+      if (error) alert(error.message);
+      else fetchOrders();
+    };
+
+    window.updatePaymentStatus = async (id, payment_status) => {
+      const { error } = await supabaseClient.from('orders').update({ payment_status }).eq('id', id);
+      if (error) alert(error.message);
+      else fetchOrders();
+    };
+
+    window.deleteOrder = async (id) => {
+      if (!confirm('DELETE_ORDER_PERMANENTLY?')) return;
+      const { error } = await supabaseClient.from('orders').delete().eq('id', id);
+      if (error) alert(error.message);
+      else fetchOrders();
+    };
+
+    // Theme Toggle Logic (Aligned with main scripts.js)
+    const themeToggle = document.getElementById('themeToggle');
+    const icon = themeToggle.querySelector('i');
+
+    function setTheme(theme) {
+      if (theme === 'dark') {
+        document.body.classList.add('dark-mode');
+        icon.classList.replace('fa-sun', 'fa-moon');
+      } else {
+        document.body.classList.remove('dark-mode');
+        icon.classList.replace('fa-moon', 'fa-sun');
+      }
+      localStorage.setItem('theme', theme);
+    }
+
+    // Initialize theme from localStorage or default to dark
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.body.classList.contains('dark-mode');
+      setTheme(isDark ? 'light' : 'dark');
+    });
+
+  </script>
+</body>
+
+</html>
