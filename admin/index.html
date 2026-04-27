@@ -29,123 +29,220 @@
       --text-primary: #00f2ff;
       --text-secondary: #05df72;
     }
-    
-    body { 
-        background: var(--admin-bg); 
-        color: var(--admin-text); 
-        margin: 0; 
-        font-family: 'Anta', sans-serif;
-        transition: all 0.3s ease; 
+
+    body {
+      background: var(--admin-bg);
+      color: var(--admin-text);
+      margin: 0;
+      font-family: 'Anta', sans-serif;
+      transition: all 0.3s ease;
     }
 
     .login-container {
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
 
-    #adminDashboard { 
-        display: none; 
-        padding: 120px 20px 60px; 
+    #adminDashboard {
+      display: none;
+      padding: 120px 20px 60px;
     }
 
-    .container { max-width: 1200px; margin: 0 auto; }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
     /* Stats Styling */
     .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-        margin-bottom: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
     }
 
     .stat-card {
-        background: var(--admin-card-bg);
-        border: 1px solid var(--admin-border);
-        padding: 25px;
-        border-radius: 12px;
-        text-align: center;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      background: var(--admin-card-bg);
+      border: 1px solid var(--admin-border);
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
 
-    .stat-card h3 { 
-        font-size: 0.7rem; 
-        opacity: 0.6; 
-        margin-bottom: 10px; 
-        letter-spacing: 2px; 
+    .stat-card h3 {
+      font-size: 0.7rem;
+      opacity: 0.6;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
     }
 
-    .stat-card .stat-value { 
-        font-size: 2.2rem; 
-        font-weight: bold; 
-        color: var(--text-primary); 
+    .stat-card .stat-value {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: var(--text-primary);
     }
 
     /* Table Styling */
     .dashboard-section {
-        margin-top: 20px;
-        border-radius: 12px;
-        overflow-x: auto;
-        border: 1px solid var(--admin-border);
+      margin-top: 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+      border: 1px solid var(--admin-border);
     }
 
     .dashboard-table {
-        width: 100%;
-        border-collapse: collapse;
-        background: var(--admin-card-bg);
-        min-width: 900px;
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--admin-card-bg);
+      min-width: 900px;
     }
 
-    .dashboard-table th, .dashboard-table td {
-        padding: 18px;
-        text-align: left;
-        border-bottom: 1px solid var(--admin-border);
+    .dashboard-table th,
+    .dashboard-table td {
+      padding: 18px;
+      text-align: left;
+      border-bottom: 1px solid var(--admin-border);
     }
 
     .dashboard-table th {
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        color: var(--text-primary);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-primary);
     }
 
-    /* Theme Toggle Button */
-    .theme-toggle-admin {
-        position: fixed;
-        top: 25px;
-        right: 25px;
-        z-index: 1000;
-        background: var(--admin-card-bg);
-        border: 1px solid var(--admin-border);
-        color: var(--text-primary);
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    /* Top Bar Styling */
+    .admin-top-bar {
+      position: fixed;
+      top: 25px;
+      left: 25px;
+      right: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .top-bar-left,
+    .top-bar-right {
+      pointer-events: auto;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .admin-logo {
+      height: 40px;
+      filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.2));
+      transition: transform 0.3s ease;
+    }
+
+    .admin-logo:hover {
+      transform: scale(1.05);
+    }
+
+    .action-icon {
+      background: var(--admin-card-bg);
+      border: 1px solid var(--admin-border);
+      color: var(--text-primary);
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 1.1rem;
+    }
+
+    .action-icon:hover {
+      transform: translateY(-3px);
+      background: var(--text-primary);
+      color: #fff;
+      border-color: var(--text-primary);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    #logoutBtn:hover {
+      background: #640000;
+      border-color: #ff4d4d00;
+      color: #fff;
+    }
+
+    .service-title {
+      font-family: 'August', sans-serif;
+      font-size: 5.5rem;
+      margin: 20px 0;
+      color: var(--text-primary);
+      text-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+      letter-spacing: -2px;
     }
 
     /* Responsive */
     @media (max-width: 768px) {
-        .hero-title { font-size: 2rem !important; }
-        .stats-grid { grid-template-columns: 1fr 1fr; }
-        #adminDashboard { padding: 80px 15px 40px; }
+      .hero-title, .service-title {
+        font-size: 4.5rem !important;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      #adminDashboard {
+        padding: 80px 15px 40px;
+      }
     }
 
     @media (max-width: 600px) {
-        .dashboard-table { min-width: auto !important; }
-        .dashboard-table, .dashboard-table thead, .dashboard-table tbody, .dashboard-table th, .dashboard-table td, .dashboard-table tr {
-            display: block;
-        }
-        .dashboard-table thead tr { position: absolute; top: -9999px; left: -9999px; }
-        .dashboard-table tr { margin-bottom: 25px; border: 1px solid var(--admin-border); padding: 15px; border-radius: 12px; background: var(--admin-card-bg); }
-        .dashboard-table td { border: none; padding: 10px 0 !important; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--admin-border); }
-        .dashboard-table td:before { content: attr(data-label); font-weight: bold; color: var(--text-primary); font-size: 0.65rem; }
+      .dashboard-table {
+        min-width: auto !important;
+      }
+
+      .dashboard-table,
+      .dashboard-table thead,
+      .dashboard-table tbody,
+      .dashboard-table th,
+      .dashboard-table td,
+      .dashboard-table tr {
+        display: block;
+      }
+
+      .dashboard-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+
+      .dashboard-table tr {
+        margin-bottom: 25px;
+        border: 1px solid var(--admin-border);
+        padding: 15px;
+        border-radius: 12px;
+        background: var(--admin-card-bg);
+      }
+
+      .dashboard-table td {
+        border: none;
+        padding: 10px 0 !important;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--admin-border);
+      }
+
+      .dashboard-table td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--text-primary);
+        font-size: 0.65rem;
+      }
     }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -153,10 +250,24 @@
 
 <body class="dark-mode">
 
-  <!-- Theme Toggle -->
-  <button id="themeToggle" class="theme-toggle-admin">
-    <i class="fas fa-moon"></i>
-  </button>
+  <!-- Admin Top Bar -->
+  <div class="admin-top-bar">
+    <div class="top-bar-left">
+      <img src="../public/logo.png" alt="Logo" class="admin-logo">
+    </div>
+    <div class="top-bar-right">
+      <button id="refreshBtn" onclick="fetchOrders()" class="action-icon" style="display: none;" title="Refresh Data">
+        <i class="fas fa-sync"></i>
+      </button>
+      <button id="themeToggle" class="action-icon" title="Toggle Theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button id="logoutBtn" onclick="handleLogout()" class="action-icon" style="display: none; color: #ff4d4d;"
+        title="Logout">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+    </div>
+  </div>
 
   <!-- Login Section -->
   <div id="loginSection" class="login-container">
@@ -168,7 +279,8 @@
           <label>ACCESS_KEY</label>
           <input type="password" id="adminPassword" placeholder="Enter security key" required
             style="background: rgba(255,255,255,0.05); border: 1px solid var(--text-primary); text-align: center; letter-spacing: 5px; color: var(--text-secondary); width: 100%;">
-          <i id="togglePassword" class="fas fa-eye" style="position: absolute; right: 15px; top: 35px; cursor: pointer; opacity: 0.5;"></i>
+          <i id="togglePassword" class="fas fa-eye"
+            style="position: absolute; right: 15px; top: 35px; cursor: pointer; opacity: 0.5;"></i>
         </div>
         <button type="submit" class="service-cta" style="width: 100%; border: none; cursor: pointer; margin-top: 20px;">
           <i class="fas fa-unlock"></i> AUTHORIZE
@@ -183,15 +295,8 @@
       <div style="text-align: center; margin-bottom: 60px;">
         <div class="section-tag" style="display: inline-block;">// COMMAND_CENTER</div>
         <h1 class="hero-title" style="font-size: 3.5rem; margin: 20px 0;">ORDER MANAGEMENT</h1>
-        
-        <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
-          <button onclick="fetchOrders()" class="btn-hud btn-outline" style="font-size: 0.8rem;">
-            <i class="fas fa-sync"></i> REFRESH_DATA
-          </button>
-          <button onclick="handleLogout()" class="btn-hud btn-outline" style="font-size: 0.8rem; border-color: #ff4d4d; color: #ff4d4d;">
-            <i class="fas fa-sign-out-alt"></i> TERMINATE_SESSION
-          </button>
-        </div>
+
+
       </div>
 
       <!-- Stats Summary -->
@@ -254,12 +359,12 @@
     // Login logic with Supabase Auth
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      
+
       const submitBtn = e.target.querySelector('button[type="submit"]');
       submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> AUTHENTICATING...';
-      
+
       // Masukkan EMAIL yang Anda buat di menu 'Authentication' Supabase
-      const email = "admin@asixnam.com"; 
+      const email = "admin@asixnam.com";
       const passwordInput = document.getElementById('adminPassword');
 
       if (!passwordInput) {
@@ -270,18 +375,16 @@
       try {
         const passwordValue = passwordInput.value.trim();
         console.log("Attempting login for:", email);
-        
+
         const { data, error } = await supabaseClient.auth.signInWithPassword({
           email: email,
           password: passwordValue,
         });
 
-        console.log("Supabase response:", { data, error });
 
         if (error) throw error;
         showDashboard();
       } catch (error) {
-        console.error("Login Error Object:", error);
         let msg = error.message;
         if (msg === "Invalid login credentials") {
           msg = "Email atau Password Salah. Silakan cek kembali atau matikan 'Confirm Email' di settings Supabase.";
@@ -292,7 +395,8 @@
     });
 
     // Toggle Password Visibility
-    document.getElementById('togglePassword').addEventListener('click', function() {
+    document.getElementById('togglePassword').addEventListener('click', function () {
+      const passwordInput = document.getElementById('adminPassword');
       const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
       passwordInput.setAttribute('type', type);
       this.classList.toggle('fa-eye');
@@ -309,6 +413,8 @@
     function showDashboard() {
       loginSection.style.display = 'none';
       adminDashboard.style.display = 'block';
+      document.getElementById('refreshBtn').style.display = 'flex';
+      document.getElementById('logoutBtn').style.display = 'flex';
       fetchOrders();
     }
 
@@ -354,7 +460,7 @@
             <td data-label="WhatsApp"><a href="https://wa.me/${order.client_whatsapp}" target="_blank" style="color: #25D366; text-decoration:none">
               <i class="fab fa-whatsapp"></i> ${order.client_whatsapp}
             </a></td>
-            <td data-label="Catatan" style="font-size: 0.8rem; opacity: 0.8; max-width: 200px; white-space: normal;">${order.notes || '-'}</td>
+            <td data-label="Catatan" style="font-size: 0.8rem; max-width: 200px; white-space: normal;">${order.order_notes || '-'}</td>
             <td data-label="Status">
               <select onchange="updateOrderStatus('${order.id}', this.value)" class="status-select ${order.status}">
                 <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
