@@ -104,6 +104,21 @@
 
     // Authentication Check
     async function checkSession() {
+      // 1. Check if token was passed via URL (bypass for file:/// protocol)
+      const urlParams = new URLSearchParams(window.location.search);
+      const accessToken = urlParams.get('access_token');
+      const refreshToken = urlParams.get('refresh_token');
+
+      if (accessToken && refreshToken) {
+        await supabaseClient.auth.setSession({
+          access_token: accessToken,
+          refresh_token: refreshToken
+        });
+        // Clean URL so token isn't visible in address bar
+        window.history.replaceState({}, document.title, "dashboard.html");
+      }
+
+      // 2. Standard Session Check
       const { data: { session } } = await supabaseClient.auth.getSession();
       if (!session) {
         window.location.href = 'index.html'; // Redirect to login if not authenticated
