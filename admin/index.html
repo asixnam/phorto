@@ -11,6 +11,7 @@
 </head>
 <body class="dark-mode">
 
+  <!-- ================= LOGIN SECTION ================= -->
   <div class="login-container">
     <div class="about-card" style="max-width: 400px; width: 100%; text-align: center;">
       <div class="section-tag">// SECURE_UPLINK_REQUIRED</div>
@@ -35,7 +36,7 @@
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5tbHhpdmxqYWR1d3B0dHN4Z29lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcyODAxNjQsImV4cCI6MjA5Mjg1NjE2NH0.ApzztRY7eKPV0Ivo5aOv_0vjgxAG2gDM3HhuFSle4SI';
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // If already logged in, redirect to dashboard
+    // 1. Session Checker
     async function checkSession() {
       const { data: { session } } = await supabaseClient.auth.getSession();
       if (session) {
@@ -44,7 +45,7 @@
     }
     checkSession();
 
-    // Login Logic
+    // 2. Authentication Events
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -55,10 +56,9 @@
       const passwordInput = document.getElementById('adminPassword');
 
       try {
-        const passwordValue = passwordInput.value.trim();
         const { error } = await supabaseClient.auth.signInWithPassword({
           email: email,
-          password: passwordValue,
+          password: passwordInput.value.trim(),
         });
 
         if (error) throw error;
@@ -75,18 +75,12 @@
 
     // Toggle Password
     document.getElementById('togglePassword').addEventListener('click', function () {
-      const passwordInput = document.getElementById('adminPassword');
-      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-      passwordInput.setAttribute('type', type);
+      const input = document.getElementById('adminPassword');
+      input.type = input.type === 'password' ? 'text' : 'password';
       this.classList.toggle('fa-eye');
       this.classList.toggle('fa-eye-slash');
     });
 
-    // Theme initialization
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    if (savedTheme === 'light') {
-      document.body.classList.remove('dark-mode');
-    }
   </script>
 </body>
 </html>
