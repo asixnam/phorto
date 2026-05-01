@@ -4178,3 +4178,69 @@ body::before {
   cursor: pointer;
   text-align: center;
 }
+
+/* Admin Specific Overrides & Additions */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 120px 20px 20px 20px;
+}
+
+.admin-logo {
+  max-height: 40px;
+  object-fit: contain;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.stat-card:hover {
+  border-color: var(--text-primary);
+  box-shadow: 0 5px 20px rgba(5, 223, 114, 0.15);
+  transform: translateY(-3px);
+}
+
+.stat-card h3 {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  opacity: 0.8;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  font-family: monospace;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-family: 'August', sans-serif;
+}
+
+.top-bar-left {
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+}
+
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}

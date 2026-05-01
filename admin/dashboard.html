@@ -1,0 +1,54 @@
+<div id="adminDashboard" style="display: none;">
+  <div class="container" style="padding-top: 120px;">
+    <div style="text-align: center; margin-bottom: 60px;">
+      <div class="section-tag">// COMMAND_CENTER</div>
+      <h1 class="section-title">ORDER MANAGEMENT</h1>
+    </div>
+
+    <!-- Stats Summary -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>TOTAL_PESANAN</h3>
+        <div id="statTotal" class="stat-value">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>BELUM_DP / UNPAID</h3>
+        <div id="statUnpaid" class="stat-value">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>LUNAS / PAID</h3>
+        <div id="statPaid" class="stat-value">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>SELESAI / COMPLETED</h3>
+        <div id="statCompleted" class="stat-value" style="color: #05df72;">0</div>
+      </div>
+    </div>
+
+    <div class="dashboard-section" style="display: block; background: transparent;">
+      <table class="dashboard-table">
+        <thead>
+          <tr>
+            <th>Tanggal</th>
+            <th>Layanan</th>
+            <th>Klien</th>
+            <th>WhatsApp</th>
+            <th>Catatan</th>
+            <th>Status</th>
+            <th>Pembayaran</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="ordersTableBody">
+          <!-- Data loaded via JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top: 40px; text-align: center;">
+      <a href="../shop.html" style="color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.7rem;">
+        <i class="fas fa-external-link-alt"></i> Back to Public Site
+      </a>
+    </div>
+  </div>
+</div>

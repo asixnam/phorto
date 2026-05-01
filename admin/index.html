@@ -4,404 +4,123 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin Dashboard - Mohamad Khoirul Anam</title>
-  <link rel="stylesheet" href="../style.css?v=1.5" />
+  <title>adminasix</title>
+  <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="../public/logo.png">
-  <style>
-    /* Admin Dashboard Dynamic Styles */
-    :root {
-      /* Default Light Mode Variables */
-      --admin-bg: #f5f7fa;
-      --admin-text: #000000;
-      --admin-card-bg: #ffffff;
-      --admin-border: rgba(0, 0, 0, 0.1);
-      --text-primary: #640000;
-      --text-secondary: #640000;
-    }
-
-    /* Dark Mode Overrides */
-    body.dark-mode {
-      --admin-bg: #00231f;
-      --admin-text: #ffffff;
-      --admin-card-bg: rgba(255, 255, 255, 0.03);
-      --admin-border: rgba(255, 255, 255, 0.1);
-      --text-primary: #00f2ff;
-      --text-secondary: #05df72;
-    }
-
-    body {
-      background: var(--admin-bg);
-      color: var(--admin-text);
-      margin: 0;
-      font-family: 'Anta', sans-serif;
-      transition: all 0.3s ease;
-    }
-
-    .login-container {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    #adminDashboard {
-      display: none;
-      padding: 120px 20px 60px;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    /* Stats Styling */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin-bottom: 30px;
-    }
-
-    .stat-card {
-      background: var(--admin-card-bg);
-      border: 1px solid var(--admin-border);
-      padding: 25px;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    }
-
-    .stat-card h3 {
-      font-size: 0.7rem;
-      opacity: 0.6;
-      margin-bottom: 10px;
-      letter-spacing: 2px;
-    }
-
-    .stat-card .stat-value {
-      font-size: 2.2rem;
-      font-weight: bold;
-      color: var(--text-primary);
-    }
-
-    /* Table Styling */
-    .dashboard-section {
-      margin-top: 20px;
-      border-radius: 12px;
-      overflow-x: auto;
-      border: 1px solid var(--admin-border);
-    }
-
-    .dashboard-table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--admin-card-bg);
-      min-width: 900px;
-    }
-
-    .dashboard-table th,
-    .dashboard-table td {
-      padding: 18px;
-      text-align: left;
-      border-bottom: 1px solid var(--admin-border);
-    }
-
-    .dashboard-table th {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text-primary);
-    }
-
-    /* Top Bar Styling */
-    .admin-top-bar {
-      position: fixed;
-      top: 25px;
-      left: 25px;
-      right: 25px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-      pointer-events: none;
-    }
-
-    .top-bar-left,
-    .top-bar-right {
-      pointer-events: auto;
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-
-    .admin-logo {
-      height: 40px;
-      filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.2));
-      transition: transform 0.3s ease;
-    }
-
-    .admin-logo:hover {
-      transform: scale(1.05);
-    }
-
-    .action-icon {
-      background: var(--admin-card-bg);
-      border: 1px solid var(--admin-border);
-      color: var(--text-primary);
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      font-size: 1.1rem;
-    }
-
-    .action-icon:hover {
-      transform: translateY(-3px);
-      background: var(--text-primary);
-      color: #fff;
-      border-color: var(--text-primary);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    #logoutBtn:hover {
-      background: #640000;
-      border-color: #ff4d4d00;
-      color: #fff;
-    }
-
-    .service-title {
-      font-family: 'August', sans-serif;
-      font-size: 5.5rem;
-      margin: 20px 0;
-      color: var(--text-primary);
-      text-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
-      letter-spacing: -2px;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .hero-title, .service-title {
-        font-size: 4.5rem !important;
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      #adminDashboard {
-        padding: 80px 15px 40px;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .dashboard-table {
-        min-width: auto !important;
-      }
-
-      .dashboard-table,
-      .dashboard-table thead,
-      .dashboard-table tbody,
-      .dashboard-table th,
-      .dashboard-table td,
-      .dashboard-table tr {
-        display: block;
-      }
-
-      .dashboard-table thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-      }
-
-      .dashboard-table tr {
-        margin-bottom: 25px;
-        border: 1px solid var(--admin-border);
-        padding: 15px;
-        border-radius: 12px;
-        background: var(--admin-card-bg);
-      }
-
-      .dashboard-table td {
-        border: none;
-        padding: 10px 0 !important;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid var(--admin-border);
-      }
-
-      .dashboard-table td:before {
-        content: attr(data-label);
-        font-weight: bold;
-        color: var(--text-primary);
-        font-size: 0.65rem;
-      }
-    }
-  </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body class="dark-mode">
 
-  <!-- Admin Top Bar -->
-  <div class="admin-top-bar">
-    <div class="top-bar-left">
-      <img src="../public/logo.png" alt="Logo" class="admin-logo">
-    </div>
-    <div class="top-bar-right">
-      <button id="refreshBtn" onclick="fetchOrders()" class="action-icon" style="display: none;" title="Refresh Data">
-        <i class="fas fa-sync"></i>
-      </button>
-      <button id="themeToggle" class="action-icon" title="Toggle Theme">
-        <i class="fas fa-moon"></i>
-      </button>
-      <button id="logoutBtn" onclick="handleLogout()" class="action-icon" style="display: none; color: #ff4d4d;"
-        title="Logout">
-        <i class="fas fa-sign-out-alt"></i>
-      </button>
-    </div>
-  </div>
-
-  <!-- Login Section -->
-  <div id="loginSection" class="login-container">
-    <div class="about-card" style="max-width: 400px; width: 100%; text-align: center;">
-      <div class="section-tag">// SECURE_UPLINK_REQUIRED</div>
-      <h1 class="service-title">ADMIN LOGIN</h1>
-      <form id="loginForm" class="modal-form">
-        <div class="form-group" style="position: relative;">
-          <label>ACCESS_KEY</label>
-          <input type="password" id="adminPassword" placeholder="Enter security key" required
-            style="background: rgba(255,255,255,0.05); border: 1px solid var(--text-primary); text-align: center; letter-spacing: 5px; color: var(--text-secondary); width: 100%;">
-          <i id="togglePassword" class="fas fa-eye"
-            style="position: absolute; right: 15px; top: 35px; cursor: pointer; opacity: 0.5;"></i>
-        </div>
-        <button type="submit" class="service-cta" style="width: 100%; border: none; cursor: pointer; margin-top: 20px;">
-          <i class="fas fa-unlock"></i> AUTHORIZE
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Dashboard Section -->
-  <div id="adminDashboard">
-    <div class="container">
-      <div style="text-align: center; margin-bottom: 60px;">
-        <div class="section-tag" style="display: inline-block;">// COMMAND_CENTER</div>
-        <h1 class="hero-title" style="font-size: 3.5rem; margin: 20px 0;">ORDER MANAGEMENT</h1>
-
-
-      </div>
-
-      <!-- Stats Summary -->
-      <div class="stats-grid">
-        <div class="stat-card">
-          <h3>TOTAL_PESANAN</h3>
-          <div id="statTotal" class="stat-value">0</div>
-        </div>
-        <div class="stat-card">
-          <h3>BELUM_DP / UNPAID</h3>
-          <div id="statUnpaid" class="stat-value">0</div>
-        </div>
-        <div class="stat-card">
-          <h3>LUNAS / PAID</h3>
-          <div id="statPaid" class="stat-value">0</div>
-        </div>
-        <div class="stat-card">
-          <h3>SELESAI / COMPLETED</h3>
-          <div id="statCompleted" class="stat-value" style="color: #05df72;">0</div>
-        </div>
-      </div>
-
-      <div class="dashboard-section" style="display: block; background: transparent;">
-        <table class="dashboard-table">
-          <thead>
-            <tr>
-              <th>Tanggal</th>
-              <th>Layanan</th>
-              <th>Klien</th>
-              <th>WhatsApp</th>
-              <th>Catatan</th>
-              <th>Status</th>
-              <th>Pembayaran</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody id="ordersTableBody">
-            <!-- Data loaded via JS -->
-          </tbody>
-        </table>
-      </div>
-
-      <div style="margin-top: 40px; text-align: center;">
-        <a href="../shop.html" style="color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.7rem;">
-          <i class="fas fa-external-link-alt"></i> Back to Public Site
-        </a>
-      </div>
-    </div>
-  </div>
+  <div id="header-container"></div>
+  <div id="login-container"></div>
+  <div id="dashboard-container"></div>
 
   <script>
     const SUPABASE_URL = 'https://nmlxivljaduwpttsxgoe.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5tbHhpdmxqYWR1d3B0dHN4Z29lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcyODAxNjQsImV4cCI6MjA5Mjg1NjE2NH0.ApzztRY7eKPV0Ivo5aOv_0vjgxAG2gDM3HhuFSle4SI';
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const loginSection = document.getElementById('loginSection');
-    const adminDashboard = document.getElementById('adminDashboard');
-    const ordersTableBody = document.getElementById('ordersTableBody');
+    let loginSection, adminDashboard, ordersTableBody;
 
-    // Login logic with Supabase Auth
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const submitBtn = e.target.querySelector('button[type="submit"]');
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> AUTHENTICATING...';
-
-      // Masukkan EMAIL yang Anda buat di menu 'Authentication' Supabase
-      const email = "admin@asixnam.com";
-      const passwordInput = document.getElementById('adminPassword');
-
-      if (!passwordInput) {
-        alert('Error: Elemen password tidak ditemukan!');
-        return;
-      }
-
+    async function loadAdminComponents() {
       try {
-        const passwordValue = passwordInput.value.trim();
-        console.log("Attempting login for:", email);
+        // Fetch components concurrently
+        const [headerRes, loginRes, dashboardRes] = await Promise.all([
+          fetch('header.html'),
+          fetch('login.html'),
+          fetch('dashboard.html')
+        ]);
 
-        const { data, error } = await supabaseClient.auth.signInWithPassword({
-          email: email,
-          password: passwordValue,
-        });
+        document.getElementById('header-container').innerHTML = await headerRes.text();
+        document.getElementById('login-container').innerHTML = await loginRes.text();
+        document.getElementById('dashboard-container').innerHTML = await dashboardRes.text();
 
+        // Initialize DOM elements after HTML is injected
+        loginSection = document.getElementById('loginSection');
+        adminDashboard = document.getElementById('adminDashboard');
+        ordersTableBody = document.getElementById('ordersTableBody');
 
-        if (error) throw error;
-        showDashboard();
+        initAdminEvents();
+        checkSession();
       } catch (error) {
-        let msg = error.message;
-        if (msg === "Invalid login credentials") {
-          msg = "Email atau Password Salah. Silakan cek kembali atau matikan 'Confirm Email' di settings Supabase.";
-        }
-        alert('LOGIN GAGAL: ' + msg);
-        submitBtn.innerHTML = '<i class="fas fa-unlock"></i> AUTHORIZE';
+        console.error('Error loading admin components:', error);
+        document.body.innerHTML = '<h2 style="color:red; text-align:center; padding: 50px;">Gagal memuat komponen Admin. Pastikan Anda menjalankannya di Local Server.</h2>';
       }
-    });
+    }
 
-    // Toggle Password Visibility
-    document.getElementById('togglePassword').addEventListener('click', function () {
-      const passwordInput = document.getElementById('adminPassword');
-      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-      passwordInput.setAttribute('type', type);
-      this.classList.toggle('fa-eye');
-      this.classList.toggle('fa-eye-slash');
-    });
+    function initAdminEvents() {
+      // Login logic with Supabase Auth
+      document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> AUTHENTICATING...';
+
+        const email = "admin@asixnam.com";
+        const passwordInput = document.getElementById('adminPassword');
+
+        if (!passwordInput) {
+          alert('Error: Elemen password tidak ditemukan!');
+          return;
+        }
+
+        try {
+          const passwordValue = passwordInput.value.trim();
+          console.log("Attempting login for:", email);
+
+          const { data, error } = await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: passwordValue,
+          });
+
+          if (error) throw error;
+          showDashboard();
+        } catch (error) {
+          let msg = error.message;
+          if (msg === "Invalid login credentials") {
+            msg = "Email atau Password Salah. Silakan cek kembali atau matikan 'Confirm Email' di settings Supabase.";
+          }
+          alert('LOGIN GAGAL: ' + msg);
+          submitBtn.innerHTML = '<i class="fas fa-unlock"></i> AUTHORIZE';
+        }
+      });
+
+      // Toggle Password Visibility
+      document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordInput = document.getElementById('adminPassword');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
+
+      // Theme Toggle Logic
+      const themeToggle = document.getElementById('themeToggle');
+      if (themeToggle) {
+        const icon = themeToggle.querySelector('i');
+
+        function setTheme(theme) {
+          if (theme === 'dark') {
+            document.body.classList.add('dark-mode');
+            icon.classList.replace('fa-sun', 'fa-moon');
+          } else {
+            document.body.classList.remove('dark-mode');
+            icon.classList.replace('fa-moon', 'fa-sun');
+          }
+          localStorage.setItem('theme', theme);
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        setTheme(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+          const isDark = document.body.classList.contains('dark-mode');
+          setTheme(isDark ? 'light' : 'dark');
+        });
+      }
+    }
 
     async function checkSession() {
       const { data: { session } } = await supabaseClient.auth.getSession();
@@ -422,9 +141,6 @@
       await supabaseClient.auth.signOut();
       location.reload();
     };
-
-    // Run session check on load
-    checkSession();
 
     async function fetchOrders() {
       ordersTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 40px;">ACCESSING_DATABASE...</td></tr>';
@@ -514,30 +230,8 @@
       else fetchOrders();
     };
 
-    // Theme Toggle Logic (Aligned with main scripts.js)
-    const themeToggle = document.getElementById('themeToggle');
-    const icon = themeToggle.querySelector('i');
-
-    function setTheme(theme) {
-      if (theme === 'dark') {
-        document.body.classList.add('dark-mode');
-        icon.classList.replace('fa-sun', 'fa-moon');
-      } else {
-        document.body.classList.remove('dark-mode');
-        icon.classList.replace('fa-moon', 'fa-sun');
-      }
-      localStorage.setItem('theme', theme);
-    }
-
-    // Initialize theme from localStorage or default to dark
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
-
-    themeToggle.addEventListener('click', () => {
-      const isDark = document.body.classList.contains('dark-mode');
-      setTheme(isDark ? 'light' : 'dark');
-    });
-
+    // Load everything when the DOM is ready
+    document.addEventListener('DOMContentLoaded', loadAdminComponents);
   </script>
 </body>
 
