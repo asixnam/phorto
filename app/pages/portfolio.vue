@@ -212,6 +212,11 @@
             <div class="section-tag">// MEDIA_PRODUCTION</div>
             <h3 class="category-title">Merchandise</h3>
             <div class="portfolio-grid grid-outdoor">
+              <!-- Manual Merchandise 5 -->
+              <div class="portfolio-item ratio-25-15">
+                <img src="https://lh3.googleusercontent.com/d/18O44CJww_mAA7Qw4m-9c4yhP02CIAcFQ=w1000" alt="Outdoor 1" loading="lazy" />
+                <div class="overlay"></div>
+              </div>
               <!-- Manual Merchandise 4 -->
               <div class="portfolio-item ratio-25-15">
                 <img src="https://lh3.googleusercontent.com/d/1lmO1PJEsUbuIDghD4yJj8GrgQAbXQZSO=w1000" alt="Outdoor 1" loading="lazy" />
