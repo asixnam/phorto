@@ -97,154 +97,23 @@
         <div class="testimonials-marquee">
           <div class="testimonials-row row-right">
             <div class="testimonials-inner">
-              <div class="testimonial-card">
+              <div v-for="t in testimonials" :key="t.id || t.name" class="testimonial-card">
                 <div class="testimonial-header">
                   <div class="client-avatar">
-                    <i class="fas fa-user-circle"></i>
+                    <img v-if="t.avatar_url" :src="t.avatar_url" alt="Client Avatar">
+                    <i v-else class="fas fa-user-circle"></i>
                   </div>
                   <div class="client-info">
-                    <h4 class="client-name">Agna Nia Zahra</h4>
-                    <span class="client-role">Wakil Ketua KAMABA Yogyakarta</span>
+                    <h4 class="client-name">{{ t.name }}</h4>
+                    <span class="client-role">{{ t.role }}</span>
                   </div>
                 </div>
                 <div class="testimonial-body">
-                  <p>"Setiap produk punya pasarnya sendiri, namun desain ini kurang cocok bagi saya. Kata "Born in Blora"
-                    kurang menarik; bagian depan lebih bagus jika tulisan "Blora" saja. Bagian belakang sebaiknya dipecah
-                    menjadi tiga tema berbeda agar identitasnya lebih kuat dan fokus"</p>
+                  <p>{{ t.body }}</p>
                 </div>
                 <div class="testimonial-footer">
                   <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
-                  </div>
-                </div>
-              </div>
-
-              <div class="testimonial-card">
-                <div class="testimonial-header">
-                  <div class="client-avatar">
-                    <img src="https://lh3.googleusercontent.com/d/1KFBd8nRIoo12jcXgfrWFyV7q-s6eFUv2" alt="Client Avatar">
-                  </div>
-                  <div class="client-info">
-                    <h4 class="client-name">Luthfi Nishfi</h4>
-                    <span class="client-role">Alumni Mahasiswi UNU Yogyakarta</span>
-                  </div>
-                </div>
-                <div class="testimonial-body">
-                  <p>"bagus banget hasil fotonya"</p>
-                </div>
-                <div class="testimonial-footer">
-                  <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                  </div>
-                </div>
-              </div>
-
-              <div class="testimonial-card">
-                <div class="testimonial-header">
-                  <div class="client-avatar">
-                    <img src="https://lh3.googleusercontent.com/d/1beIbT6eVGa-vlCkGVyF6XTGQuKiILE_0" alt="Client Avatar">
-                  </div>
-                  <div class="client-info">
-                    <h4 class="client-name">Franciska Nur Widya Ningrum</h4>
-                    <span class="client-role">Guru Bahasa Inggris</span>
-                  </div>
-                </div>
-                <div class="testimonial-body">
-                  <p>"Coming Soon"</p>
-                </div>
-                <div class="testimonial-footer">
-                  <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                  </div>
-                </div>
-              </div>
-
-              <div class="testimonial-card">
-                <div class="testimonial-header">
-                  <div class="client-avatar">
-                    <img src="https://lh3.googleusercontent.com/d/1783iKvBdrRerXZCN4wuhtx46_TTjZTNl" alt="Client Avatar">
-                  </div>
-                  <div class="client-info">
-                    <h4 class="client-name">Anik Ida Wijayanti</h4>
-                    <span class="client-role">Mahasiswa UNY</span>
-                  </div>
-                </div>
-                <div class="testimonial-body">
-                  <p>Oke jujur ya… ini fotografer vibes-nya mantepp poll😭
-                    Hasil fotonya? GILA SIH 🔥
-                    Candid dapet, pose juga tetep natural. Yang biasanya aku awkward depan kamera aja bisa keliatan santai 😆
-                    Editannya juga nggak lebay— clean, aesthetic , dan tetep “aku bgt”. Jadi nggak yang tiba-tiba muka berubah jadi orang lain wkwk.
-                    Yang paling aku suka: dia ngerti vibe .
-                    Mau foto yang chill , fun , atau agak cinematic dikit, semuanya kena </p>
-                </div>
-                <div class="testimonial-footer">
-                  <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                  </div>
-                </div>
-              </div>
-
-              <div class="testimonial-card">
-                <div class="testimonial-header">
-                  <div class="client-avatar">
-                    <i class="fas fa-user-circle"></i>
-                  </div>
-                  <div class="client-info">
-                    <h4 class="client-name">Erma</h4>
-                    <span class="client-role">Founder Ermora</span>
-                  </div>
-                </div>
-                <div class="testimonial-body">
-                  <p>"Kemarin request logo buat fashion Designnya cepet, rapi, minimalis, harga sesuai budget mau
-                    mahaallllll banget bisa, mau yang murahhh pun bisa 🔥 Ultra HD hasilnya, ga pecah2 juga aman di cetak
-                    dikain"</p>
-                </div>
-                <div class="testimonial-footer">
-                  <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                  </div>
-                </div>
-              </div>
-
-              <div class="testimonial-card">
-                <div class="testimonial-header">
-                  <div class="client-avatar">
-                    <i class="fas fa-user-circle"></i>
-                  </div>
-                  <div class="client-info">
-                    <h4 class="client-name">Agus Prasetya</h4>
-                    <span class="client-role">Founder Mahara</span>
-                  </div>
-                </div>
-                <div class="testimonial-body">
-                  <p>Designya bagus, pengerjaan cepat, hasil memuaskan</p>
-                </div>
-                <div class="testimonial-footer">
-                  <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                  </div>
-                </div>
-              </div>
-
-              <div class="testimonial-card">
-                <div class="testimonial-header">
-                  <div class="client-avatar">
-                    <i class="fas fa-user-circle"></i>
-                  </div>
-                  <div class="client-info">
-                    <h4 class="client-name">Erin Gayatri</h4>
-                    <span class="client-role">Diretur Center For GEDSI</span>
-                  </div>
-                </div>
-                <div class="testimonial-body">
-                  <p>Selama di Media Center GEDSI UNU Yogyakarta, Anam berkontribusi besar dalam desain konten kreatif dan
-                    video pendek, termasuk proyek kolaborasi skala besar. Ia bekerja cepat, komunikatif dalam revisi,
-                    serta piawai dalam dokumentasi kegiatan. Sosok yang santun dan mudah berbaur ini memiliki potensi
-                    besar untuk karier yang cemerlang.</p>
-                </div>
-                <div class="testimonial-footer">
-                  <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <i v-for="star in 5" :key="star" :class="[star <= t.rating ? 'fas' : 'far', 'fa-star']"></i>
                   </div>
                 </div>
               </div>
@@ -297,6 +166,8 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+
 const services = [
   {
     title: 'Desain Logo',
@@ -369,4 +240,73 @@ const services = [
     link: '/checkout?service=Desain Cover Buku'
   }
 ]
+
+const testimonials = ref([
+  {
+    name: 'Agna Nia Zahra',
+    role: 'Wakil Ketua KAMABA Yogyakarta',
+    avatar_url: '',
+    body: '"Setiap produk punya pasarnya sendiri, namun desain ini kurang cocok bagi saya. Kata "Born in Blora" kurang menarik; bagian depan lebih bagus jika tulisan "Blora" saja. Bagian belakang sebaiknya dipecah menjadi tiga tema berbeda agar identitasnya lebih kuat dan fokus"',
+    rating: 3
+  },
+  {
+    name: 'Luthfi Nishfi',
+    role: 'Alumni Mahasiswi UNU Yogyakarta',
+    avatar_url: 'https://lh3.googleusercontent.com/d/1KFBd8nRIoo12jcXgfrWFyV7q-s6eFUv2',
+    body: '"bagus banget hasil fotonya"',
+    rating: 5
+  },
+  {
+    name: 'Franciska Nur Widya Ningrum',
+    role: 'Guru Bahasa Inggris',
+    avatar_url: 'https://lh3.googleusercontent.com/d/1beIbT6eVGa-vlCkGVyF6XTGQuKiILE_0',
+    body: '"Coming Soon"',
+    rating: 5
+  },
+  {
+    name: 'Anik Ida Wijayanti',
+    role: 'Mahasiswa UNY',
+    avatar_url: 'https://lh3.googleusercontent.com/d/1783iKvBdrRerXZCN4wuhtx46_TTjZTNl',
+    body: 'Oke jujur ya… ini fotografer vibes-nya mantepp poll😭 Hasil fotonya? GILA SIH 🔥 Candid dapet, pose juga tetep natural. Yang biasanya aku awkward depan kamera aja bisa keliatan santai 😆 Editannya juga nggak lebay— clean, aesthetic , dan tetep “aku bgt”. Jadi nggak yang tiba-tiba muka berubah jadi orang lain wkwk. Yang paling aku suka: dia ngerti vibe . Mau foto yang chill , fun , atau agak cinematic dikit, semuanya kena ',
+    rating: 5
+  },
+  {
+    name: 'Erma',
+    role: 'Founder Ermora',
+    avatar_url: '',
+    body: '"Kemarin request logo buat fashion Designnya cepet, rapi, minimalis, harga sesuai budget mau mahaallllll banget bisa, mau yang murahhh pun bisa 🔥 Ultra HD hasilnya, ga pemulahan di cetak dikain"',
+    rating: 5
+  },
+  {
+    name: 'Agus Prasetya',
+    role: 'Founder Mahara',
+    avatar_url: '',
+    body: 'Designya bagus, pengerjaan cepat, hasil memuaskan',
+    rating: 5
+  },
+  {
+    name: 'Erin Gayatri',
+    role: 'Diretur Center For GEDSI',
+    avatar_url: '',
+    body: 'Selama di Media Center GEDSI UNU Yogyakarta, Anam berkontribusi besar dalam desain konten kreatif dan video pendek, termasuk proyek kolaborasi skala besar. Ia bekerja cepat, komunikatif dalam revisi, serta piawai dalam dokumentasi kegiatan. Sosok yang santun dan mudah berbaur ini memiliki potensi besar untuk karier yang cemerlang.',
+    rating: 5
+  }
+])
+
+onMounted(async () => {
+  try {
+    const { $supabase } = useNuxtApp()
+    const { data, error } = await $supabase
+      .from('testimonials')
+      .select('*')
+      .order('created_at', { ascending: true })
+
+    if (error) throw error
+    if (data && data.length > 0) {
+      testimonials.value = data
+    }
+  } catch (err) {
+    console.error('Failed to fetch testimonials from database, using static fallback:', err)
+  }
+})
 </script>

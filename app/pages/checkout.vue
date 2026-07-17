@@ -1,10 +1,10 @@
 <template>
   <div>
-    <section class="checkout-section" style="padding: 120px 20px 60px;">
+    <section class="checkout-section">
       <div class="container" style="max-width: 800px;">
-        <div style="text-align: center; margin-bottom: 50px;">
+        <div class="hero-content">
           <div class="section-tag" style="display: inline-block;">// ORDER_UPLINK_ESTABLISHED</div>
-          <h1 class="hero-title" style="font-size: clamp(2.5rem, 10vw, 80px); margin: 20px 0;">KONFIRMASI PESANAN</h1>
+          <h1 class="hero-title">KONFIRMASI PESANAN</h1>
         </div>
 
         <div id="checkoutContainer" class="about-card" style="padding: 40px; margin-bottom: 30px;">
@@ -25,20 +25,26 @@
                 <input type="email" v-model="clientEmail" placeholder="nama@email.com" required>
               </div>
               <div class="form-group">
-                <label>JENIS_PEMESANAN</label>
-                <select v-model="serviceNameInput" required class="form-select">
-                  <option value="" disabled selected>Pilih Layanan</option>
-                  <option value="Desain Logo">Desain Logo</option>
-                  <option value="Desain Kaos">Desain Kaos</option>
-                  <option value="Feed Instagram">Feed Instagram</option>
-                  <option value="Desain Stiker">Desain Stiker</option>
-                  <option value="Desain Mug">Desain Mug</option>
-                  <option value="Desain Lanyard">Desain Lanyard</option>
-                  <option value="Desain ID Card">Desain ID Card</option>
-                  <option value="Pembuatan Website">Pembuatan Website</option>
-                  <option value="Fotografi">Fotografi</option>
-                  <option value="Desain Cover Buku">Desain Cover Buku</option>
-                </select>
+                <label>JENIS_PEMESANAN <span class="label-info">(Bisa pilih lebih dari satu)</span></label>
+                <div class="checkbox-grid">
+                  <label 
+                    v-for="service in availableServices" 
+                    :key="service" 
+                    class="checkbox-card"
+                    :class="{ 'is-checked': selectedServices.includes(service) }"
+                  >
+                    <input 
+                      type="checkbox" 
+                      :value="service" 
+                      v-model="selectedServices"
+                      class="checkbox-input"
+                    />
+                    <div class="checkbox-box">
+                      <i class="fas fa-check" v-if="selectedServices.includes(service)"></i>
+                    </div>
+                    <span class="checkbox-label">{{ service }}</span>
+                  </label>
+                </div>
               </div>
               <div class="form-group">
                 <label>CATATAN_MISI</label>
@@ -132,33 +138,50 @@ const route = useRoute()
 const clientName = ref('')
 const clientWA = ref('')
 const clientEmail = ref('')
-const serviceNameInput = ref('')
+const selectedServices = ref([])
 const orderNotes = ref('')
+
+const availableServices = [
+  'Desain Logo',
+  'Desain Kaos',
+  'Feed Instagram',
+  'Desain Stiker',
+  'Desain Mug',
+  'Desain Lanyard',
+  'Desain ID Card',
+  'Pembuatan Website',
+  'Fotografi',
+  'Desain Cover Buku'
+]
 
 const isSubmitting = ref(false)
 const isSubmitted = ref(false)
 
 onMounted(() => {
   if (route.query.service) {
-    serviceNameInput.value = route.query.service
+    selectedServices.value = [route.query.service]
   }
 })
 
 const waRedirectionUrl = computed(() => {
-  const service = serviceNameInput.value || ''
+  const services = selectedServices.value.join(', ') || ''
   const name = clientName.value || ''
-  const text = `Halo Anam, saya sudah melakukan pemesanan ${service} dan ingin konfirmasi pembayaran.`
+  const text = `Halo Anam, saya sudah melakukan pemesanan ${services} dan ingin konfirmasi pembayaran.`
   return `https://wa.me/6281323596022?text=${encodeURIComponent(text)}`
 })
 
 const handleSubmit = async () => {
+  if (selectedServices.value.length === 0) {
+    alert('Silakan pilih minimal satu jenis pemesanan.')
+    return
+  }
   isSubmitting.value = true
   
   const formData = {
     client_name: clientName.value,
     client_whatsapp: clientWA.value,
     client_email: clientEmail.value,
-    order_type: serviceNameInput.value,
+    order_type: selectedServices.value.join(', '),
     order_notes: orderNotes.value,
     status: 'pending',
     payment_status: 'unpaid'
@@ -186,3 +209,148 @@ const handleSubmit = async () => {
   }
 }
 </script>
+
+<style scoped>
+.checkout-section {
+  padding: 120px 20px 60px;
+}
+
+.container {
+  margin: 0 auto;
+}
+
+.hero-content {
+  text-align: center;
+  margin: 0 auto 40px !important;
+}
+
+.hero-title {
+  text-align: center;
+  width: 100%;
+  white-space: normal !important;
+  word-break: break-word;
+  margin: 20px 0 !important;
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.checkbox-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  padding: 14px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  user-select: none;
+}
+
+.checkbox-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.checkbox-card.is-checked {
+  background: rgba(138, 112, 81, 0.1);
+  border-color: var(--text-primary);
+  box-shadow: 0 0 10px rgba(138, 112, 81, 0.15);
+}
+
+body.dark-mode .checkbox-card.is-checked {
+  background: rgba(197, 168, 128, 0.12);
+  border-color: var(--text-primary);
+  box-shadow: 0 0 12px rgba(197, 168, 128, 0.2);
+}
+
+.checkbox-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkbox-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.checkbox-card.is-checked .checkbox-box {
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+}
+
+.checkbox-box i {
+  color: var(--bg-primary);
+  font-size: 0.75rem;
+}
+
+.checkbox-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.label-info {
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  font-family: var(--font-main);
+  opacity: 0.7;
+  margin-left: 5px;
+}
+
+/* Form inputs styling & neater layouts */
+.form-group input,
+.form-group textarea {
+  transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--text-primary);
+  outline: none;
+  box-shadow: 0 0 8px rgba(197, 168, 128, 0.15);
+}
+
+.form-group {
+  margin-bottom: 5px;
+}
+
+.payment-info {
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  transition: border-color 0.25s ease;
+}
+
+.payment-info:hover {
+  border-color: var(--text-primary);
+}
+
+/* Responsiveness adjustments for checkout */
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr !important;
+    gap: 15px;
+  }
+  .checkbox-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

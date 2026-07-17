@@ -11,6 +11,25 @@
         </div>
       </div>
 
+      <!-- Center: Admin Navigation Navbar -->
+      <nav class="nav-center-icons">
+        <a href="#" :class="['nav-icon', { active: activeAdminTab === 'orders' }]" @click.prevent="activeAdminTab = 'orders'" title="Orders">
+          <i class="fas fa-shopping-cart"></i><span>PESANAN</span>
+        </a>
+        <a href="#" :class="['nav-icon', { active: activeAdminTab === 'portfolio' }]" @click.prevent="activeAdminTab = 'portfolio'" title="Portfolio">
+          <i class="fas fa-images"></i><span>PORTFOLIO</span>
+        </a>
+        <a href="#" :class="['nav-icon', { active: activeAdminTab === 'testimonials' }]" @click.prevent="activeAdminTab = 'testimonials'" title="Testimonials">
+          <i class="fas fa-comments"></i><span>TESTIMONI</span>
+        </a>
+        <a href="#" :class="['nav-icon', { active: activeAdminTab === 'resume' }]" @click.prevent="activeAdminTab = 'resume'" title="Resume">
+          <i class="fas fa-graduation-cap"></i><span>RESUME</span>
+        </a>
+        <a href="#" :class="['nav-icon', { active: activeAdminTab === 'about' }]" @click.prevent="activeAdminTab = 'about'" title="About">
+          <i class="fas fa-user-edit"></i><span>ABOUT ME</span>
+        </a>
+      </nav>
+
       <!-- Right: Actions -->
       <div class="nav-right-cyber">
         <div class="cyber-actions" style="border-left: none; padding-left: 0;">
@@ -32,6 +51,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
+const activeAdminTab = useState('active-admin-tab', () => 'orders')
 const refreshTrigger = useState('admin-refresh-trigger', () => 0)
 const isDark = ref(true)
 
