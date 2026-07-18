@@ -118,6 +118,8 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue'
+import { compressImage } from '~/utils/image'
+
 
 definePageMeta({
   layout: 'admin'
@@ -148,8 +150,17 @@ const onAvatarFileChange = async (event) => {
 
   isUploadingAvatar.value = true
   try {
+    // Compress and resize avatar client-side (max 200x200 pixels, quality 0.8)
+    const compressedBlob = await compressImage(file, 200, 200, 0.8)
+    
+    // Construct a standard filename with .jpg extension for the compressed blob
+    const originalName = file.name || 'avatar.png'
+    const extIdx = originalName.lastIndexOf('.')
+    const nameWithoutExt = extIdx !== -1 ? originalName.slice(0, extIdx) : originalName
+    const filename = `${nameWithoutExt}.jpg`
+
     const formData = new FormData()
-    formData.append('file', file)
+    formData.append('file', compressedBlob, filename)
 
     const response = await fetch('/api/upload', {
       method: 'POST',
@@ -157,8 +168,19 @@ const onAvatarFileChange = async (event) => {
     })
 
     if (!response.ok) {
-      const errData = await response.json()
-      throw new Error(errData.statusMessage || 'Upload failed')
+      let errMsg = 'Upload failed'
+      try {
+        const text = await response.text()
+        try {
+          const errData = JSON.parse(text)
+          errMsg = errData.statusMessage || errData.message || errMsg
+        } catch (_) {
+          errMsg = text || response.statusText || errMsg
+        }
+      } catch (_) {
+        errMsg = response.statusText || errMsg
+      }
+      throw new Error(errMsg)
     }
 
     const result = await response.json()
