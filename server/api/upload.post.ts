@@ -1,5 +1,4 @@
 import { defineEventHandler, readMultipartFormData, createError } from 'h3'
-import fs from 'node:fs'
 import path from 'node:path'
 
 export default defineEventHandler(async (event) => {
