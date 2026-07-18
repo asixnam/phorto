@@ -31,23 +31,19 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Ensure the uploads directory exists in public folder
-    const uploadDir = path.resolve(process.cwd(), 'public/uploads')
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true })
-    }
+    // Convert the buffer to a Base64 data URL since Vercel's filesystem is read-only at runtime
+    let mimeType = 'image/jpeg'
+    if (fileExt === '.png') mimeType = 'image/png'
+    else if (fileExt === '.webp') mimeType = 'image/webp'
+    else if (fileExt === '.gif') mimeType = 'image/gif'
 
-    // Create a unique filename
-    const uniqueName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}${fileExt}`
-    const filePath = path.join(uploadDir, uniqueName)
+    const base64 = file.data.toString('base64')
+    const dataUrl = `data:${mimeType};base64,${base64}`
 
-    // Write the buffer to the filesystem
-    fs.writeFileSync(filePath, file.data)
-
-    // Return the relative URL
+    // Return the data URL
     return {
       success: true,
-      url: `/uploads/${uniqueName}`
+      url: dataUrl
     }
   } catch (error: any) {
     throw createError({
