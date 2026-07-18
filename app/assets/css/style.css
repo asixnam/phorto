@@ -4160,15 +4160,33 @@ body::before {
   padding: 20px;
 }
 
+/* Modal backdrop style for admin forms */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
 .modal-content {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   width: 100%;
-  max-width: 500px;
-  padding: 30px;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
   position: relative;
   border-radius: 8px;
-  box-shadow: 0 0 50px rgba(5, 223, 114, 0.1);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5); /* Flat, dark shadow, no colored glow */
+  padding: 30px;
 }
 
 .modal-close {
@@ -4433,4 +4451,120 @@ body::before {
   display: flex;
   align-items: center;
   gap: 15px;
+}
+
+/* ==========================================================================
+   ADMIN PANEL COMPONENT THEME STYLING
+   ========================================================================== */
+#adminDashboard a,
+.admin-sidebar a,
+.admin-navbar a {
+  color: var(--accent-blue) !important;
+  transition: opacity 0.2s;
+}
+
+#adminDashboard a:hover,
+.admin-sidebar a:hover,
+.admin-navbar a:hover {
+  opacity: 0.8;
+}
+
+.btn-submit {
+  background: var(--accent-blue) !important;
+  color: var(--bg-primary) !important;
+  border: 1px solid var(--accent-blue) !important;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-family: var(--font-main);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-submit:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-cancel {
+  background: transparent !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color) !important;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-family: var(--font-main);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cancel:hover {
+  background: var(--bg-social) !important;
+  border-color: var(--text-primary) !important;
+}
+
+.btn-edit-item {
+  background: rgba(138, 112, 81, 0.1) !important;
+  color: var(--accent-blue) !important;
+  border: 1px solid rgba(138, 112, 81, 0.2) !important;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-edit-item:hover {
+  background: var(--accent-blue) !important;
+  color: var(--bg-primary) !important;
+}
+
+.btn-delete-item {
+  background: rgba(239, 68, 68, 0.1) !important;
+  color: #ef4444 !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-delete-item:hover {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+}
+
+.btn-refresh-dashboard {
+  background: var(--bg-social) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.btn-refresh-dashboard:hover {
+  background: var(--bg-social) !important;
+  border-color: var(--text-primary) !important;
+}
+
+/* Modals input form field text color */
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  color: var(--text-primary) !important;
+  background: var(--bg-social) !important;
+  border: 1px solid var(--border-color) !important;
 }
