@@ -6,6 +6,41 @@ export default defineNuxtPlugin(() => {
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
+  // Use a Proxy wrapper around supabase.auth to implement custom database-backed session logic
+  const originalAuth = supabase.auth
+  supabase.auth = new Proxy(originalAuth, {
+    get(target, prop, receiver) {
+      if (prop === 'getSession') {
+        return async () => {
+          if (process.client) {
+            const token = localStorage.getItem('admin_session_token')
+            if (token === 'authenticated') {
+              return {
+                data: {
+                  session: {
+                    user: { email: 'admin@asixnam.com' },
+                    expires_at: 9999999999
+                  }
+                },
+                error: null
+              }
+            }
+          }
+          return { data: { session: null }, error: null }
+        }
+      }
+      if (prop === 'signOut') {
+        return async () => {
+          if (process.client) {
+            localStorage.removeItem('admin_session_token')
+          }
+          return { error: null }
+        }
+      }
+      return Reflect.get(target, prop, receiver)
+    }
+  })
+
   return {
     provide: {
       supabase

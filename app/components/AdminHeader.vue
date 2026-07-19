@@ -34,6 +34,9 @@
       <NuxtLink to="/admin/hero" :class="['sidebar-nav-item', { active: isActive('/admin/hero') }]">
         <i class="fas fa-image"></i><span>Hero Banner</span>
       </NuxtLink>
+      <NuxtLink to="/admin/settings" :class="['sidebar-nav-item', { active: isActive('/admin/settings') }]">
+        <i class="fas fa-cog"></i><span>Pengaturan</span>
+      </NuxtLink>
     </nav>
   </aside>
 </template>
