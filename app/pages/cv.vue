@@ -49,6 +49,9 @@
               <a href="https://github.com/asixnam" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
                 <i class="fab fa-github"></i>
               </a>
+              <a href="https://pin.it/4vV0u8p59" aria-label="Pinterest" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-pinterest"></i>
+              </a>
             </div>
 
           </div>

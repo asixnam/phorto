@@ -16,14 +16,14 @@
         <NuxtLink to="/" class="nav-icon" exact-active-class="active" title="Home">
           <i class="fas fa-gamepad"></i><span>HOME</span>
         </NuxtLink>
-        <NuxtLink to="/#services" class="nav-icon" title="Lore">
-          <i class="fas fa-scroll"></i><span>SKILLS</span>
-        </NuxtLink>
         <NuxtLink to="/cv" class="nav-icon" active-class="active" title="Resume">
-          <i class="fas fa-khanda"></i><span>RESUME</span>
+          <i class="fas fa-khanda"></i><span>CV</span>
         </NuxtLink>
+        <!-- <NuxtLink to="/#services" class="nav-icon" title="Lore">
+          <i class="fas fa-scroll"></i><span>SKILLS</span>
+        </NuxtLink> -->
         <NuxtLink to="/portfolio" class="nav-icon" active-class="active" title="Portfolio">
-          <i class="fas fa-bolt"></i><span>PROJECTS</span>
+          <i class="fas fa-bolt"></i><span>PORTFOLIO</span>
         </NuxtLink>
         <NuxtLink to="/shop" class="nav-icon" active-class="active" title="Shop">
           <i class="fas fa-shopping-bag"></i><span>SHOP</span>

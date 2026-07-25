@@ -5,7 +5,7 @@
       <div class="brand-logo">
         <img src="/logo.png" alt="Logo">
       </div>
-      <span class="brand-text">PORTFOLIO ADMIN</span>
+      <span class="brand-text">ASIXNAM ADMIN</span>
       <button class="close-sidebar-btn" @click="$emit('toggle-sidebar')" aria-label="Close Sidebar">
         <i class="fas fa-times"></i>
       </button>
@@ -62,8 +62,8 @@ const isActive = (path) => {
 <style scoped>
 .admin-sidebar {
   width: 260px;
-  background-color: #000000; /* Pitch black sidebar */
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: var(--bg-secondary, #ffffff);
+  border-right: 1px solid var(--border-color, #e5e7eb);
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -71,8 +71,14 @@ const isActive = (path) => {
   top: 0;
   left: 0;
   z-index: 1000;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
   transform: translateX(0);
+  box-shadow: var(--shadow-color, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+}
+
+body.dark-mode .admin-sidebar {
+  background-color: #161616;
+  border-right: 1px solid rgba(197, 168, 128, 0.15);
 }
 
 .admin-sidebar:not(.is-open) {
@@ -85,7 +91,12 @@ const isActive = (path) => {
   align-items: center;
   gap: 12px;
   padding: 24px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  transition: border-color 0.3s ease;
+}
+
+body.dark-mode .sidebar-brand {
+  border-bottom: 1px solid rgba(197, 168, 128, 0.15);
 }
 
 .brand-logo {
@@ -95,6 +106,7 @@ const isActive = (path) => {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .brand-logo img {
@@ -104,21 +116,32 @@ const isActive = (path) => {
 }
 
 .brand-text {
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-family: 'SilverEditorial', 'August', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--text-secondary, #1c1b18);
+  transition: color 0.3s ease;
+}
+
+body.dark-mode .brand-text {
   color: #ffffff;
-  letter-spacing: 0.5px;
 }
 
 .close-sidebar-btn {
   display: none;
   background: none;
   border: none;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-primary, #8a7051);
   font-size: 1.2rem;
   cursor: pointer;
   margin-left: auto;
   padding: 4px;
+  transition: color 0.2s ease;
+}
+
+body.dark-mode .close-sidebar-btn {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 /* Sidebar navigation links */
@@ -128,6 +151,7 @@ const isActive = (path) => {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  overflow-y: auto;
 }
 
 .sidebar-nav-item {
@@ -135,7 +159,7 @@ const isActive = (path) => {
   align-items: center;
   gap: 16px;
   padding: 12px 16px;
-  color: rgba(255, 255, 255, 0.7);
+  color: #4b5563;
   text-decoration: none;
   font-weight: 500;
   font-size: 0.95rem;
@@ -147,20 +171,53 @@ const isActive = (path) => {
   font-size: 1.1rem;
   width: 20px;
   text-align: center;
+  color: var(--text-primary, #8a7051);
+  transition: color 0.2s ease;
 }
 
 .sidebar-nav-item:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
+  background-color: rgba(138, 112, 81, 0.1);
+  color: var(--text-secondary, #1c1b18);
+}
+
+.sidebar-nav-item:hover i {
+  color: var(--text-primary, #8a7051);
 }
 
 /* Active sidebar nav item styled as gold-brown round card */
 .sidebar-nav-item.active {
-  background-color: #9f7615; /* Matching the gold-brown background in the screenshot */
+  background-color: #8a7051;
   color: #ffffff;
 }
 
 .sidebar-nav-item.active i {
+  color: #ffffff;
+}
+
+/* Dark mode nav items */
+body.dark-mode .sidebar-nav-item {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+body.dark-mode .sidebar-nav-item i {
+  color: var(--text-primary, #c5a880);
+}
+
+body.dark-mode .sidebar-nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+body.dark-mode .sidebar-nav-item:hover i {
+  color: #ffffff;
+}
+
+body.dark-mode .sidebar-nav-item.active {
+  background-color: #9f7615;
+  color: #ffffff;
+}
+
+body.dark-mode .sidebar-nav-item.active i {
   color: #ffffff;
 }
 
