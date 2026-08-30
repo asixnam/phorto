@@ -1,60 +1,60 @@
 <template>
   <div>
     <!-- Hero Section -->
+    <!-- Hero Section -->
     <section class="hero hero-landing hero-index">
-      <!-- Background Portfolio Slides (Seamless Loop) -->
-      <div class="hero-bg-slides">
-        <div class="slides-track">
-          <!-- Slide Set 1 -->
-          <img src="https://lh3.googleusercontent.com/d/1Ow8UureIlvkddCZAj5utU2nHciwnjFmp=w1000" alt="Instagram Feed Design" class="slide-img" />
-          <img src="https://lh3.googleusercontent.com/d/1783iKvBdrRerXZCN4wuhtx46_TTjZTNl=w1000" alt="Photo Graph" class="slide-img" />
-          <img src="https://lh3.googleusercontent.com/d/1kERgO05KpliBTo56XHbZDxdOML61Gu-X=w1000" alt="Logo Design" class="slide-img" />
-          <!-- Slide Set 2 (Duplicate for Seamless Loop) -->
-          <img src="https://lh3.googleusercontent.com/d/1Ow8UureIlvkddCZAj5utU2nHciwnjFmp=w1000" alt="Instagram Feed Design" class="slide-img" />
-          <img src="https://lh3.googleusercontent.com/d/1783iKvBdrRerXZCN4wuhtx46_TTjZTNl=w1000" alt="Photo Graph" class="slide-img" />
-          <img src="https://lh3.googleusercontent.com/d/1kERgO05KpliBTo56XHbZDxdOML61Gu-X=w1000" alt="Logo Design" class="slide-img" />
-        </div>
-      </div>
-
       <!-- Dynamic Hero Background Overlay -->
-      <div class="hero-bg-image" style="background-image: url('/dekstop.png');"></div>
+      <div class="hero-bg-image" style="background-image: url('');"></div>
       <div class="hero-overlay-gradient"></div>
 
       <div class="container hero-container">
-        <div class="hero-content">
-          <!-- <div class="hero-tag">Selamat Datang</div> -->
-          <h1 class="hero-title">Ciptakan Kenanganmu <span class="name-blue">& Kembangkan Kreasimu</span></h1>
-          <!-- <p class="hero-tagline">// VISUAL_LOG_CAPTURE & CODE_UPLINK_OPERATOR</p> -->
-          <div class="hero-btns">
-            <NuxtLink to="/shop" class="btn-hud btn-cyan"><i class="fas fa-shopping-bag"></i> SHOP</NuxtLink>
-            <NuxtLink to="/portfolio" class="btn-hud btn-outline"><i class="fas fa-folder-open"></i> PORTFOLIO</NuxtLink>
-          </div>
-        </div>
-      </div>
+        <div class="hero-grid">
+          <!-- Left Column: Hero Text & Actions -->
+          <div class="hero-col-left">
+            <div class="hero-header-block">
+              <div class="hero-tag">// CREATIVE_STUDIO &amp; PORTFOLIO</div>
+              <h1 class="hero-title">
+                <span class="title-line">Ciptakan Kenanganmu</span>
+                <span class="title-line name-blue">&amp; Kembangkan Kreasimu</span>
+              </h1>
+            </div>
+            <p class="hero-description">
+              Menghadirkan layanan desain grafis kreatif, identitas visual branding, fotografi profesional, serta pengembangan website modern untuk memperkuat karakter visual karya dan bisnis Anda.
+            </p>
 
-      <!-- Bottom Section - Transparent Box -->
-      <div class="hero-bottom">
-        <div class="container">
-          <div class="bottom-content">
-            <!-- Stats -->
-            <div class="hero-stats">
+            <div class="hero-btns">
+              <NuxtLink to="/shop" class="btn-hud btn-cyan">
+                <i class="fas fa-shopping-bag"></i> SHOP
+              </NuxtLink>
+              <NuxtLink to="/portfolio" class="btn-hud btn-outline">
+                <i class="fas fa-folder-open"></i> PORTFOLIO
+              </NuxtLink>
+            </div>
+
+            <!-- Integrated Stats Counter -->
+            <div class="hero-quick-stats">
               <div class="stat-item">
                 <div class="stat-number">50+</div>
-                <div class="section-tag">Feed Design</div>
+                <div class="stat-label">Feed Design</div>
               </div>
               <div class="stat-item">
                 <div class="stat-number">20+</div>
-                <div class="section-tag">Logo Design</div>
+                <div class="stat-label">Logo Design</div>
               </div>
               <div class="stat-item">
                 <div class="stat-number">10+</div>
-                <div class="section-tag">PhotoGraph</div>
+                <div class="stat-label">PhotoGraph</div>
               </div>
               <div class="stat-item">
                 <div class="stat-number">02</div>
-                <div class="section-tag">Website</div>
+                <div class="stat-label">Website</div>
               </div>
             </div>
+          </div>
+
+          <!-- Right Column: 3D Entrance Bloom Carousel -->
+          <div class="hero-col-right">
+            <EntranceBloom :images="heroCards" />
           </div>
         </div>
       </div>
@@ -167,6 +167,44 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+
+const heroCards = [
+  {
+    image: 'https://lh3.googleusercontent.com/d/1dCQkAU6SWwl1AS41_y6pfkYSZO9NhxS4=w1000',
+    tag: 'FEED DESIGN',
+    title: 'Social Media Feed'
+  },
+  {
+    image: 'https://lh3.googleusercontent.com/d/1RdooRldxPpu6nxKdjzk5DLFPec4uoIHv=w1000',
+    tag: 'PHOTOGRAPHY',
+    title: 'Visual Photography'
+  },
+  {
+    image: 'https://lh3.googleusercontent.com/d/1kERgO05KpliBTo56XHbZDxdOML61Gu-X=w1000',
+    tag: 'LOGO DESIGN',
+    title: 'Vector Logo Art'
+  },
+  {
+    image: 'https://lh3.googleusercontent.com/d/10VTt3fdauC1O5tcYxZMHIgUWu6nIb9xP=w1000',
+    tag: 'COVER BUKU',
+    title: 'Book Cover Design'
+  },
+  {
+    image: 'https://lh3.googleusercontent.com/d/1iIdy7xrBptrsdOvGkHrYrVayTAjO5IpE=w1000',
+    tag: 'MERCHANDISE',
+    title: 'Apparel & T-Shirt'
+  },
+  {
+    image: 'https://lh3.googleusercontent.com/d/1OBoKrJXe79OjK4hX785REhfBLoSHAltf=w1000',
+    tag: 'WEB PROJECT',
+    title: 'Modern Web UI/UX'
+  },
+  {
+    image: 'https://lh3.googleusercontent.com/d/1z8PUjwAvzdK7vT3jc8Wbvlty7_0S5xcr=w1000',
+    tag: 'PORTRAIT',
+    title: 'Creative Portrait'
+  }
+]
 
 const services = [
   {
