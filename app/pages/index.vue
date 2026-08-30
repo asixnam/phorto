@@ -1,8 +1,7 @@
 <template>
   <div>
     <!-- Hero Section -->
-    <!-- Hero Section -->
-    <section class="hero hero-landing hero-index">
+    <section class="hero hero-index">
       <!-- Dynamic Hero Background Overlay -->
       <div class="hero-bg-image" style="background-image: url('');"></div>
       <div class="hero-overlay-gradient"></div>
@@ -61,7 +60,7 @@
     </section>
 
     <!-- Freelance Services Section -->
-    <section id="services" class="shop" style="padding-top: 100px; padding-bottom: 80px;">
+    <section id="services" class="shop index-services">
       <div class="container" style="text-align: center;">
         <div class="section-tag">// SERVICE_CAPABILITIES_UPLINK</div>
         <h2 class="section-title">Layanan <span>Freelance</span></h2>
@@ -266,7 +265,7 @@ const services = [
   {
     title: 'Fotografi',
     description: 'Jasa fotografi profesional untuk acara, produk, atau keperluan komersial dengan hasil berkualitas tinggi.',
-    image: 'https://lh3.googleusercontent.com/d/1783iKvBdrRerXZCN4wuhtx46_TTjZTNl=w1000',
+    image: 'https://lh3.googleusercontent.com/d/1O8EsKWTmrXw5SPGl8MbsUtNSU0ZqMdzc=w1000',
     tags: ['Foto & Editing', 'Profesional', 'Berbagai Paket', 'Start From 300k'],
     link: '/checkout?service=Fotografi'
   },

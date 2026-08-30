@@ -59,7 +59,7 @@ const services = [
   {
     title: 'Fotografi',
     description: 'Jasa fotografi profesional untuk acara, produk, atau keperluan komersial dengan hasil berkualitas tinggi.',
-    image: 'https://lh3.googleusercontent.com/d/1783iKvBdrRerXZCN4wuhtx46_TTjZTNl=w1000',
+    image: 'https://lh3.googleusercontent.com/d/1O8EsKWTmrXw5SPGl8MbsUtNSU0ZqMdzc=w1000',
     tags: ['Foto & Editing', 'Profesional', 'Berbagai Paket', 'Start From 300k'],
     link: '/checkout?service=Fotografi'
   },

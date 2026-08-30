@@ -3,21 +3,23 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-content">
-        <div class="footer-section about">
-          <div class="section-tag">// IDENTITY_ROOT</div>
-          <h3>asixcreative</h3>
-          <p>Solusi kreatif untuk kebutuhan digital Anda. Kami hadir untuk mewujudkan visi bisnis Anda.</p>
-        </div>
-        
-        <div class="footer-section links">
-          <div class="section-tag">// NAVIGATION_NODES</div>
-          <h4>Tautan Cepat</h4>
-          <ul>
-            <li><NuxtLink to="/shop">Layanan</NuxtLink></li>
-            <li><NuxtLink to="/portfolio">Portofolio</NuxtLink></li>
-            <li><NuxtLink to="/#resume">Tentang Kami</NuxtLink></li>
-            <li><NuxtLink to="/#services">Capabilities</NuxtLink></li>
-          </ul>
+        <div class="footer-top-row">
+          <div class="footer-section about">
+            <div class="section-tag">// IDENTITY_ROOT</div>
+            <h3>asixcreative</h3>
+            <p>Solusi kreatif untuk kebutuhan digital Anda. Kami hadir untuk mewujudkan visi bisnis Anda.</p>
+          </div>
+          
+          <div class="footer-section links">
+            <div class="section-tag">// NAVIGATION_NODES</div>
+            <h4>Tautan Cepat</h4>
+            <ul>
+              <li><NuxtLink to="/shop">Layanan</NuxtLink></li>
+              <li><NuxtLink to="/portfolio">Portofolio</NuxtLink></li>
+              <li><NuxtLink to="/cv">Tentang Kami</NuxtLink></li>
+              <li><NuxtLink to="/#services">Capabilities</NuxtLink></li>
+            </ul>
+          </div>
         </div>
         
         <div class="footer-section contact">

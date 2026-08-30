@@ -17,7 +17,7 @@
           <i class="fas fa-gamepad"></i><span>HOME</span>
         </NuxtLink>
         <NuxtLink to="/cv" class="nav-icon" active-class="active" title="Resume">
-          <i class="fas fa-khanda"></i><span>CV</span>
+          <i class="fas fa-khanda"></i><span>ABOUT</span>
         </NuxtLink>
         <!-- <NuxtLink to="/#services" class="nav-icon" title="Lore">
           <i class="fas fa-scroll"></i><span>SKILLS</span>
