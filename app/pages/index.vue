@@ -76,7 +76,7 @@
               <h3 class="service-title">{{ service.title }}</h3>
               <p class="service-description">{{ service.description }}</p>
               <div class="service-features">
-                <span v-for="tag in service.tags" :key="tag" class="feature-tag">{{ tag }}</span>
+                <span v-for="tag in parseTags(service.tags)" :key="tag" class="feature-tag">{{ tag }}</span>
               </div>
               <NuxtLink :to="service.link" class="service-cta">
                 <i class="fas fa-shopping-cart"></i> Pesan Sekarang
@@ -205,7 +205,16 @@ const heroCards = [
   }
 ]
 
-const services = [
+const parseTags = (tags) => {
+  if (!tags) return []
+  if (Array.isArray(tags)) return tags
+  if (typeof tags === 'string') {
+    return tags.split(',').map(t => t.trim()).filter(Boolean)
+  }
+  return []
+}
+
+const defaultServices = [
   {
     title: 'Desain Logo',
     description: 'Pembuatan logo profesional yang mencerminkan identitas bisnis Anda dengan desain yang unik dan memorable.',
@@ -278,6 +287,8 @@ const services = [
   }
 ]
 
+const services = ref([...defaultServices])
+
 const testimonials = ref([
   {
     name: 'Agna Nia Zahra',
@@ -344,6 +355,24 @@ onMounted(async () => {
     }
   } catch (err) {
     console.error('Failed to fetch testimonials from database, using static fallback:', err)
+  }
+
+  // Fetch dynamic services
+  try {
+    const { $supabase } = useNuxtApp()
+    if ($supabase) {
+      const { data: servicesData, error: servicesErr } = await $supabase
+        .from('services')
+        .select('*')
+        .order('order_num', { ascending: true })
+        .order('created_at', { ascending: false })
+
+      if (!servicesErr && servicesData && servicesData.length > 0) {
+        services.value = servicesData.filter(s => s.is_active !== false)
+      }
+    }
+  } catch (err) {
+    console.warn('Failed to fetch services for homepage:', err)
   }
 })
 </script>

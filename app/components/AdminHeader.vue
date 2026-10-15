@@ -19,6 +19,9 @@
       <NuxtLink to="/admin/orders" :class="['sidebar-nav-item', { active: isActive('/admin/orders') }]">
         <i class="fas fa-shopping-bag"></i><span>Kelola Pesanan</span>
       </NuxtLink>
+      <NuxtLink to="/admin/services" :class="['sidebar-nav-item', { active: isActive('/admin/services') }]">
+        <i class="fas fa-layer-group"></i><span>Kelola Layanan</span>
+      </NuxtLink>
       <NuxtLink to="/admin/portfolio" :class="['sidebar-nav-item', { active: isActive('/admin/portfolio') }]">
         <i class="fas fa-images"></i><span>Kelola Portofolio</span>
       </NuxtLink>

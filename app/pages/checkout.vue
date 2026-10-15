@@ -141,7 +141,7 @@ const clientEmail = ref('')
 const selectedServices = ref([])
 const orderNotes = ref('')
 
-const availableServices = [
+const defaultAvailableServices = [
   'Desain Logo',
   'Desain Kaos',
   'Feed Instagram',
@@ -154,12 +154,37 @@ const availableServices = [
   'Desain Cover Buku'
 ]
 
+const availableServices = ref([...defaultAvailableServices])
+
 const isSubmitting = ref(false)
 const isSubmitted = ref(false)
 
-onMounted(() => {
+onMounted(async () => {
   if (route.query.service) {
     selectedServices.value = [route.query.service]
+  }
+
+  try {
+    const { $supabase } = useNuxtApp()
+    if ($supabase) {
+      const { data, error } = await $supabase
+        .from('services')
+        .select('title, is_active')
+        .order('order_num', { ascending: true })
+
+      if (!error && data && data.length > 0) {
+        const titles = data.filter(s => s.is_active !== false).map(s => s.title)
+        if (titles.length > 0) {
+          // If query param service exists and not in list, keep it
+          if (route.query.service && !titles.includes(route.query.service)) {
+            titles.unshift(route.query.service)
+          }
+          availableServices.value = titles
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('Checkout services fetch notice:', err)
   }
 })
 
