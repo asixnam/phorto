@@ -573,13 +573,64 @@ const formatDate = (dateStr) => {
   }
 }
 
+// const getWaChatUrl = (order) => {
+//   if (!order || !order.client_whatsapp) return '#'
+//   let num = String(order.client_whatsapp).replace(/[^0-9]/g, '')
+//   if (num.startsWith('0')) num = '62' + num.slice(1)
+//   const text = `Halo kak ${order.client_name || ''}, kami dari asixnam ingin mengonfirmasi pesanan ${order.order_type || 'layanan'} Anda.`
+//   return `https://wa.me/${num}?text=${encodeURIComponent(text)}`
+// }
+
 const getWaChatUrl = (order) => {
   if (!order || !order.client_whatsapp) return '#'
+
+  // Format nomor WhatsApp
   let num = String(order.client_whatsapp).replace(/[^0-9]/g, '')
-  if (num.startsWith('0')) num = '62' + num.slice(1)
-  const text = `Halo kak ${order.client_name || ''}, kami dari asixnam ingin mengonfirmasi pesanan ${order.order_type || 'layanan'} Anda.`
+
+  if (num.startsWith('0')) {
+    num = '62' + num.slice(1)
+  } else if (num.startsWith('8')) {
+    num = '62' + num
+  }
+
+  // Ambil status pesanan dan pembayaran
+  const status = order.status || 'pending'
+  const payment = order.payment_status || 'unpaid'
+
+  let text = ''
+
+  // Pesan berdasarkan status pesanan dan pembayaran
+  if (status === 'completed' && payment === 'unpaid') {
+    text = `Halo Kak ${order.client_name || ''} 
+    Kami dari Asixnam ingin menginformasikan bahwa pesanan Kakak untuk layanan *${order.order_type || 'layanan'}* telah selesai dikerjakan. 🎉Namun, pembayaran pesanan masih belum kami terima. Mohon segera melakukan pembayaran agar proses penyelesaian pesanan dapat kami tuntaskan. Jika sudah melakukan pembayaran, silakan abaikan pesan ini dan konfirmasikan kepada kami.
+
+    Terima kasih atas kepercayaan Kakak menggunakan layanan Asixnam 🙏`
+
+  } else if (status === 'completed' && payment === 'paid') {
+    text = `Halo Kak ${order.client_name || ''} 👋 Kabar baik! Pesanan Kakak untuk layanan *${order.order_type || 'layanan'}* telah selesai dikerjakan dan pembayaran sudah kami terima. ✅ Terima kasih atas kepercayaan Kakak menggunakan layanan Asixnam. Semoga Kakak puas dengan hasilnya. Kami tunggu pesanan berikutnya! 🙏`
+
+  } else if (status === 'in-progress' && payment === 'unpaid') {
+    text = `Halo Kak ${order.client_name || ''} 👋 Kami dari Asixnam ingin menginformasikan bahwa pesanan Kakak untuk layanan *${order.order_type || 'layanan'}* sedang dalam proses pengerjaan. 🔄 Sebagai pengingat, pembayaran pesanan masih berstatus belum lunas. Mohon melakukan pembayaran sesuai kesepakatan yang telah ditentukan. Terima kasih atas kepercayaan Kakak kepada Asixnam 🙏`
+
+  } else if (status === 'in-progress' && payment === 'paid') {
+    text = `Halo Kak ${order.client_name || ''} 👋 Pesanan Kakak untuk layanan *${order.order_type || 'layanan'}* saat ini sedang kami kerjakan. 🔄 Pembayaran telah kami terima. Kami akan memberikan informasi kembali setelah pesanan selesai. Terima kasih telah mempercayakan kebutuhan Kakak kepada Asixnam 🙏`
+
+  } else if (status === 'pending' && payment === 'unpaid') {
+    text = `Halo Kak ${order.client_name || ''} 👋 Kami dari Asixnam telah menerima pesanan Kakak untuk layanan *${order.order_type || 'layanan'}*. 📋 Saat ini pesanan masih menunggu proses selanjutnya dan pembayaran belum kami terima. Mohon konfirmasikan pembayaran sesuai kesepakatan agar pesanan dapat segera diproses. Terima kasih 🙏`
+
+  } else {
+    text = `Halo Kak ${order.client_name || ''} 👋 Kami dari Asixnam ingin menginformasikan bahwa pesanan Kakak untuk layanan *${order.order_type || 'layanan'}* telah kami catat. 
+    
+    - Status pesanan: ${status}
+    - Status pembayaran: ${payment === 'paid' ? 'Lunas' : 'Belum Lunas'}
+    
+    Jika ada pertanyaan, silakan hubungi kami melalui WhatsApp ini.
+    Terima kasih telah mempercayai Asixnam 🙏`
+  }
+
   return `https://wa.me/${num}?text=${encodeURIComponent(text)}`
 }
+
 
 // Fetch Orders from Supabase
 const fetchOrders = async () => {
