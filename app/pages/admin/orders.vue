@@ -606,19 +606,17 @@ if (status === 'completed' && payment === 'unpaid') {
 
       Kami dari Asixnam ingin menginformasikan bahwa pesanan Kakak untuk layanan *${order.order_type || 'layanan'}* telah selesai dikerjakan. 🎉
 
-      Namun, pembayaran pesanan masih belum kami terima. Mohon segera melakukan pembayaran melalui rekening berikut:
+      Pembayaran pesanan masih belum kami terima. Mohon melakukan pembayaran melalui rekening berikut:
 
-      🏦 *Informasi Pembayaran*
+      🏦 *INFORMASI PEMBAYARAN*
       BRI: 001001061913504
       DANA :085943548498
       Shopee :081323596022
       AN: Mohamad Khoirul Anam
 
-      Setelah melakukan pembayaran, mohon kirimkan bukti transfer kepada kami sebagai konfirmasi.
+     Setelah melakukan pembayaran, mohon kirimkan bukti transfer kepada kami.
 
-      Jika Kakak sudah melakukan pembayaran, silakan abaikan pesan ini dan konfirmasikan kepada kami.
-
-      Terima kasih telah mempercayakan kebutuhan Kakak kepada *Asixnam*. 🙏`;
+    Terima kasih telah mempercayakan kebutuhan Kakak kepada *Asixnam*. 🙏`;
 
 
 
