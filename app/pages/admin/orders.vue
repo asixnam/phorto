@@ -244,10 +244,20 @@
                 :href="getWaChatUrl(order)" 
                 target="_blank" 
                 class="btn-icon-action wa-chat-btn" 
-                title="Chat via WhatsApp"
+                title="Kirim Chat via WhatsApp (Direct API)"
               >
                 <i class="fab fa-whatsapp"></i> Chat
               </a>
+
+              <button 
+                type="button"
+                @click="copyOrderWaMessage(order)" 
+                :class="['btn-icon-action copy-chat-btn', { copied: copiedOrderId === order.id }]" 
+                :title="copiedOrderId === order.id ? 'Tersalin!' : 'Salin Pesan WA Beserta Emoji'"
+              >
+                <i :class="copiedOrderId === order.id ? 'fas fa-check' : 'far fa-copy'"></i>
+                <span>{{ copiedOrderId === order.id ? 'Tersalin' : 'Salin' }}</span>
+              </button>
 
               <button 
                 @click="deleteOrder(order.id)" 
@@ -324,9 +334,18 @@
                 </td>
                 <td data-label="Aksi" style="text-align: center;">
                   <div style="display:flex; gap:6px; justify-content: center;">
-                    <a :href="getWaChatUrl(order)" target="_blank" class="btn-icon-action wa-chat-btn" title="Chat Klien" style="padding: 5px 8px;">
+                    <a :href="getWaChatUrl(order)" target="_blank" class="btn-icon-action wa-chat-btn" title="Kirim Chat via WhatsApp" style="padding: 5px 8px;">
                       <i class="fab fa-whatsapp"></i>
                     </a>
+                    <button 
+                      type="button"
+                      @click="copyOrderWaMessage(order)" 
+                      :class="['btn-icon-action copy-chat-btn', { copied: copiedOrderId === order.id }]" 
+                      :title="copiedOrderId === order.id ? 'Tersalin!' : 'Salin Pesan WA Beserta Emoji'" 
+                      style="padding: 5px 8px;"
+                    >
+                      <i :class="copiedOrderId === order.id ? 'fas fa-check' : 'far fa-copy'"></i>
+                    </button>
                     <button @click="deleteOrder(order.id)" class="btn-icon-action delete-btn" title="Hapus Pesanan" style="padding: 5px 8px;">
                       <i class="fas fa-trash-alt"></i>
                     </button>
@@ -460,6 +479,14 @@
       </div>
 
     </div>
+
+    <!-- Floating Toast Notification for Copy Chat -->
+    <transition name="toast-fade">
+      <div v-if="toastMessage" class="toast-notify">
+        <i class="fas fa-check-circle" style="color: #34d399; font-size: 1.15rem;"></i>
+        <span>{{ toastMessage }}</span>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -475,6 +502,10 @@ const orders = ref([])
 const isLoading = ref(true)
 const isSubmitting = ref(false)
 const errorMsg = ref('')
+
+// Toast & Copy State
+const copiedOrderId = ref(null)
+const toastMessage = ref('')
 
 // View mode: 'grid' (default) | 'table'
 const viewMode = ref('grid')
@@ -573,77 +604,220 @@ const formatDate = (dateStr) => {
   }
 }
 
-// const getWaChatUrl = (order) => {
-//   if (!order || !order.client_whatsapp) return '#'
-//   let num = String(order.client_whatsapp).replace(/[^0-9]/g, '')
-//   if (num.startsWith('0')) num = '62' + num.slice(1)
-//   const text = `Halo kak ${order.client_name || ''}, kami dari asixnam ingin mengonfirmasi pesanan ${order.order_type || 'layanan'} Anda.`
-//   return `https://wa.me/${num}?text=${encodeURIComponent(text)}`
-// }
+const getWaMessageText = (order) => {
+  if (!order) return ''
 
+  // Ambil status pesanan dan pembayaran
+  const status = order.status || 'pending'
+  const payment = order.payment_status || 'unpaid'
+
+  // Format sapaan nama klien & layanan
+  const rawName = (order.client_name || '').trim()
+  let clientGreeting = 'Kak'
+  if (rawName) {
+    clientGreeting = rawName.toLowerCase().startsWith('kak ') ? `*${rawName}*` : `Kak *${rawName}*`
+  }
+
+  const serviceName = order.order_type ? `*${order.order_type}*` : '*Layanan Kami*'
+
+  // Rincian rekening pembayaran resmi Asixnam
+  const paymentDetails = [
+    '💳 *INFORMASI PEMBAYARAN:*',
+    '• *Bank BRI:* 001001061913504',
+    '• *DANA:* 085943548498',
+    '• *ShopeePay:* 081323596022',
+    '• *A/N:* Mohamad Khoirul Anam',
+    '',
+    '📸 _Mohon kirimkan bukti transfer setelah pembayaran agar dapat segera kami verifikasi._'
+  ]
+
+  let lines = []
+
+  // 1. Pesanan Selesai tapi Belum Lunas
+  if (status === 'completed' && payment === 'unpaid') {
+    lines = [
+      `Halo ${clientGreeting} 👋`,
+      '',
+      `Kabar gembira! Kami dari *Asixnam* ingin menginformasikan bahwa pesanan Kakak untuk layanan ${serviceName} telah *SELESAI* dikerjakan. 🎉✨`,
+      '',
+      '📋 *Rincian Pesanan:*',
+      `• Layanan: ${serviceName}`,
+      '• Status Pengerjaan: *Selesai (Completed)* ✅',
+      '• Status Pembayaran: *Belum Lunas (Unpaid)* ⏳',
+      '',
+      'Untuk pengiriman file master / hasil akhir pesanan, mohon menyelesaikan pembayaran melalui rekening berikut:',
+      '',
+      ...paymentDetails,
+      '',
+      'Terima kasih banyak telah mempercayakan kebutuhan Kakak kepada *Asixnam*! 🙏✨'
+    ]
+
+  // 2. Pesanan Selesai dan Sudah Lunas
+  } else if (status === 'completed' && payment === 'paid') {
+    lines = [
+      `Halo ${clientGreeting} 👋`,
+      '',
+      `Kabar gembira! Pesanan Kakak untuk layanan ${serviceName} telah *SELESAI* dikerjakan dan pembayaran sudah kami terima (*Lunas*). 🎉✅`,
+      '',
+      '📋 *Rincian Pesanan:*',
+      `• Layanan: ${serviceName}`,
+      '• Status Pengerjaan: *Selesai (Completed)* ✅',
+      '• Status Pembayaran: *Lunas (Paid)* 💚',
+      '',
+      'File / hasil pengerjaan siap digunakan. Semoga Kakak puas dengan hasil karya kami! 🌟',
+      '',
+      'Terima kasih banyak atas kepercayaan Kakak memilih *Asixnam*. Kami sangat menantikan project dan pesanan Kakak berikutnya! 🙏✨'
+    ]
+
+  // 3. Sedang Dikerjakan tapi Belum Lunas
+  } else if (status === 'in-progress' && payment === 'unpaid') {
+    lines = [
+      `Halo ${clientGreeting} 👋`,
+      '',
+      `Kami dari *Asixnam* ingin mengabarkan bahwa pesanan Kakak untuk layanan ${serviceName} saat ini *SEDANG DALAM PROSES PENGERJAAN*. 🎨⏳`,
+      '',
+      '📋 *Rincian Pesanan:*',
+      `• Layanan: ${serviceName}`,
+      '• Status Pengerjaan: *Dalam Proses (In Progress)* 🔄',
+      '• Status Pembayaran: *Belum Lunas (Unpaid)* ⏳',
+      '',
+      'Sebagai pengingat ramah, pembayaran pesanan masih tercatat belum lunas. Kakak dapat melakukan pembayaran melalui rekening berikut:',
+      '',
+      ...paymentDetails,
+      '',
+      'Terima kasih banyak atas kepercayaannya kepada *Asixnam*! 🙏✨'
+    ]
+
+  // 4. Sedang Dikerjakan dan Sudah Lunas
+  } else if (status === 'in-progress' && payment === 'paid') {
+    lines = [
+      `Halo ${clientGreeting} 👋`,
+      '',
+      `Pesanan Kakak untuk layanan ${serviceName} saat ini *SEDANG KAMI KERJAKAN* dengan maksimal. 🎨⏳`,
+      '',
+      '📋 *Rincian Pesanan:*',
+      `• Layanan: ${serviceName}`,
+      '• Status Pengerjaan: *Dalam Proses (In Progress)* 🔄',
+      '• Status Pembayaran: *Lunas (Paid)* ✅',
+      '',
+      'Pembayaran telah kami terima dengan baik. Kami akan segera memberikan update kembali begitu pesanan rampung dikerjakan. 🚀',
+      '',
+      'Terima kasih telah mempercayakan project Kakak kepada *Asixnam*! 🙏✨'
+    ]
+
+  // 5. Menunggu Antrean (Pending) dan Belum Lunas
+  } else if (status === 'pending' && payment === 'unpaid') {
+    lines = [
+      `Halo ${clientGreeting} 👋`,
+      '',
+      `Terima kasih telah melakukan pemesanan di *Asixnam*! ✨`,
+      `Pesanan Kakak untuk layanan ${serviceName} telah kami terima di sistem antrean kami. 📋`,
+      '',
+      '📋 *Rincian Pesanan:*',
+      `• Layanan: ${serviceName}`,
+      '• Status Antrean: *Menunggu Pengerjaan (Pending)* ⏳',
+      '• Status Pembayaran: *Belum Lunas (Unpaid)* 💳',
+      '',
+      'Agar pesanan dapat segera kami jadwalkan dan mulai dikerjakan, mohon melakukan pembayaran / DP melalui rekening berikut:',
+      '',
+      ...paymentDetails,
+      '',
+      'Terima kasih banyak, kami tunggu konfirmasinya ya Kak! 🙏✨'
+    ]
+
+  // 6. Menunggu Antrean (Pending) dan Sudah Lunas
+  } else if (status === 'pending' && payment === 'paid') {
+    lines = [
+      `Halo ${clientGreeting} 👋`,
+      '',
+      `Terima kasih! Pesanan Kakak untuk layanan ${serviceName} telah kami terima dan pembayaran sudah terverifikasi *LUNAS*. ✅✨`,
+      '',
+      '📋 *Rincian Pesanan:*',
+      `• Layanan: ${serviceName}`,
+      '• Status Antrean: *Menunggu Antrean (Pending)* ⏳',
+      '• Status Pembayaran: *Lunas (Paid)* 💚',
+      '',
+      'Pesanan Kakak sudah masuk ke jadwal pengerjaan dan akan segera diproses oleh tim kami secepatnya. 🚀',
+      '',
+      'Terima kasih atas kepercayaannya kepada *Asixnam*! 🙏✨'
+    ]
+
+  // 7. Status Lainnya (Fallback)
+  } else {
+    const statusLabel = status === 'completed' ? 'Selesai (Completed) ✅' : status === 'in-progress' ? 'Dalam Proses (In Progress) 🔄' : 'Menunggu (Pending) ⏳'
+    const paymentLabel = payment === 'paid' ? 'Lunas (Paid) ✅' : 'Belum Lunas (Unpaid) ⏳'
+
+    lines = [
+      `Halo ${clientGreeting} 👋`,
+      '',
+      `Kami dari *Asixnam* ingin menginformasikan pembaruan status pesanan Kakak untuk layanan ${serviceName}. 📋✨`,
+      '',
+      '📋 *Status Terkini Pesanan:*',
+      `• Layanan: ${serviceName}`,
+      `• Status Pengerjaan: *${statusLabel}*`,
+      `• Status Pembayaran: *${paymentLabel}*`,
+      '',
+      'Jika ada pertanyaan atau kebutuhan revisi, silakan hubungi kami melalui chat ini ya Kak. 😊',
+      '',
+      'Terima kasih telah mempercayai *Asixnam*! 🙏✨'
+    ]
+  }
+
+  return lines.join('\n')
+}
+
+// WhatsApp URL menggunakan api.whatsapp.com/send langsung (menghindari bug redirect wa.me yang menghapus emoji)
 const getWaChatUrl = (order) => {
   if (!order || !order.client_whatsapp) return '#'
 
   // Format nomor WhatsApp
   let num = String(order.client_whatsapp).replace(/[^0-9]/g, '')
 
-  if (num.startsWith('0')) {
+  if (num.startsWith('620')) {
+    num = '62' + num.slice(3)
+  } else if (num.startsWith('0')) {
     num = '62' + num.slice(1)
   } else if (num.startsWith('8')) {
     num = '62' + num
   }
 
-  // Ambil status pesanan dan pembayaran
-  const status = order.status || 'pending'
-  const payment = order.payment_status || 'unpaid'
-
-  let text = ''
-
-  // Pesan berdasarkan status pesanan dan pembayaran
- 
-if (status === 'completed' && payment === 'unpaid') {
-    text = `Halo Kak ${order.client_name || ''} 👋
-
-      Kami dari Asixnam ingin menginformasikan bahwa pesanan Kakak untuk layanan *${order.order_type || 'layanan'}* telah selesai dikerjakan. 🎉
-
-      Pembayaran pesanan masih belum kami terima. Mohon melakukan pembayaran melalui rekening berikut:
-
-      🏦 *INFORMASI PEMBAYARAN*
-      BRI: 001001061913504
-      DANA :085943548498
-      Shopee :081323596022
-      AN: Mohamad Khoirul Anam
-
-     Setelah melakukan pembayaran, mohon kirimkan bukti transfer kepada kami.
-
-    Terima kasih telah mempercayakan kebutuhan Kakak kepada *Asixnam*. 🙏`;
-
-
-
-  } else if (status === 'completed' && payment === 'paid') {
-    text = `Halo Kak ${order.client_name || ''} 👋 Kabar baik! Pesanan Kakak untuk layanan *${order.order_type || 'layanan'}* telah selesai dikerjakan dan pembayaran sudah kami terima. ✅ Terima kasih atas kepercayaan Kakak menggunakan layanan Asixnam. Semoga Kakak puas dengan hasilnya. Kami tunggu pesanan berikutnya! 🙏`
-
-  } else if (status === 'in-progress' && payment === 'unpaid') {
-    text = `Halo Kak ${order.client_name || ''} 👋 Kami dari Asixnam ingin menginformasikan bahwa pesanan Kakak untuk layanan *${order.order_type || 'layanan'}* sedang dalam proses pengerjaan. 🔄 Sebagai pengingat, pembayaran pesanan masih berstatus belum lunas. Mohon melakukan pembayaran sesuai kesepakatan yang telah ditentukan. Terima kasih atas kepercayaan Kakak kepada Asixnam 🙏`
-
-  } else if (status === 'in-progress' && payment === 'paid') {
-    text = `Halo Kak ${order.client_name || ''} 👋 Pesanan Kakak untuk layanan *${order.order_type || 'layanan'}* saat ini sedang kami kerjakan. 🔄 Pembayaran telah kami terima. Kami akan memberikan informasi kembali setelah pesanan selesai. Terima kasih telah mempercayakan kebutuhan Kakak kepada Asixnam 🙏`
-
-  } else if (status === 'pending' && payment === 'unpaid') {
-    text = `Halo Kak ${order.client_name || ''} 👋 Kami dari Asixnam telah menerima pesanan Kakak untuk layanan *${order.order_type || 'layanan'}*. 📋 Saat ini pesanan masih menunggu proses selanjutnya dan pembayaran belum kami terima. Mohon konfirmasikan pembayaran sesuai kesepakatan agar pesanan dapat segera diproses. Terima kasih 🙏`
-
-  } else {
-    text = `Halo Kak ${order.client_name || ''} 👋 Kami dari Asixnam ingin menginformasikan bahwa pesanan Kakak untuk layanan *${order.order_type || 'layanan'}* telah kami catat. 
-    
-    - Status pesanan: ${status}
-    - Status pembayaran: ${payment === 'paid' ? 'Lunas' : 'Belum Lunas'}
-    
-    Jika ada pertanyaan, silakan hubungi kami melalui WhatsApp ini.
-    Terima kasih telah mempercayai Asixnam 🙏`
-  }
-
-  return `https://wa.me/${num}?text=${encodeURIComponent(text)}`
+  const text = getWaMessageText(order)
+  return `https://api.whatsapp.com/send?phone=${num}&text=${encodeURIComponent(text)}`
 }
+
+// Fitur Salin Pesan (Backup 100% aman untuk paste langsung dengan seluruh emoji utuh)
+const copyOrderWaMessage = async (order) => {
+  const text = getWaMessageText(order)
+  if (!text) return
+
+  try {
+    if (navigator?.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text)
+    } else {
+      const textarea = document.createElement('textarea')
+      textarea.value = text
+      textarea.style.position = 'fixed'
+      textarea.style.opacity = '0'
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
+    }
+    copiedOrderId.value = order.id
+    toastMessage.value = 'Teks chat dan emoji berhasil disalin ke clipboard!'
+    setTimeout(() => {
+      if (copiedOrderId.value === order.id) {
+        copiedOrderId.value = null
+      }
+    }, 2500)
+    setTimeout(() => {
+      toastMessage.value = ''
+    }, 3500)
+  } catch (err) {
+    console.error('Gagal menyalin pesan:', err)
+  }
+}
+
 
 
 // Fetch Orders from Supabase
@@ -1169,6 +1343,54 @@ body.dark-mode .order-card {
 .btn-icon-action.wa-chat-btn:hover {
   background: rgba(37, 211, 102, 0.2);
   border-color: #25d366;
+}
+
+.btn-icon-action.copy-chat-btn {
+  color: #60a5fa;
+  border-color: rgba(96, 165, 250, 0.3);
+  background: rgba(96, 165, 250, 0.08);
+}
+
+.btn-icon-action.copy-chat-btn:hover {
+  background: rgba(96, 165, 250, 0.2);
+  border-color: #60a5fa;
+  color: #93c5fd;
+}
+
+.btn-icon-action.copy-chat-btn.copied {
+  color: #34d399 !important;
+  border-color: rgba(52, 211, 153, 0.5) !important;
+  background: rgba(52, 211, 153, 0.15) !important;
+}
+
+/* Toast Notification */
+.toast-notify {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #18181b;
+  color: #f3f4f6;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 9999;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.toast-fade-enter-active,
+.toast-fade-leave-active {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast-fade-enter-from,
+.toast-fade-leave-to {
+  opacity: 0;
+  transform: translateY(12px);
 }
 
 .btn-icon-action.delete-btn {
