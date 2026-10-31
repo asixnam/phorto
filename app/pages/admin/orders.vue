@@ -217,10 +217,26 @@
 
             <!-- Order Notes if present -->
             <div v-if="order.order_notes" class="order-notes-box">
-              <div style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; color: #9ca3af; margin-bottom: 3px;">
-                <i class="far fa-comment-dots"></i> Catatan Klien:
+              <div class="order-notes-header">
+                <span class="order-notes-title">
+                  <i class="far fa-comment-dots"></i> Catatan Klien:
+                </span>
+                <button
+                  v-if="order.order_notes.length > 70 || order.order_notes.includes('\n')"
+                  type="button"
+                  @click="toggleNote(order.id)"
+                  class="order-notes-toggle"
+                  :title="expandedNotes[order.id] ? 'Perkecil catatan' : 'Tampilkan catatan lengkap'"
+                >
+                  <span>{{ expandedNotes[order.id] ? 'Sembunyikan' : 'Selengkapnya' }}</span>
+                  <i :class="expandedNotes[order.id] ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
+                </button>
               </div>
-              <div>{{ order.order_notes }}</div>
+              <div 
+                :class="['order-notes-content', { 'is-collapsed': !expandedNotes[order.id] && (order.order_notes.length > 70 || order.order_notes.includes('\n')) }]"
+              >
+                {{ order.order_notes }}
+              </div>
             </div>
           </div>
 
@@ -251,12 +267,12 @@
 
               <button 
                 type="button"
-                @click="copyOrderWaMessage(order)" 
-                :class="['btn-icon-action copy-chat-btn', { copied: copiedOrderId === order.id }]" 
-                :title="copiedOrderId === order.id ? 'Tersalin!' : 'Salin Pesan WA Beserta Emoji'"
+                @click="openEditOrderModal(order)" 
+                class="btn-icon-action edit-btn" 
+                title="Edit Pesanan Ini"
               >
-                <i :class="copiedOrderId === order.id ? 'fas fa-check' : 'far fa-copy'"></i>
-                <span>{{ copiedOrderId === order.id ? 'Tersalin' : 'Salin' }}</span>
+                <i class="fas fa-edit"></i>
+                <span>Edit</span>
               </button>
 
               <button 
@@ -307,8 +323,23 @@
                     <i class="fab fa-whatsapp"></i> {{ order.client_whatsapp }}
                   </a>
                 </td>
-                <td data-label="Catatan" style="font-size: 0.8rem; max-width: 220px; white-space: normal; line-height: 1.4;">
-                  {{ order.order_notes || '-' }}
+                <td data-label="Catatan" style="font-size: 0.8rem; max-width: 240px; white-space: normal; line-height: 1.4;">
+                  <div v-if="order.order_notes">
+                    <div :class="['table-notes-text', { 'is-collapsed': !expandedNotes[order.id] && (order.order_notes.length > 60 || order.order_notes.includes('\n')) }]">
+                      {{ order.order_notes }}
+                    </div>
+                    <button 
+                      v-if="order.order_notes.length > 60 || order.order_notes.includes('\n')"
+                      type="button" 
+                      @click="toggleNote(order.id)" 
+                      class="order-notes-toggle"
+                      style="margin-top: 4px;"
+                    >
+                      <span>{{ expandedNotes[order.id] ? 'Tutup' : 'Selengkapnya' }}</span>
+                      <i :class="expandedNotes[order.id] ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
+                    </button>
+                  </div>
+                  <span v-else style="color: #6b7280;">-</span>
                 </td>
                 <td data-label="Status" style="text-align: center;">
                   <select 
@@ -339,12 +370,12 @@
                     </a>
                     <button 
                       type="button"
-                      @click="copyOrderWaMessage(order)" 
-                      :class="['btn-icon-action copy-chat-btn', { copied: copiedOrderId === order.id }]" 
-                      :title="copiedOrderId === order.id ? 'Tersalin!' : 'Salin Pesan WA Beserta Emoji'" 
+                      @click="openEditOrderModal(order)" 
+                      class="btn-icon-action edit-btn" 
+                      title="Edit Pesanan Ini" 
                       style="padding: 5px 8px;"
                     >
-                      <i :class="copiedOrderId === order.id ? 'fas fa-check' : 'far fa-copy'"></i>
+                      <i class="fas fa-edit"></i>
                     </button>
                     <button @click="deleteOrder(order.id)" class="btn-icon-action delete-btn" title="Hapus Pesanan" style="padding: 5px 8px;">
                       <i class="fas fa-trash-alt"></i>
@@ -357,16 +388,16 @@
         </div>
       </div>
 
-      <!-- ================= MODAL: TAMBAH PESANAN ================= -->
+      <!-- ================= MODAL: TAMBAH / EDIT PESANAN ================= -->
       <div v-if="showOrderModal" class="modal-backdrop" @click.self="closeOrderModal">
         <div class="crud-form-card modal-content animate-scale" style="max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 28px;">
           <button type="button" class="modal-close-btn" @click="closeOrderModal" aria-label="Close modal">&times;</button>
           
           <h3 class="form-title" style="font-size:1.2rem; margin-bottom: 20px;">
-            // TAMBAH_PESANAN_BARU
+            {{ modalMode === 'edit' ? '// EDIT_DATA_PESANAN' : '// TAMBAH_PESANAN_BARU' }}
           </h3>
 
-          <form @submit.prevent="saveNewOrder" class="admin-form">
+          <form @submit.prevent="saveOrder" class="admin-form">
             <div class="form-group">
               <label>Nama Klien *</label>
               <input 
@@ -456,7 +487,10 @@
                 style="width: auto; padding: 12px 28px;"
               >
                 <span v-if="isSubmitting"><i class="fas fa-spinner fa-spin"></i> MENYIMPAN...</span>
-                <span v-else><i class="fas fa-check"></i> SIMPAN PESANAN</span>
+                <span v-else>
+                  <i class="fas fa-check"></i>
+                  {{ modalMode === 'edit' ? 'SIMPAN PERUBAHAN' : 'SIMPAN PESANAN' }}
+                </span>
               </button>
               <button 
                 type="button" 
@@ -507,6 +541,12 @@ const errorMsg = ref('')
 const copiedOrderId = ref(null)
 const toastMessage = ref('')
 
+// Catatan Klien expand/collapse state
+const expandedNotes = ref({})
+const toggleNote = (id) => {
+  expandedNotes.value[id] = !expandedNotes.value[id]
+}
+
 // View mode: 'grid' (default) | 'table'
 const viewMode = ref('grid')
 
@@ -517,6 +557,8 @@ const paymentFilter = ref('ALL')
 
 // Modal state
 const showOrderModal = ref(false)
+const modalMode = ref('add') // 'add' | 'edit'
+const editingOrderId = ref(null)
 const selectedServicePreset = ref('')
 
 const defaultOrderForm = () => ({
@@ -654,6 +696,13 @@ const getWaMessageText = (order) => {
 
   // 2. Pesanan Selesai dan Sudah Lunas
   } else if (status === 'completed' && payment === 'paid') {
+    const origin = typeof window !== 'undefined' && window.location?.origin ? window.location.origin : ''
+    const queryParams = new URLSearchParams()
+    if (order.client_name) queryParams.append('name', order.client_name.trim())
+    if (order.order_type) queryParams.append('service', order.order_type.trim())
+    const queryString = queryParams.toString() ? `?${queryParams.toString()}` : ''
+    const testiUrl = `${origin}/form-testi${queryString}`
+
     lines = [
       `Halo ${clientGreeting} 👋`,
       '',
@@ -665,6 +714,10 @@ const getWaMessageText = (order) => {
       '• Status Pembayaran: *Lunas (Paid)* 💚',
       '',
       'File / hasil pengerjaan siap digunakan. Semoga Kakak puas dengan hasil karya kami! 🌟',
+      '',
+      '⭐ *Beri Rating & Testimoni:*',
+      'Kepuasan Kakak adalah prioritas utama kami. Mohon kesediaan Kakak meluangkan waktu 1 menit untuk memberikan penilaian bintang & ulasan melalui link berikut:',
+      `👉 ${testiUrl}`,
       '',
       'Terima kasih banyak atas kepercayaan Kakak memilih *Asixnam*. Kami sangat menantikan project dan pesanan Kakak berikutnya! 🙏✨'
     ]
@@ -861,13 +914,40 @@ const fetchAvailableServices = async () => {
 
 // Modal actions
 const openAddOrderModal = () => {
+  modalMode.value = 'add'
+  editingOrderId.value = null
   orderForm.value = defaultOrderForm()
   selectedServicePreset.value = ''
   showOrderModal.value = true
 }
 
+const openEditOrderModal = (order) => {
+  if (!order) return
+  modalMode.value = 'edit'
+  editingOrderId.value = order.id
+  orderForm.value = {
+    client_name: order.client_name || '',
+    client_whatsapp: order.client_whatsapp || '',
+    client_email: order.client_email || '',
+    order_type: order.order_type || '',
+    order_notes: order.order_notes || '',
+    status: order.status || 'pending',
+    payment_status: order.payment_status || 'unpaid'
+  }
+
+  if (availableServices.value.includes(order.order_type)) {
+    selectedServicePreset.value = order.order_type
+  } else {
+    selectedServicePreset.value = 'CUSTOM'
+  }
+
+  showOrderModal.value = true
+}
+
 const closeOrderModal = () => {
   showOrderModal.value = false
+  editingOrderId.value = null
+  modalMode.value = 'add'
 }
 
 const onServicePresetChange = () => {
@@ -878,7 +958,7 @@ const onServicePresetChange = () => {
   }
 }
 
-const saveNewOrder = async () => {
+const saveOrder = async () => {
   if (!orderForm.value.client_name || !orderForm.value.client_whatsapp || !orderForm.value.order_type) {
     alert('Harap isi Nama Klien, Nomor WhatsApp, dan Jenis Layanan.')
     return
@@ -897,21 +977,35 @@ const saveNewOrder = async () => {
       payment_status: orderForm.value.payment_status || 'unpaid'
     }
 
-    const { error } = await $supabase
-      .from('orders')
-      .insert([payload])
+    if (modalMode.value === 'edit' && editingOrderId.value) {
+      const { error } = await $supabase
+        .from('orders')
+        .update(payload)
+        .eq('id', editingOrderId.value)
 
-    if (error) throw error
+      if (error) throw error
 
-    alert('Pesanan baru berhasil ditambahkan!')
+      alert('Pesanan berhasil diperbarui!')
+    } else {
+      const { error } = await $supabase
+        .from('orders')
+        .insert([payload])
+
+      if (error) throw error
+
+      alert('Pesanan baru berhasil ditambahkan!')
+    }
+
     closeOrderModal()
     await fetchOrders()
   } catch (err) {
-    alert('Gagal menambahkan pesanan: ' + err.message)
+    alert((modalMode.value === 'edit' ? 'Gagal memperbarui pesanan: ' : 'Gagal menambahkan pesanan: ') + err.message)
   } finally {
     isSubmitting.value = false
   }
 }
+
+const saveNewOrder = saveOrder
 
 // Update order status
 const updateOrderStatus = async (id, status) => {
@@ -1289,10 +1383,99 @@ body.dark-mode .order-card {
   border-radius: 8px;
   padding: 10px 12px;
   font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.85);
   border-left: 3px solid rgba(197, 168, 128, 0.5);
-  line-height: 1.4;
+  line-height: 1.5;
   margin-top: 4px;
+}
+
+.order-notes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  gap: 8px;
+}
+
+.order-notes-title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #9ca3af;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.order-notes-toggle {
+  background: transparent;
+  border: none;
+  color: var(--text-primary, #c5a880);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+}
+
+.order-notes-toggle:hover {
+  background: rgba(197, 168, 128, 0.15);
+  color: #ffffff;
+}
+
+.order-notes-content {
+  white-space: pre-wrap;
+  word-break: break-word;
+  transition: max-height 0.3s ease;
+}
+
+.order-notes-content.is-collapsed {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.order-notes-content:not(.is-collapsed) {
+  max-height: 180px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Custom sleek scrollbar for notes box */
+.order-notes-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.order-notes-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.order-notes-content::-webkit-scrollbar-thumb {
+  background: rgba(197, 168, 128, 0.4);
+  border-radius: 4px;
+}
+
+/* Table Notes */
+.table-notes-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.table-notes-text.is-collapsed {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .order-card-footer {
@@ -1343,6 +1526,19 @@ body.dark-mode .order-card {
 .btn-icon-action.wa-chat-btn:hover {
   background: rgba(37, 211, 102, 0.2);
   border-color: #25d366;
+}
+
+.btn-icon-action.edit-btn {
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.3);
+  background: rgba(56, 189, 248, 0.1);
+  font-weight: 600;
+}
+
+.btn-icon-action.edit-btn:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  color: #7dd3fc;
 }
 
 .btn-icon-action.copy-chat-btn {

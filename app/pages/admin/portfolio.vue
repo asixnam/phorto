@@ -107,7 +107,25 @@
               </td>
               <td data-label="Judul" style="font-weight:bold; color: var(--accent-blue);">{{ item.title }}</td>
               <td data-label="Kategori"><span class="meta-tag" style="background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius:4px;">{{ item.category }}</span></td>
-              <td data-label="Deskripsi" style="font-size:0.8rem; max-width:250px; white-space:normal;">{{ item.description || '-' }}</td>
+              <td data-label="Deskripsi" style="font-size:0.8rem; max-width:260px; white-space:normal;">
+                <div v-if="item.description">
+                  <div 
+                    :class="['desc-text', { 'is-collapsed': !expandedDescriptions[item.id] && (item.description.length > 70 || item.description.includes('\n')) }]"
+                  >
+                    {{ item.description }}
+                  </div>
+                  <button 
+                    v-if="item.description.length > 70 || item.description.includes('\n')"
+                    type="button" 
+                    @click="toggleDescription(item.id)" 
+                    class="desc-toggle-btn"
+                  >
+                    <span>{{ expandedDescriptions[item.id] ? 'Tutup' : 'Selengkapnya' }}</span>
+                    <i :class="expandedDescriptions[item.id] ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
+                  </button>
+                </div>
+                <span v-else style="opacity:0.3">-</span>
+              </td>
               <td data-label="Link / File" style="font-size:0.8rem; max-width:150px; overflow:hidden; text-overflow:ellipsis;">
                 <a v-if="item.link_url" :href="item.link_url" target="_blank" style="color:var(--accent-blue); text-decoration:none;">{{ item.link_url }}</a>
                 <span v-else>-</span>
@@ -154,6 +172,12 @@ const portfolioFilter = ref('ALL')
 const isEditingPortfolio = ref(false)
 const isUploading = ref(false)
 const editingPortfolioId = ref(null)
+
+// Expand/collapse state untuk area teks deskripsi
+const expandedDescriptions = ref({})
+const toggleDescription = (id) => {
+  expandedDescriptions.value[id] = !expandedDescriptions.value[id]
+}
 
 const newPortfolio = ref({
   category: 'Instagram',
@@ -434,3 +458,63 @@ onMounted(async () => {
   }
 })
 </script>
+
+<style scoped>
+.desc-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.85);
+  transition: max-height 0.3s ease;
+}
+
+.desc-text.is-collapsed {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.desc-text:not(.is-collapsed) {
+  max-height: 160px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Custom sleek scrollbar for expanded description */
+.desc-text::-webkit-scrollbar {
+  width: 4px;
+}
+
+.desc-text::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.desc-text::-webkit-scrollbar-thumb {
+  background: rgba(197, 168, 128, 0.4);
+  border-radius: 4px;
+}
+
+.desc-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary, #c5a880);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 2px 4px;
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.desc-toggle-btn:hover {
+  background: rgba(197, 168, 128, 0.15);
+  color: #ffffff;
+}
+</style>
